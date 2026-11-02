@@ -1,0 +1,10 @@
+#!/bin/sh
+root="$(git rev-parse --show-toplevel)"
+if [ -x "$root/.venv/Scripts/python.exe" ]; then
+  python_bin="$root/.venv/Scripts/python.exe"
+elif [ -x "$root/.venv/bin/python" ]; then
+  python_bin="$root/.venv/bin/python"
+else
+  python_bin="python"
+fi
+exec "$python_bin" "$root/scripts/check_secrets.py"

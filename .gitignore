@@ -1,0 +1,14 @@
+# 비밀값 (절대 올리지 않음)
+.env
+.env.*
+!.env.example
+
+# 파이썬
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# 생성물 (공개 게시용은 media 브랜치에 따로 저장)
+out/
+state/

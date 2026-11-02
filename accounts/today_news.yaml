@@ -1,0 +1,50 @@
+account_key: today_news
+enabled: true
+brand_name: "오늘의 3분 뉴스"
+timezone: Asia/Seoul
+
+secrets:
+  ig_user_id: IG_USER_ID
+  ig_access_token: IG_ACCESS_TOKEN
+
+slots:
+  - "07:30"
+  - "12:00"
+  - "18:00"
+  - "21:30"
+generate_lead_minutes: 60
+
+format_plan:
+  test_start_date: null
+  week1: { "07:30": reel, "12:00": carousel, "18:00": reel, "21:30": carousel }
+  week2: { "07:30": carousel, "12:00": reel, "18:00": carousel, "21:30": reel }
+reels_enabled: false
+
+collect:
+  rss_feeds: []
+  lookback_hours: 12
+  include_categories: [경제, 생활, IT, 트렌드, 날씨·교통]
+  exclude_categories: [정치, 선거, 사건사고, 범죄, 연예가십]
+  exclude_keywords: []
+  items_per_post: 3
+
+write:
+  model: claude-haiku-5-5
+  max_output_tokens: 2000
+  tone: "친근한 존댓말, 짧고 쉬운 문장"
+  monthly_budget_usd: 2.0
+
+design:
+  card_size: [1080, 1350]
+  reel_size: [1080, 1920]
+  colors: { bg: "#FFFFFF", primary: "#1F2A44", accent: "#FFC83D", text: "#111111" }
+  font: Pretendard
+
+caption:
+  hashtags: ["#오늘의뉴스", "#뉴스요약", "#출근길뉴스", "#경제뉴스", "#3분뉴스"]
+  ai_disclosure: true
+  schedule_note: "매일 07:30 · 12:00 · 18:00 · 21:30 업데이트"
+
+approval:
+  required: true
+  on_timeout: skip

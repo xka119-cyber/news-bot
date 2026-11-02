@@ -1,0 +1,5 @@
+pydantic>=2,<3
+python-dotenv>=1,<2
+PyYAML>=6,<7
+tzdata
+pytest>=8,<10
