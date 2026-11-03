@@ -191,12 +191,14 @@ def run_write(account_key: str, mock_llm: bool) -> int:
 
     draft = result.draft
     caption = build_caption(draft, account)
-    print(f"■ {draft['hook']}\n")
-    for n, item in enumerate(draft["items"], start=1):
-        print(f"{n}. [{item['category']}] {item['headline']}  ({item['source_name']})")
-        for line in item["summary_lines"]:
+    print(f"■ [{draft['category']}] {draft['cover_title']}  ({draft['source_name']})")
+    print(f"  {draft['cover_sub']}\n")
+    for point in draft["points"]:
+        print(f"▸ {point['title']}")
+        for line in point["lines"]:
             print(f"   · {line}")
-        print(f"   → {item['why_it_matters']}\n")
+    print(f"\n💡 {draft['why_it_matters']}\n")
+    print(f"원문: {draft['source_title']}\n")
     print("— 캡션 —")
     print(caption)
     print()

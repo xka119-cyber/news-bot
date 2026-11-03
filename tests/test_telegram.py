@@ -69,7 +69,7 @@ def test_callback_data_roundtrip_and_limit():
 
 
 def test_preview_text_escapes_and_lists():
-    draft = {"items": [{"source_url": "https://a.kr/?a=1&b=2", "source_name": "연합뉴스", "headline": "<금리>"}]}
+    draft = {"cover_title": "<금리>", "source_url": "https://a.kr/?a=1&b=2", "source_name": "연합뉴스", "source_title": "금리 기사"}
     text = preview_text(draft, "캡션 & 내용", "11월 4일(수) 07:30", ["원문에 없는 숫자: 7"], "오늘의 3분 뉴스")
     assert "&lt;금리&gt;" in text and "캡션 &amp; 내용" in text
     assert "⚠️ 확인할 점" in text and "07:30" in text

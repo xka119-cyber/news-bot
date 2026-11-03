@@ -4,7 +4,7 @@ import re
 
 from newsbot.collect.rss import Article
 
-LIMITS = {"hook": 25, "headline": 20, "summary_line": 35, "why_it_matters": 40, "caption_intro": 60}
+LIMITS = {"cover_title": 22, "cover_sub": 30, "point_title": 14, "point_line": 35, "why_it_matters": 60, "caption_intro": 60}
 COPY_RUN = 20  # 공백 빼고 이만큼 똑같이 이어지면 베낀 것으로 본다
 
 _NUMBER_RE = re.compile(r"\d+(?:[.,]\d+)*")
@@ -36,42 +36,45 @@ def longest_copy(written: str, source: Article) -> str:
     return best
 
 
+def _over(label: str, text: str, limit: int) -> str | None:
+    return f"{label} {len(text)}자 (최대 {limit}자)" if len(text) > limit else None
+
+
 def length_problems(draft) -> list[str]:
-    problems = []
-    if len(draft.hook) > LIMITS["hook"]:
-        problems.append(f"hook {len(draft.hook)}자 (최대 {LIMITS['hook']}자)")
-    if len(draft.caption_intro) > LIMITS["caption_intro"]:
-        problems.append(f"캡션 첫 문장 {len(draft.caption_intro)}자 (최대 {LIMITS['caption_intro']}자)")
-    for n, item in enumerate(draft.items, start=1):
-        if len(item.headline) > LIMITS["headline"]:
-            problems.append(f"{n}번 제목 {len(item.headline)}자 (최대 {LIMITS['headline']}자)")
-        if len(item.summary_lines) != 3:
-            problems.append(f"{n}번 요약이 {len(item.summary_lines)}줄 (3줄이어야 함)")
-        for k, line in enumerate(item.summary_lines, start=1):
-            if len(line) > LIMITS["summary_line"]:
-                problems.append(f"{n}번 요약 {k}줄 {len(line)}자 (최대 {LIMITS['summary_line']}자)")
-        if len(item.why_it_matters) > LIMITS["why_it_matters"]:
-            problems.append(f"{n}번 한 줄 해석 {len(item.why_it_matters)}자 (최대 {LIMITS['why_it_matters']}자)")
-    return problems
+    found = [
+        _over("표지 제목", draft.cover_title, LIMITS["cover_title"]),
+        _over("표지 설명", draft.cover_sub, LIMITS["cover_sub"]),
+        _over("한 줄 해석", draft.why_it_matters, LIMITS["why_it_matters"]),
+        _over("캡션 첫 문장", draft.caption_intro, LIMITS["caption_intro"]),
+    ]
+    for n, point in enumerate(draft.points, start=1):
+        found.append(_over(f"{n}번 소제목", point.title, LIMITS["point_title"]))
+        if not 2 <= len(point.lines) <= 3:
+            found.append(f"{n}번 카드가 {len(point.lines)}줄 (2~3줄이어야 함)")
+        for k, line in enumerate(point.lines, start=1):
+            found.append(_over(f"{n}번 카드 {k}줄", line, LIMITS["point_line"]))
+    return [p for p in found if p]
 
 
-def item_text(item) -> str:
-    return " ".join([item.headline, *item.summary_lines, item.why_it_matters])
+def draft_text(draft) -> str:
+    parts = [draft.cover_title, draft.cover_sub, draft.why_it_matters]
+    for point in draft.points:
+        parts += [point.title, *point.lines]
+    return " ".join(parts)
 
 
-def check_draft(draft, sources: list[Article], exclude_keywords: list[str]) -> dict[str, list[str]]:
+def check_draft(draft, source: Article, exclude_keywords: list[str]) -> dict[str, list[str]]:
     """{'retry': 다시 쓰게 할 문제, 'warn': 사람이 확인할 경고}"""
     retry = length_problems(draft)
     warn: list[str] = []
-    for n, (item, source) in enumerate(zip(draft.items, sources), start=1):
-        text = item_text(item)
-        copied = longest_copy(text, source)
-        if len(copied) >= COPY_RUN:
-            retry.append(f"{n}번이 원문을 {len(copied)}자 그대로 옮김: '{copied[:25]}…'")
-        missing = unknown_numbers(text, source)
-        if missing:
-            warn.append(f"{n}번 원문에 없는 숫자: {', '.join(sorted(missing))}")
-        banned = [w for w in exclude_keywords if w in text]
-        if banned:
-            warn.append(f"{n}번 제외 단어 포함: {', '.join(banned)}")
+    text = draft_text(draft)
+    copied = longest_copy(text, source)
+    if len(copied) >= COPY_RUN:
+        retry.append(f"원문을 {len(copied)}자 그대로 옮김: '{copied[:25]}…'")
+    missing = unknown_numbers(text, source)
+    if missing:
+        warn.append(f"원문에 없는 숫자: {', '.join(sorted(missing))}")
+    banned = [w for w in exclude_keywords if w in text]
+    if banned:
+        warn.append(f"제외 단어 포함: {', '.join(banned)}")
     return {"retry": retry, "warn": warn}

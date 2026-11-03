@@ -23,24 +23,21 @@ NOW = datetime(2026, 11, 4, 3, 0, tzinfo=timezone.utc)
 CANDIDATES = [
     Article("연합뉴스", "전기요금 내년 1월부터 kWh당 5원 인상", "한국전력은 가정용 전기요금을 내년 1월부터 kWh당 5원 올린다고 밝혔다.", "https://a.kr/1", NOW),
     Article("동아일보", "반도체 수출 10월 역대 최대", "10월 반도체 수출이 150억달러로 역대 최대를 기록했다.", "https://b.kr/2", NOW),
-    Article("SBS", "주말 서울 첫 영하권 추위", "토요일 아침 서울 기온이 영하 2도까지 내려간다.", "https://c.kr/3", NOW),
-    Article("ZDNet Korea", "AI 비서 앱 이용자 급증", "AI 비서 앱 이용자가 크게 늘었다.", "https://d.kr/4", NOW),
 ]
 
 
-def item(cid, headline="짧은 제목", lines=("한 줄", "두 줄", "세 줄"), why="내 지갑에 영향", category="경제"):
-    return {"candidate_id": cid, "headline": headline, "summary_lines": list(lines), "why_it_matters": why, "category": category}
+def make(cid=1, cover_title="전기요금 1월부터 오른다", points=None, why="관리비가 조금 늘 수 있어요", category="생활"):
+    points = points or [
+        {"title": "무엇이 바뀌나", "lines": ["가정용 요금이 올라요", "1월부터 적용돼요"]},
+        {"title": "얼마나 오르나", "lines": ["kWh당 5원 더 내요", "겨울에 체감이 커요"]},
+    ]
+    return LLMDraft.model_validate({
+        "candidate_id": cid, "category": category, "cover_title": cover_title, "cover_sub": "우리 집은 얼마?",
+        "points": points, "why_it_matters": why, "caption_intro": "전기요금 얼마나 오를까요?",
+    })
 
 
-def draft(items, hook="오늘의 뉴스 3개", intro="오늘 뉴스 뭐 있을까요?"):
-    return LLMDraft.model_validate({"hook": hook, "items": items, "caption_intro": intro})
-
-
-GOOD = draft([
-    item(1, "전기요금 5원 오른다", ("내년 1월부터 요금이 올라요", "kWh당 5원씩 더 내요", "가정용이 대상이에요"), "관리비가 조금 늘어요", "생활"),
-    item(2, "반도체 수출 최고치", ("10월 수출이 역대 최대예요", "150억달러를 기록했어요", "메모리 수요 덕분이에요"), "경기 회복 신호예요", "경제"),
-    item(3, "주말 첫 영하권", ("토요일 아침 영하 2도예요", "올가을 첫 영하권이에요", "외투를 챙기세요"), "출근길 옷차림 주의", "날씨·교통"),
-])
+GOOD = make()
 
 
 class FakeClient:
@@ -69,7 +66,7 @@ def account():
 def test_prompt_contains_candidates_and_rules(account):
     prompt = build_prompt(account, CANDIDATES)
     assert "[1] (연합뉴스) 전기요금" in prompt
-    assert "원문에 없는 숫자" in prompt
+    assert "기사 **1개**" in prompt
     assert "{" not in prompt  # 빈칸이 다 채워졌는지
 
 
@@ -78,8 +75,8 @@ def test_write_success_records_cost(account, tmp_path):
     costs = tmp_path / "costs.json"
     result = write_post(account, CANDIDATES, costs, client=client, now=NOW)
     assert result.attempts == 1
-    assert [i["source_name"] for i in result.draft["items"]] == ["연합뉴스", "동아일보", "SBS"]
-    assert result.draft["items"][1]["source_url"] == "https://b.kr/2"
+    assert result.draft["source_name"] == "연합뉴스" and result.draft["source_url"] == "https://a.kr/1"
+    assert len(result.draft["points"]) == 2
     assert result.warnings == []
     expected = 2000 / 1e6 * 0.10 + 800 / 1e6 * 0.50
     assert result.cost_usd == pytest.approx(expected)
@@ -89,26 +86,30 @@ def test_write_success_records_cost(account, tmp_path):
 
 
 def test_retry_on_too_long_then_ok(account, tmp_path):
-    too_long = draft([item(1, "가" * 30), item(2), item(3)])
-    client = FakeClient([too_long, GOOD])
+    client = FakeClient([make(cover_title="가" * 30), GOOD])
     result = write_post(account, CANDIDATES, tmp_path / "c.json", client=client, now=NOW)
     assert result.attempts == 2
-    assert "1번 제목 30자" in client.calls[1]["messages"][-1]["content"]
+    assert "표지 제목 30자" in client.calls[1]["messages"][-1]["content"]
     assert load_costs(tmp_path / "c.json")["today_news"]["2026-11"]["calls"] == 2
 
 
 def test_length_problem_left_after_retry_becomes_warning(account, tmp_path):
-    too_long = draft([item(1, "가" * 30), item(2), item(3)])
-    client = FakeClient([too_long, too_long])
-    result = write_post(account, CANDIDATES, tmp_path / "c.json", client=client, now=NOW)
-    assert any("1번 제목 30자" in w for w in result.warnings)
+    long = make(cover_title="가" * 30)
+    result = write_post(account, CANDIDATES, tmp_path / "c.json", client=FakeClient([long, long]), now=NOW)
+    assert any("표지 제목 30자" in w for w in result.warnings)
 
 
 def test_bad_structure_twice_raises(account, tmp_path):
-    two_items = draft([item(1), item(1)])
-    client = FakeClient([two_items, two_items])
+    bad = make(cid=9)
     with pytest.raises(WriteError):
-        write_post(account, CANDIDATES, tmp_path / "c.json", client=client, now=NOW)
+        write_post(account, CANDIDATES, tmp_path / "c.json", client=FakeClient([bad, bad]), now=NOW)
+
+
+def test_wrong_point_count_is_retried(account, tmp_path):
+    one_point = make(points=[{"title": "무엇이", "lines": ["한 줄", "두 줄"]}])
+    client = FakeClient([one_point, GOOD])
+    result = write_post(account, CANDIDATES, tmp_path / "c.json", client=client, now=NOW)
+    assert result.attempts == 2
 
 
 def test_budget_stops_before_calling(account, tmp_path):
@@ -132,14 +133,16 @@ def test_number_check():
 
 
 def test_copy_check():
-    copied = "가정용 전기요금을 내년 1월부터 kWh당 5원 올린다"
-    assert len(longest_copy(copied, CANDIDATES[0])) >= 20
+    assert len(longest_copy("가정용 전기요금을 내년 1월부터 kWh당 5원 올린다", CANDIDATES[0])) >= 20
     assert len(longest_copy("요금이 조금 올라요", CANDIDATES[0])) < 20
 
 
 def test_check_draft_flags_copy_and_numbers(account):
-    copy_draft = draft([item(1, lines=("가정용 전기요금을 내년 1월부터 kWh당 5원 올린다고", "두 줄", "9% 오름"))])
-    result = check_draft(copy_draft, CANDIDATES[:1], account.collect.exclude_keywords)
+    copy_draft = make(points=[
+        {"title": "무엇이", "lines": ["가정용 전기요금을 내년 1월부터 kWh당 5원 올린다고", "9% 오름"]},
+        {"title": "얼마나", "lines": ["한 줄", "두 줄"]},
+    ])
+    result = check_draft(copy_draft, CANDIDATES[0], account.collect.exclude_keywords)
     assert any("그대로 옮김" in p for p in result["retry"])
     assert any("9" in w for w in result["warn"])
 
@@ -148,8 +151,8 @@ def test_caption(account):
     out = mock_post(CANDIDATES)
     caption = build_caption(out.draft, account)
     assert caption.startswith(out.draft["caption_intro"])
-    assert "1️⃣" in caption and "3️⃣" in caption
-    assert "출처: 연합뉴스, 동아일보, SBS" in caption
+    assert "✔ 무엇이 바뀌나" in caption and "💡" in caption
+    assert "출처: 연합뉴스" in caption
     assert "AI의 도움을 받아 요약했어요." in caption
     assert caption.count("#") <= 5
     assert "07:30" not in caption  # 게시 시간은 넣지 않음

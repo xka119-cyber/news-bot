@@ -45,7 +45,7 @@ collect:
      기소, 검찰, 경찰 조사, 압수수색, 징역, 재판,
     # 연예 가십
      열애, 결별, 이혼, 불륜, 스캔들]
-  items_per_post: 3
+  items_per_post: 1               # 2026-11-04 사용자 결정: 1게시물 = 뉴스 1개
 
 write:
   model: claude-haiku-5-5

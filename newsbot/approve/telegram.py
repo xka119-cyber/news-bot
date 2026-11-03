@@ -93,9 +93,8 @@ def parse_callback(data: str) -> tuple[str, str] | None:
 def preview_text(draft: dict, caption: str, slot_label: str, warnings: list[str], brand: str) -> str:
     e = html.escape
     lines = [f"<b>📮 {e(brand)} 미리보기</b>", f"게시 예정: <b>{e(slot_label)}</b> · 카드뉴스 4장", ""]
-    lines += ["<b>캡션</b>", f"<blockquote expandable>{e(caption)}</blockquote>", "<b>원문</b>"]
-    for n, item in enumerate(draft["items"], start=1):
-        lines.append(f'{n}. <a href="{e(item["source_url"], quote=True)}">{e(item["source_name"])} · {e(item["headline"])}</a>')
+    lines += [f"<b>{e(draft['cover_title'])}</b>", "", "<b>캡션</b>", f"<blockquote expandable>{e(caption)}</blockquote>"]
+    lines.append(f'<b>원문</b>: <a href="{e(draft["source_url"], quote=True)}">{e(draft["source_name"])} · {e(draft["source_title"])}</a>')
     if warnings:
         lines += ["", "<b>⚠️ 확인할 점</b>"] + [f"• {e(w)}" for w in warnings]
     lines += ["", "아래 버튼으로 승인하거나 건너뛰세요."]

@@ -1,4 +1,4 @@
-"""카드뉴스 4장(표지 + 뉴스 3장)을 HTML 템플릿 → Chromium 스크린샷 → JPEG로 만든다."""
+"""카드뉴스 4장(표지 → 핵심 2장 → 나한테 의미)을 HTML 템플릿 → Chromium 스크린샷 → JPEG로 만든다."""
 
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -31,25 +31,19 @@ def date_label(when: datetime, timezone: str) -> str:
 
 
 def build_cards(draft: dict, account: AccountConfig, when: datetime) -> list[dict]:
-    total = len(draft["items"]) + 1
-    cards = [{
-        "kind": "cover",
-        "hook": draft["hook"],
-        "date": date_label(when, account.timezone),
-        "headlines": [item["headline"] for item in draft["items"]],
-        "page": 1,
-        "total": total,
-    }]
-    for n, item in enumerate(draft["items"], start=1):
-        cards.append({
-            "kind": "item",
-            "number": n,
-            "count": len(draft["items"]),
-            "emoji": CATEGORY_EMOJI.get(item["category"], "📰"),
-            **item,
-            "page": n + 1,
-            "total": total,
-        })
+    common = {
+        "category": draft["category"],
+        "emoji": CATEGORY_EMOJI.get(draft["category"], "📰"),
+        "cover_title": draft["cover_title"],
+        "source_name": draft["source_name"],
+    }
+    total = len(draft["points"]) + 2
+    cards = [{**common, "kind": "cover", "sub": draft["cover_sub"], "date": date_label(when, account.timezone)}]
+    for point in draft["points"]:
+        cards.append({**common, "kind": "point", "title": point["title"], "lines": point["lines"]})
+    cards.append({**common, "kind": "why", "text": draft["why_it_matters"]})
+    for page, card in enumerate(cards, start=1):
+        card.update(page=page, total=total)
     return cards
 
 

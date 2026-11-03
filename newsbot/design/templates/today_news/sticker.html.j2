@@ -1,54 +1,69 @@
 {% extends "_base.html.j2" %}
-{# 시안 B: 스티커 노트 — 소개 게시물과 같은 크림 바탕·손글씨·메모지 느낌 #}
+{# 스티커 노트 (2026-11-04 선택): 크림 바탕·손글씨 스티커·메모지, 반듯하게. 1게시물 1뉴스 4장 #}
 {% block style %}
 body { background: #FFFBF1; }
 .card { width: 100%; height: 100%; padding: 80px; display: flex; flex-direction: column; position: relative; }
-.sticker { align-self: flex-start; background: var(--accent); color: var(--primary); font-family: "Pen"; font-size: 54px; padding: 6px 30px 10px; border-radius: 22px; }
-.page { position: absolute; top: 92px; right: 80px; font-family: "Jua"; font-size: 34px; color: #8A8F9C; }
+.top { display: flex; justify-content: space-between; align-items: center; }
+.sticker { background: var(--accent); color: var(--primary); font-family: "Pen"; font-size: 54px; padding: 4px 30px 8px; border-radius: 22px; }
+.page { font-family: "Jua"; font-size: 34px; color: #8A8F9C; }
+mark { background: linear-gradient(transparent 60%, var(--accent) 60%, var(--accent) 92%, transparent 92%); color: inherit; }
+.foot { margin-top: 30px; display: flex; justify-content: space-between; gap: 30px; font-size: 26px; color: #6B7385; font-weight: 600; }
+.foot .ctx { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 
-/* 표지 */
-.date { margin-top: 40px; font-family: "Pen"; font-size: 56px; color: #5B6475; }
-.hook-wrap { margin-top: 20px; }
-.hook { font-family: "Jua"; font-size: calc(var(--s) * 110px); line-height: 1.2; color: var(--primary); }
-.hook mark { background: linear-gradient(transparent 58%, var(--accent) 58%, var(--accent) 92%, transparent 92%); color: inherit; }
-.notes { margin-top: auto; display: flex; flex-direction: column; gap: 26px; }
-.note { background: #fff; border-radius: 24px; padding: 26px 34px; font-family: "Jua"; font-size: calc(var(--s) * 46px); color: var(--primary); box-shadow: 0 6px 0 rgba(31,42,68,.08); display: flex; gap: 24px; align-items: center; }
-.note .n { flex: none; width: 58px; height: 58px; border-radius: 50%; background: var(--accent); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 36px; }
-.swipe { margin-top: 34px; font-family: "Pen"; font-size: 50px; color: var(--primary); text-align: right; }
+/* 1장: 표지 */
+.cover-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.date { font-family: "Pen"; font-size: 56px; color: #5B6475; }
+.cat { margin-top: 30px; display: flex; align-items: center; gap: 18px; font-family: "Jua"; font-size: 44px; color: var(--primary); }
+.cat .emoji { font-size: 76px; }
+.cover-title { margin-top: 26px; font-family: "Jua"; font-size: calc(var(--s) * 122px); line-height: 1.2; color: var(--primary); }
+.cover-sub { margin-top: 40px; font-size: calc(var(--s) * 46px); font-weight: 600; line-height: 1.4; color: #3B4560; }
+.swipe { font-family: "Pen"; font-size: 54px; color: var(--primary); text-align: right; }
 
-/* 뉴스 */
-.head { margin-top: 46px; display: flex; gap: 26px; align-items: flex-start; }
-.big-emoji { font-size: 92px; line-height: 1.1; }
-.headline { font-family: "Jua"; font-size: calc(var(--s) * 76px); line-height: 1.22; color: var(--primary); }
-.paper { margin-top: 44px; background: #fff; border-radius: 28px; padding: 44px 46px 24px; box-shadow: 0 6px 0 rgba(31,42,68,.08); position: relative; }
+/* 2~3장: 핵심 */
+.point-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.point-title { font-family: "Jua"; font-size: calc(var(--s) * 92px); line-height: 1.2; color: var(--primary); }
+.paper { margin-top: 56px; background: #fff; border-radius: 30px; padding: 56px 54px 30px; box-shadow: 0 6px 0 rgba(31,42,68,.08); position: relative; }
 .paper::before { content: ""; position: absolute; top: -16px; left: 50%; width: 140px; height: 32px; margin-left: -70px; background: rgba(255,200,61,.8); border-radius: 4px; }
-.paper li { list-style: none; font-size: calc(var(--s) * 41px); line-height: 1.45; font-weight: 600; margin-bottom: 22px; padding-left: 44px; position: relative; }
-.paper li::before { content: ""; position: absolute; left: 4px; top: .55em; width: 18px; height: 18px; border-radius: 50%; background: var(--accent); }
-.why { margin-top: auto; background: var(--primary); color: #fff; border-radius: 28px; padding: 30px 40px; }
-.why-label { font-family: "Pen"; font-size: calc(var(--s) * 46px); color: var(--accent); }
-.why-text { margin-top: 4px; font-size: calc(var(--s) * 40px); font-weight: 700; line-height: 1.4; }
-.foot { margin-top: 30px; display: flex; justify-content: space-between; font-size: 26px; color: #6B7385; font-weight: 600; }
+.paper li { list-style: none; font-size: calc(var(--s) * 46px); line-height: 1.45; font-weight: 600; margin-bottom: 30px; padding-left: 48px; position: relative; }
+.paper li::before { content: ""; position: absolute; left: 4px; top: .55em; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); }
+
+/* 4장: 나한테 의미 */
+.why-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.why { background: var(--primary); color: #fff; border-radius: 34px; padding: 64px 60px; }
+.why-label { font-family: "Pen"; font-size: calc(var(--s) * 70px); color: var(--accent); }
+.why-text { margin-top: 18px; font-size: calc(var(--s) * 56px); font-weight: 700; line-height: 1.45; }
+.save { margin-top: 50px; font-family: "Pen"; font-size: 56px; color: var(--primary); text-align: center; }
 {% endblock %}
 {% block body %}
 <div class="card">
+  <div class="top">
+    {% if card.kind == "cover" %}<span class="sticker">{{ brand }}</span>
+    {% elif card.kind == "point" %}<span class="sticker"><span class="emoji">{{ card.emoji }}</span> {{ card.category }} · {{ card.page - 1 }}/2</span>
+    {% else %}<span class="sticker">한 줄 정리</span>{% endif %}
+    <span class="page">{{ card.page }}/{{ card.total }}</span>
+  </div>
+
 {% if card.kind == "cover" %}
-  <span class="sticker">{{ brand }}</span>
-  <span class="page">{{ card.page }}/{{ card.total }}</span>
-  <div class="fit-box" style="flex:1; display:flex; flex-direction:column; padding-bottom: 24px;">
+  <div class="cover-body fit-box">
     <div class="date">{{ card.date }}</div>
-    <div class="hook-wrap"><div class="hook"><mark>{{ card.hook }}</mark></div></div>
-    <div class="notes">
-      {% for h in card.headlines %}<div class="note"><span class="n">{{ loop.index }}</span><span>{{ h }}</span></div>{% endfor %}
-    </div>
+    <div class="cat"><span class="emoji">{{ card.emoji }}</span>{{ card.category }}</div>
+    <div class="cover-title"><mark>{{ card.cover_title }}</mark></div>
+    <div class="cover-sub">{{ card.sub }}</div>
   </div>
   <div class="swipe">옆으로 넘겨 보세요 →</div>
+  <div class="foot"><span>출처 · {{ card.source_name }}</span><span>{{ brand }}</span></div>
+
+{% elif card.kind == "point" %}
+  <div class="point-body fit-box">
+    <div class="point-title"><mark>{{ card.title }}</mark></div>
+    <ul class="paper">{% for line in card.lines %}<li>{{ line }}</li>{% endfor %}</ul>
+  </div>
+  <div class="foot"><span class="ctx">{{ card.cover_title }}</span><span>출처 · {{ card.source_name }}</span></div>
+
 {% else %}
-  <span class="sticker">{{ card.category }} · {{ card.number }}번째 소식</span>
-  <span class="page">{{ card.page }}/{{ card.total }}</span>
-  <div class="fit-box" style="flex:1; display:flex; flex-direction:column; padding: 20px 14px 14px; margin: 0 -14px;">
-    <div class="head"><span class="big-emoji emoji">{{ card.emoji }}</span><div class="headline">{{ card.headline }}</div></div>
-    <ul class="paper">{% for line in card.summary_lines %}<li>{{ line }}</li>{% endfor %}</ul>
-    <div class="why"><div class="why-label">그래서 나한테는?</div><div class="why-text">{{ card.why_it_matters }}</div></div>
+  <div class="why-body fit-box">
+    <div class="why"><div class="why-label">그래서 나한테는?</div><div class="why-text">{{ card.text }}</div></div>
+    <div class="save">저장해 두고 필요할 때 꺼내 보세요</div>
   </div>
   <div class="foot"><span>출처 · {{ card.source_name }}</span><span>{{ brand }}</span></div>
 {% endif %}

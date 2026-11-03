@@ -1,4 +1,7 @@
-"""Claude 1회 호출로 후보 중 기사를 고르고 카드 문구를 쓴다. 검사·재시도·비용 기록 포함."""
+"""Claude 1회 호출로 후보 중 기사 1개를 고르고 카드 4장 문구를 쓴다. 검사·재시도·비용 기록 포함.
+
+2026-11-04 사용자 결정: 1게시물 = 뉴스 1개 (표지 → 핵심 2장 → 나한테 의미).
+"""
 
 import json
 import logging
@@ -18,17 +21,18 @@ log = logging.getLogger(__name__)
 PROMPTS_DIR = Path(__file__).parent / "prompts"
 
 
-class LLMItem(BaseModel):
-    candidate_id: int
-    headline: str
-    summary_lines: list[str]
-    why_it_matters: str
-    category: str
+class LLMPoint(BaseModel):
+    title: str
+    lines: list[str]
 
 
 class LLMDraft(BaseModel):
-    hook: str
-    items: list[LLMItem]
+    candidate_id: int
+    category: str
+    cover_title: str
+    cover_sub: str
+    points: list[LLMPoint]
+    why_it_matters: str
     caption_intro: str
 
 
@@ -99,7 +103,6 @@ def build_prompt(account: AccountConfig, candidates: list[Article]) -> str:
     c = account.collect
     return template.format(
         brand_name=account.brand_name,
-        items_per_post=c.items_per_post,
         include_categories=", ".join(c.include_categories),
         exclude_categories=", ".join(c.exclude_categories),
         tone=account.write.tone,
@@ -109,37 +112,34 @@ def build_prompt(account: AccountConfig, candidates: list[Article]) -> str:
 
 # ---------- 검증 ----------
 
+POINTS = 2
+
+
 def structure_problems(draft: LLMDraft, account: AccountConfig, n_candidates: int) -> list[str]:
-    want = account.collect.items_per_post
-    ids = [item.candidate_id for item in draft.items]
     problems = []
-    if len(draft.items) != want:
-        problems.append(f"기사를 {len(draft.items)}개 골랐음 ({want}개여야 함)")
-    if any(not 1 <= i <= n_candidates for i in ids):
-        problems.append(f"없는 후보 번호를 고름: {ids}")
-    if len(set(ids)) != len(ids):
-        problems.append(f"같은 후보를 두 번 고름: {ids}")
-    allowed = set(account.collect.include_categories)
-    bad = [item.category for item in draft.items if item.category not in allowed]
-    if bad:
-        problems.append(f"정해진 분야가 아님: {bad}")
+    if not 1 <= draft.candidate_id <= n_candidates:
+        problems.append(f"없는 후보 번호를 고름: {draft.candidate_id}")
+    if len(draft.points) != POINTS:
+        problems.append(f"핵심 카드가 {len(draft.points)}개 ({POINTS}개여야 함)")
+    if draft.category not in account.collect.include_categories:
+        problems.append(f"정해진 분야가 아님: {draft.category}")
     return problems
 
 
 def to_output(draft: LLMDraft, candidates: list[Article]) -> dict:
-    """스키마(설계서 4.2) 형태로 바꾼다. 언론사·링크는 Claude가 아니라 수집 데이터에서 채운다."""
-    items = []
-    for item in draft.items:
-        source = candidates[item.candidate_id - 1]
-        items.append({
-            "headline": item.headline,
-            "summary_lines": item.summary_lines,
-            "why_it_matters": item.why_it_matters,
-            "category": item.category,
-            "source_name": source.source,
-            "source_url": source.link,
-        })
-    return {"hook": draft.hook, "items": items, "caption_intro": draft.caption_intro}
+    """카드·캡션에 쓰는 형태로 바꾼다. 언론사·링크는 Claude가 아니라 수집 데이터에서 채운다."""
+    source = candidates[draft.candidate_id - 1]
+    return {
+        "category": draft.category,
+        "cover_title": draft.cover_title,
+        "cover_sub": draft.cover_sub,
+        "points": [p.model_dump() for p in draft.points],
+        "why_it_matters": draft.why_it_matters,
+        "caption_intro": draft.caption_intro,
+        "source_name": source.source,
+        "source_url": source.link,
+        "source_title": source.title,
+    }
 
 
 # ---------- 호출 ----------
@@ -183,8 +183,8 @@ def write_post(
     now: datetime | None = None,
 ) -> WriteResult:
     now = now or datetime.now(timezone.utc)
-    if len(candidates) < account.collect.items_per_post:
-        raise WriteError(f"후보 기사가 {len(candidates)}개뿐이라 작성할 수 없습니다.")
+    if not candidates:
+        raise WriteError("후보 기사가 없어 작성할 수 없습니다.")
     month = month_key(account, now)
     spent = month_spent(costs_path, account.account_key, month)
     if spent >= account.write.monthly_budget_usd:
@@ -214,8 +214,7 @@ def write_post(
 
         problems = [error] if error else structure_problems(draft, account, len(candidates))
         if not problems:
-            sources = [candidates[item.candidate_id - 1] for item in draft.items]
-            checks = check_draft(draft, sources, account.collect.exclude_keywords)
+            checks = check_draft(draft, candidates[draft.candidate_id - 1], account.collect.exclude_keywords)
             problems = checks["retry"]
         if not problems:
             break
@@ -239,6 +238,5 @@ def write_post(
 def mock_post(candidates: list[Article]) -> WriteResult:
     """디자인 작업용: Claude를 부르지 않고 고정 샘플 문구를 쓴다(비용 0)."""
     sample = LLMDraft.model_validate_json((PROMPTS_DIR / "mock_draft.json").read_text(encoding="utf-8"))
-    for n, item in enumerate(sample.items, start=1):
-        item.candidate_id = n
+    sample.candidate_id = 1
     return WriteResult(draft=to_output(sample, candidates), warnings=["샘플 문구입니다(--mock-llm)."])
