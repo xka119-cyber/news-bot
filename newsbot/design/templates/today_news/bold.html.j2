@@ -1,0 +1,53 @@
+{% extends "_base.html.j2" %}
+{# 시안 C: 굵은 남색 — 남색 바탕에 흰 글씨, 큰 번호와 노란 강조 #}
+{% block style %}
+body { background: var(--primary); color: #fff; }
+.card { width: 100%; height: 100%; padding: 80px; display: flex; flex-direction: column; }
+.row { display: flex; justify-content: space-between; align-items: center; font-size: 32px; font-weight: 700; }
+.brand { color: var(--accent); font-weight: 800; }
+.dim { opacity: .65; }
+
+/* 표지 */
+.date { margin-top: 90px; font-size: 40px; font-weight: 600; opacity: .7; }
+.hook { margin-top: 24px; font-size: calc(var(--s) * 104px); font-weight: 800; line-height: 1.18; letter-spacing: -3px; }
+.hook em { font-style: normal; color: var(--accent); }
+.list { margin-top: auto; border-top: 3px solid rgba(255,255,255,.18); }
+.list li { list-style: none; display: flex; gap: 30px; align-items: baseline; padding: 30px 0; border-bottom: 3px solid rgba(255,255,255,.18); font-size: calc(var(--s) * 44px); font-weight: 700; }
+.list .n { color: var(--accent); font-size: 48px; font-weight: 800; width: 50px; }
+.swipe { margin-top: 36px; text-align: right; font-size: 30px; font-weight: 700; color: var(--accent); }
+
+/* 뉴스 */
+.bignum { margin-top: 50px; font-size: 200px; font-weight: 800; line-height: .9; color: var(--accent); letter-spacing: -8px; }
+.cat { margin-top: 18px; font-size: 36px; font-weight: 700; opacity: .8; }
+.headline { margin-top: 26px; font-size: calc(var(--s) * 72px); font-weight: 800; line-height: 1.22; letter-spacing: -1.5px; }
+.lines { margin-top: 44px; }
+.lines li { list-style: none; font-size: calc(var(--s) * 40px); line-height: 1.45; font-weight: 500; margin-bottom: 20px; padding-left: 36px; position: relative; opacity: .95; }
+.lines li::before { content: ""; position: absolute; left: 0; top: .6em; width: 16px; height: 4px; background: var(--accent); }
+.why { margin-top: auto; background: var(--accent); color: var(--primary); border-radius: 24px; padding: 30px 38px; }
+.why-label { font-size: calc(var(--s) * 30px); font-weight: 800; opacity: .75; }
+.why-text { margin-top: 8px; font-size: calc(var(--s) * 40px); font-weight: 800; line-height: 1.38; }
+.foot { margin-top: 34px; display: flex; justify-content: space-between; font-size: 26px; font-weight: 600; opacity: .7; }
+{% endblock %}
+{% block body %}
+<div class="card">
+{% if card.kind == "cover" %}
+  <div class="row"><span class="brand">{{ brand }}</span><span class="dim">{{ card.page }}/{{ card.total }}</span></div>
+  <div class="fit-box" style="flex:1; display:flex; flex-direction:column;">
+    <div class="date">{{ card.date }}</div>
+    <div class="hook">{{ card.hook }}<em>.</em></div>
+    <ul class="list">{% for h in card.headlines %}<li><span class="n">{{ loop.index }}</span><span>{{ h }}</span></li>{% endfor %}</ul>
+  </div>
+  <div class="swipe">넘겨서 보기 →</div>
+{% else %}
+  <div class="row"><span class="brand">{{ brand }}</span><span class="dim">{{ card.page }}/{{ card.total }}</span></div>
+  <div class="fit-box" style="flex:1; display:flex; flex-direction:column;">
+    <div class="bignum">0{{ card.number }}</div>
+    <div class="cat"><span class="emoji">{{ card.emoji }}</span> {{ card.category }}</div>
+    <div class="headline">{{ card.headline }}</div>
+    <ul class="lines">{% for line in card.summary_lines %}<li>{{ line }}</li>{% endfor %}</ul>
+    <div class="why"><div class="why-label">💡 그래서 나한테는</div><div class="why-text">{{ card.why_it_matters }}</div></div>
+  </div>
+  <div class="foot"><span>출처 · {{ card.source_name }}</span><span>{{ brand }}</span></div>
+{% endif %}
+</div>
+{% endblock %}

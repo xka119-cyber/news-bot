@@ -87,6 +87,7 @@ class Design(_Strict):
     reel_size: Size
     colors: Colors
     font: str
+    template: str = "clean"  # design/templates/{account_key}/{template}.html.j2
 
 
 class Caption(_Strict):

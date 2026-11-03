@@ -1,0 +1,59 @@
+{% extends "_base.html.j2" %}
+{# 시안 B: 스티커 노트 — 소개 게시물과 같은 크림 바탕·손글씨·메모지 느낌 #}
+{% block style %}
+body { background: #FFFBF1; }
+.card { width: 100%; height: 100%; padding: 80px; display: flex; flex-direction: column; position: relative; }
+.sticker { align-self: flex-start; background: var(--accent); color: var(--primary); font-family: "Pen"; font-size: 54px; padding: 6px 30px 10px; border-radius: 22px; transform: rotate(-3deg); box-shadow: 6px 8px 0 rgba(0,0,0,.08); }
+.page { position: absolute; top: 92px; right: 80px; font-family: "Jua"; font-size: 34px; color: #8A8F9C; }
+
+/* 표지 */
+.date { margin-top: 40px; font-family: "Pen"; font-size: 56px; color: #5B6475; }
+.hook-wrap { margin-top: 20px; }
+.hook { font-family: "Jua"; font-size: calc(var(--s) * 110px); line-height: 1.2; color: var(--primary); }
+.hook mark { background: linear-gradient(transparent 58%, var(--accent) 58%, var(--accent) 92%, transparent 92%); color: inherit; }
+.notes { margin-top: auto; display: flex; flex-direction: column; gap: 26px; }
+.note { background: #fff; border: 4px solid var(--primary); border-radius: 26px; padding: 26px 34px; font-family: "Jua"; font-size: calc(var(--s) * 46px); color: var(--primary); box-shadow: 8px 10px 0 rgba(31,42,68,.12); display: flex; gap: 22px; align-items: center; }
+.note:nth-child(1) { transform: rotate(-1.2deg); background: #FFF0C2; border-color: transparent; }
+.note:nth-child(2) { transform: rotate(1deg); }
+.note:nth-child(3) { transform: rotate(-.6deg); background: #E6EBF5; border-color: transparent; }
+.note .n { font-size: 40px; color: #C9A227; }
+.swipe { margin-top: 34px; font-family: "Pen"; font-size: 50px; color: var(--primary); text-align: right; }
+
+/* 뉴스 */
+.head { margin-top: 46px; display: flex; gap: 26px; align-items: flex-start; }
+.big-emoji { font-size: 96px; line-height: 1; transform: rotate(-6deg); }
+.headline { font-family: "Jua"; font-size: calc(var(--s) * 76px); line-height: 1.22; color: var(--primary); }
+.paper { margin-top: 44px; background: #fff; border-radius: 28px; padding: 44px 46px 34px; box-shadow: 8px 10px 0 rgba(31,42,68,.10); position: relative; }
+.paper::before { content: ""; position: absolute; top: -18px; left: 50%; width: 150px; height: 38px; margin-left: -75px; background: rgba(255,200,61,.75); transform: rotate(-2deg); }
+.paper li { list-style: none; font-size: calc(var(--s) * 41px); line-height: 1.45; font-weight: 600; margin-bottom: 20px; padding-left: 48px; position: relative; }
+.paper li::before { content: "✔"; position: absolute; left: 0; color: var(--accent); font-weight: 800; }
+.why { margin-top: auto; background: var(--primary); color: #fff; border-radius: 28px; padding: 30px 40px; transform: rotate(-.8deg); }
+.why-label { font-family: "Pen"; font-size: calc(var(--s) * 46px); color: var(--accent); }
+.why-text { margin-top: 4px; font-size: calc(var(--s) * 40px); font-weight: 700; line-height: 1.4; }
+.foot { margin-top: 30px; display: flex; justify-content: space-between; font-size: 26px; color: #6B7385; font-weight: 600; }
+{% endblock %}
+{% block body %}
+<div class="card">
+{% if card.kind == "cover" %}
+  <span class="sticker">{{ brand }}</span>
+  <span class="page">{{ card.page }}/{{ card.total }}</span>
+  <div class="fit-box" style="flex:1; display:flex; flex-direction:column; padding-bottom: 24px;">
+    <div class="date">{{ card.date }}</div>
+    <div class="hook-wrap"><div class="hook"><mark>{{ card.hook }}</mark></div></div>
+    <div class="notes">
+      {% for h in card.headlines %}<div class="note"><span class="n">{{ loop.index }}</span><span>{{ h }}</span></div>{% endfor %}
+    </div>
+  </div>
+  <div class="swipe">옆으로 넘겨 보세요 →</div>
+{% else %}
+  <span class="sticker">{{ card.category }} · {{ card.number }}번째 소식</span>
+  <span class="page">{{ card.page }}/{{ card.total }}</span>
+  <div class="fit-box" style="flex:1; display:flex; flex-direction:column; padding: 20px 14px 14px; margin: 0 -14px;">
+    <div class="head"><span class="big-emoji emoji">{{ card.emoji }}</span><div class="headline">{{ card.headline }}</div></div>
+    <ul class="paper">{% for line in card.summary_lines %}<li>{{ line }}</li>{% endfor %}</ul>
+    <div class="why"><div class="why-label">그래서 나한테는?</div><div class="why-text">{{ card.why_it_matters }}</div></div>
+  </div>
+  <div class="foot"><span>출처 · {{ card.source_name }}</span><span>{{ brand }}</span></div>
+{% endif %}
+</div>
+{% endblock %}

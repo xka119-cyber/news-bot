@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face { font-family: "Pretendard"; font-weight: 400; src: url("{{ fonts }}/Pretendard-Regular.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 600; src: url("{{ fonts }}/Pretendard-SemiBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; src: url("{{ fonts }}/Pretendard-Bold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 800; src: url("{{ fonts }}/Pretendard-ExtraBold.otf"); }
+@font-face { font-family: "Jua"; src: url("{{ fonts }}/Jua-Regular.ttf"); }
+@font-face { font-family: "Pen"; src: url("{{ fonts }}/NanumPenScript-Regular.ttf"); }
+:root {
+  --s: 1;
+  --bg: {{ colors.bg }}; --primary: {{ colors.primary }}; --accent: {{ colors.accent }}; --text: {{ colors.text }};
+  --emoji: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji";
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: {{ width }}px; height: {{ height }}px; overflow: hidden; }
+body { font-family: "Pretendard", var(--emoji), sans-serif; color: var(--text); word-break: keep-all; overflow-wrap: anywhere; }
+.emoji { font-family: var(--emoji); }
+.fit-box { overflow: hidden; }
+{% block style %}{% endblock %}
+</style>
+</head>
+<body>
+{% block body %}{% endblock %}
+<script>
+// 글자가 상자를 넘치면 --s(글자 배율)를 조금씩 줄인다. 최소 배율에서도 넘치면 overflow=true
+window.fitCard = function () {
+  const boxes = [...document.querySelectorAll('.fit-box')];
+  // 높이만 본다(가로는 줄바꿈으로 맞춰지고, 기울인 스티커·그림자가 가로 넘침으로 잘못 잡히기 때문)
+  const over = () => boxes.some(b => b.scrollHeight > b.clientHeight + 1);
+  let s = 1;
+  while (over() && s > {{ min_scale }}) {
+    s = Math.round((s - 0.02) * 100) / 100;
+    document.documentElement.style.setProperty('--s', s);
+  }
+  return { scale: s, overflow: over() };
+};
+</script>
+</body>
+</html>
