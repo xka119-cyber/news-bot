@@ -3,4 +3,5 @@ python-dotenv>=1,<2
 PyYAML>=6,<7
 tzdata
 feedparser>=6,<7
+anthropic>=2.4,<3
 pytest>=8,<10

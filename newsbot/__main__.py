@@ -82,6 +82,57 @@ def run_collect(account_key: str, show_excluded: bool) -> int:
     return 0
 
 
+def run_write(account_key: str, mock_llm: bool) -> int:
+    """수집 → Claude 작성 → 검사 결과와 캡션을 보여 주고 out/에 저장한다."""
+    import json
+
+    from newsbot.collect.rss import collect
+    from newsbot.write.caption import build_caption
+    from newsbot.write.llm import WriteError, mock_post, month_key, month_spent, write_post
+
+    account = load_account(account_key)
+    load_dotenv(ROOT / ".env")
+    candidates = collect(account, history_path=ROOT / "state" / "history.json").candidates
+    print(f"후보 {len(candidates)}개 모음\n")
+    costs_path = ROOT / "state" / "costs.json"
+    try:
+        result = mock_post(candidates) if mock_llm else write_post(account, candidates, costs_path)
+    except WriteError as error:
+        print(f"❌ 작성 실패: {error}")
+        return 1
+
+    draft = result.draft
+    caption = build_caption(draft, account)
+    print(f"■ {draft['hook']}\n")
+    for n, item in enumerate(draft["items"], start=1):
+        print(f"{n}. [{item['category']}] {item['headline']}  ({item['source_name']})")
+        for line in item["summary_lines"]:
+            print(f"   · {line}")
+        print(f"   → {item['why_it_matters']}\n")
+    print("— 캡션 —")
+    print(caption)
+    print()
+    for warning in result.warnings:
+        print(f"⚠️ {warning}")
+    if not mock_llm:
+        from datetime import datetime, timezone
+
+        total = month_spent(costs_path, account.account_key, month_key(account, datetime.now(timezone.utc)))
+        print(
+            f"💰 이번 작성: ${result.cost_usd:.5f} (입력 {result.input_tokens} · 출력 {result.output_tokens} 토큰, "
+            f"{result.attempts}회 호출) / 이번 달 누적 ${total:.4f} (예산 ${account.write.monthly_budget_usd:.2f})"
+        )
+
+    out = ROOT / "out"
+    out.mkdir(exist_ok=True)
+    (out / "draft.json").write_text(
+        json.dumps({**draft, "warnings": result.warnings}, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    (out / "caption.txt").write_text(caption, encoding="utf-8")
+    print("\n저장: out/draft.json, out/caption.txt")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="newsbot", description="인스타 카드뉴스 자동화 엔진")
     commands = parser.add_subparsers(dest="command", required=True, metavar="명령")
@@ -90,6 +141,9 @@ def build_parser() -> argparse.ArgumentParser:
     gather = commands.add_parser("collect", help="RSS에서 기사 후보를 모아 표로 출력")
     gather.add_argument("--account", default="today_news")
     gather.add_argument("--show-excluded", action="store_true", help="제외된 기사와 이유도 출력")
+    write = commands.add_parser("write", help="수집 후 Claude가 기사 3개를 골라 카드 문구·캡션 작성")
+    write.add_argument("--account", default="today_news")
+    write.add_argument("--mock-llm", action="store_true", help="Claude를 부르지 않고 샘플 문구 사용(비용 0)")
     for name, (description, milestone) in PLANNED.items():
         commands.add_parser(name, help=f"{description} ({milestone}에서 구현)")
     return parser
@@ -103,6 +157,8 @@ def main(argv: list[str] | None = None) -> int:
         return run_check(args.account)
     if args.command == "collect":
         return run_collect(args.account, args.show_excluded)
+    if args.command == "write":
+        return run_write(args.account, args.mock_llm)
     print(f"'{args.command}' 명령은 {PLANNED[args.command][1]}에서 구현됩니다.")
     return 2
 

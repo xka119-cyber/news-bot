@@ -49,7 +49,7 @@ collect:
 
 write:
   model: claude-haiku-5-5
-  max_output_tokens: 2000
+  max_output_tokens: 4000         # Haiku 5.5는 생각(thinking)도 출력 토큰에 포함되어 설계서의 2000보다 넉넉히
   tone: "친근한 존댓말, 짧고 쉬운 문장"
   monthly_budget_usd: 2.0
 
@@ -62,7 +62,7 @@ design:
 caption:
   hashtags: ["#오늘의뉴스", "#뉴스요약", "#출근길뉴스", "#경제뉴스", "#3분뉴스"]
   ai_disclosure: true
-  schedule_note: "매일 07:30 · 12:00 · 18:00 · 21:30 업데이트"
+  schedule_note: ""               # 수동 승인이라 시간이 달라질 수 있어 비워 둠 (2026-11-04 사용자 결정)
 
 approval:
   required: true

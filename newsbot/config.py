@@ -63,6 +63,9 @@ class Write(_Strict):
     max_output_tokens: int = Field(gt=0)
     tone: str
     monthly_budget_usd: float = Field(gt=0)
+    # 1백만 토큰당 달러. 공식 가격표가 바뀌면 여기만 고친다(Haiku 5.5, 10만 토큰 이하 요청 기준).
+    price_input_per_mtok: float = Field(default=0.10, ge=0)
+    price_output_per_mtok: float = Field(default=0.50, ge=0)
 
 
 class Colors(_Strict):
@@ -89,7 +92,7 @@ class Design(_Strict):
 class Caption(_Strict):
     hashtags: list[str] = Field(max_length=5)
     ai_disclosure: bool
-    schedule_note: str
+    schedule_note: str = ""  # 비우면 캡션에 게시 시간 줄을 넣지 않는다
 
     @field_validator("hashtags")
     @classmethod
