@@ -2,7 +2,7 @@ import pytest
 
 from newsbot import __main__ as cli
 
-ENV_NAMES = ["ANTHROPIC_API_KEY", "IG_ACCESS_TOKEN", "IG_USER_ID", "TELEGRAM_BOT_TOKEN"]
+ENV_NAMES = ["ANTHROPIC_API_KEY", "IG_ACCESS_TOKEN", "IG_USER_ID", "TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID"]
 
 
 @pytest.fixture(autouse=True)

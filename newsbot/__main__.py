@@ -10,7 +10,6 @@ from pydantic import ValidationError
 from newsbot.config import ROOT, AccountConfig, load_account
 
 PLANNED = {
-    "generate": ("수집 → 작성 → 디자인 → 텔레그램 미리보기 전송", "M2~M4"),
     "publish": ("승인된 초안을 인스타에 게시", "M5"),
     "refresh-token": ("인스타 토큰 만료일 확인·갱신", "M6"),
     "prune": ("오래된 미디어 정리", "M6"),
@@ -24,7 +23,96 @@ def required_env_names(account: AccountConfig) -> list[str]:
         account.secrets.ig_access_token,
         account.secrets.ig_user_id,
         "TELEGRAM_BOT_TOKEN",
+        "TELEGRAM_CHAT_ID",
     ]
+
+
+DRAFTS_ROOT = ROOT / "state" / "drafts"
+TELEGRAM_STATE = ROOT / "state" / "telegram.json"
+
+
+def telegram_from_env():
+    from newsbot.approve.telegram import TelegramClient
+
+    chat_id = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
+    if not chat_id.lstrip("-").isdigit():
+        raise SystemExit("❌ .env의 TELEGRAM_CHAT_ID가 비어 있거나 숫자가 아닙니다.")
+    return TelegramClient(os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()), int(chat_id)
+
+
+def run_generate(account_key: str, slot_hhmm: str | None, mock_llm: bool) -> int:
+    """수집 → 작성 → 카드 → 초안 저장 → 텔레그램 미리보기. 같은 시각 초안이 이미 있으면 건너뛴다."""
+    from datetime import datetime, timezone
+
+    from newsbot.approve.telegram import TelegramError, preview_text, send_preview, send_text
+    from newsbot.collect.rss import collect
+    from newsbot.design.cards import render_cards
+    from newsbot.storage import drafts
+    from newsbot.write.caption import build_caption
+    from newsbot.write.llm import WriteError, mock_post, write_post
+
+    account = load_account(account_key)
+    load_dotenv(ROOT / ".env")
+    client, chat_id = telegram_from_env()
+    now = datetime.now(timezone.utc)
+    slot = drafts.slot_at(account, slot_hhmm, now) if slot_hhmm else drafts.upcoming_slot(account, now)
+    if slot is None:
+        print("가까운 게시 시각(30~150분 뒤)이 없어 할 일이 없습니다.")
+        return 0
+    draft_id = drafts.draft_id(account.account_key, slot, account.timezone)
+    if drafts.load(DRAFTS_ROOT, draft_id):
+        print(f"이미 초안이 있습니다: {draft_id}")
+        return 0
+
+    stage = "수집"
+    try:
+        candidates = collect(account, history_path=ROOT / "state" / "history.json").candidates
+        stage = "작성"
+        result = mock_post(candidates) if mock_llm else write_post(account, candidates, ROOT / "state" / "costs.json")
+        caption = build_caption(result.draft, account)
+        stage = "카드 디자인"
+        folder = drafts.draft_dir(DRAFTS_ROOT, draft_id)
+        rendered = render_cards(result.draft, account, folder, slot)
+        warnings = result.warnings + rendered.warnings
+        label = drafts.slot_label(slot, account.timezone)
+        record = {
+            "id": draft_id, "account": account.account_key, "slot": slot.isoformat(), "slot_label": label,
+            "format": "carousel", "draft": result.draft, "caption": caption, "warnings": warnings,
+            "cards": [p.name for p in rendered.paths], "cost_usd": result.cost_usd,
+        }
+        drafts.set_status(DRAFTS_ROOT, record, "generated", now)
+        stage = "텔레그램 전송"
+        record["telegram_message_id"] = send_preview(
+            client, chat_id, rendered.paths, preview_text(result.draft, caption, label, warnings, account.brand_name), draft_id
+        )
+        drafts.save(DRAFTS_ROOT, record)
+    except (WriteError, TelegramError, OSError) as error:
+        print(f"❌ {stage} 단계 실패: {error}")
+        try:
+            send_text(client, chat_id, f"⚠️ {account.brand_name}: {stage} 단계에서 실패했어요.\n이유: {error}")
+        except TelegramError:
+            pass
+        return 1
+    print(f"✅ 미리보기를 보냈습니다: {draft_id} ({label} 게시 예정)")
+    for warning in warnings:
+        print(f"⚠️ {warning}")
+    return 0
+
+
+def run_approvals() -> int:
+    """텔레그램 버튼 응답을 읽어 초안 상태에 기록한다."""
+    from datetime import datetime, timezone
+
+    from newsbot.approve.responses import process_updates
+
+    load_dotenv(ROOT / ".env")
+    client, chat_id = telegram_from_env()
+    decisions = process_updates(client, chat_id, DRAFTS_ROOT, TELEGRAM_STATE, datetime.now(timezone.utc))
+    if not decisions:
+        print("새 버튼 응답이 없습니다.")
+    for d in decisions:
+        print(f"{'✅' if d.status == 'approved' else '⏭' if d.status == 'skipped' else '·'} {d.draft_id}: {d.status} {d.note}")
+    return 0
 
 
 def run_check(account_key: str) -> int:
@@ -165,6 +253,11 @@ def build_parser() -> argparse.ArgumentParser:
     write = commands.add_parser("write", help="수집 후 Claude가 기사 3개를 골라 카드 문구·캡션 작성")
     write.add_argument("--account", default="today_news")
     write.add_argument("--mock-llm", action="store_true", help="Claude를 부르지 않고 샘플 문구 사용(비용 0)")
+    gen = commands.add_parser("generate", help="수집 → 작성 → 카드 → 텔레그램 미리보기 전송")
+    gen.add_argument("--account", default="today_news")
+    gen.add_argument("--slot", default=None, help="게시 시각 HH:MM (비우면 30~150분 뒤 시각을 자동 선택)")
+    gen.add_argument("--mock-llm", action="store_true", help="Claude 대신 샘플 문구(비용 0)")
+    commands.add_parser("approvals", help="텔레그램 버튼 응답을 읽어 초안 상태에 기록")
     cards = commands.add_parser("cards", help="마지막 작성 결과(out/draft.json)로 카드 4장 만들기")
     cards.add_argument("--account", default="today_news")
     cards.add_argument("--template", default=None, help="시안 이름(sticker/clean/bold). 비우면 설정값")
@@ -183,6 +276,10 @@ def main(argv: list[str] | None = None) -> int:
         return run_collect(args.account, args.show_excluded)
     if args.command == "write":
         return run_write(args.account, args.mock_llm)
+    if args.command == "generate":
+        return run_generate(args.account, args.slot, args.mock_llm)
+    if args.command == "approvals":
+        return run_approvals()
     if args.command == "cards":
         return run_cards(args.account, args.template)
     print(f"'{args.command}' 명령은 {PLANNED[args.command][1]}에서 구현됩니다.")
