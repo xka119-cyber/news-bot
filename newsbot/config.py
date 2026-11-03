@@ -43,8 +43,14 @@ class FormatPlan(_Strict):
     week2: dict[str, PostFormat]
 
 
+class Feed(_Strict):
+    source: str = Field(min_length=1)  # 카드·캡션에 적을 언론사명
+    section: str = ""
+    url: str = Field(pattern=r"^https?://")
+
+
 class Collect(_Strict):
-    rss_feeds: list[str] = Field(default_factory=list)
+    rss_feeds: list[Feed] = Field(default_factory=list)
     lookback_hours: int = Field(gt=0)
     include_categories: list[str]
     exclude_categories: list[str]

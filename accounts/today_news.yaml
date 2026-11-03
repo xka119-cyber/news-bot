@@ -21,11 +21,30 @@ format_plan:
 reels_enabled: false
 
 collect:
-  rss_feeds: []
+  # 2026-11-04 동작 확인 (요약 있음, 최근 12시간 기사 꾸준함) — 균형형
+  rss_feeds:
+    - { source: 연합뉴스, section: 경제, url: "https://www.yna.co.kr/rss/economy.xml" }
+    - { source: 연합뉴스, section: 산업, url: "https://www.yna.co.kr/rss/industry.xml" }
+    - { source: 동아일보, section: 경제, url: "https://rss.donga.com/economy.xml" }
+    - { source: 동아일보, section: 과학, url: "https://rss.donga.com/science.xml" }
+    - { source: SBS, section: 경제, url: "https://news.sbs.co.kr/news/SectionRssFeed.do?sectionId=02&plink=RSSREADER" }
+    - { source: SBS, section: 생활, url: "https://news.sbs.co.kr/news/SectionRssFeed.do?sectionId=08&plink=RSSREADER" }
+    - { source: 매일경제, section: 부동산, url: "https://www.mk.co.kr/rss/50300009/" }
+    - { source: 전자신문, section: 속보, url: "https://rss.etnews.com/Section901.xml" }
+    - { source: ZDNet Korea, section: IT, url: "https://feeds.feedburner.com/zdkorea" }
   lookback_hours: 12
   include_categories: [경제, 생활, IT, 트렌드, 날씨·교통]
   exclude_categories: [정치, 선거, 사건사고, 범죄, 연예가십]
-  exclude_keywords: []
+  # 1차 필터(제목·요약에 들어 있으면 제외). 최종 판단은 M2에서 Claude가 한 번 더 한다.
+  exclude_keywords:
+    # 정치·선거
+    [대통령, 대통령실, 국회, 여당, 야당, 민주당, 국민의힘, 정당, 국회의원, 의원들, 선거, 대선, 총선,
+     지방선거, 탄핵, 국정감사, 국감, 청문회, 정치권, 여야, 북한, 김정은, 尹, 李,
+    # 사건사고·범죄
+     사망, 숨져, 숨진, 살인, 폭행, 성범죄, 성폭행, 마약, 참사, 화재, 추락, 실종, 피해자, 구속, 체포,
+     기소, 검찰, 경찰 조사, 압수수색, 징역, 재판,
+    # 연예 가십
+     열애, 결별, 이혼, 불륜, 스캔들]
   items_per_post: 3
 
 write:
