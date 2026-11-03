@@ -133,6 +133,27 @@ def run_write(account_key: str, mock_llm: bool) -> int:
     return 0
 
 
+def run_cards(account_key: str, template: str | None) -> int:
+    """out/draft.json(마지막 작성 결과)으로 카드 4장을 out/cards/에 만든다."""
+    import json
+    from datetime import datetime, timezone
+
+    from newsbot.design.cards import render_cards
+
+    account = load_account(account_key)
+    draft_path = ROOT / "out" / "draft.json"
+    if not draft_path.exists():
+        print("❌ out/draft.json이 없습니다. 먼저 write 명령을 실행하세요.")
+        return 1
+    draft = json.loads(draft_path.read_text(encoding="utf-8"))
+    result = render_cards(draft, account, ROOT / "out" / "cards", datetime.now(timezone.utc), template=template)
+    for path in result.paths:
+        print(f"✅ {path.relative_to(ROOT)}")
+    for warning in result.warnings:
+        print(f"⚠️ {warning}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="newsbot", description="인스타 카드뉴스 자동화 엔진")
     commands = parser.add_subparsers(dest="command", required=True, metavar="명령")
@@ -144,6 +165,9 @@ def build_parser() -> argparse.ArgumentParser:
     write = commands.add_parser("write", help="수집 후 Claude가 기사 3개를 골라 카드 문구·캡션 작성")
     write.add_argument("--account", default="today_news")
     write.add_argument("--mock-llm", action="store_true", help="Claude를 부르지 않고 샘플 문구 사용(비용 0)")
+    cards = commands.add_parser("cards", help="마지막 작성 결과(out/draft.json)로 카드 4장 만들기")
+    cards.add_argument("--account", default="today_news")
+    cards.add_argument("--template", default=None, help="시안 이름(sticker/clean/bold). 비우면 설정값")
     for name, (description, milestone) in PLANNED.items():
         commands.add_parser(name, help=f"{description} ({milestone}에서 구현)")
     return parser
@@ -159,6 +183,8 @@ def main(argv: list[str] | None = None) -> int:
         return run_collect(args.account, args.show_excluded)
     if args.command == "write":
         return run_write(args.account, args.mock_llm)
+    if args.command == "cards":
+        return run_cards(args.account, args.template)
     print(f"'{args.command}' 명령은 {PLANNED[args.command][1]}에서 구현됩니다.")
     return 2
 

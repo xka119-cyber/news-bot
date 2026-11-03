@@ -58,6 +58,7 @@ design:
   reel_size: [1080, 1920]
   colors: { bg: "#FFFFFF", primary: "#1F2A44", accent: "#FFC83D", text: "#111111" }
   font: Pretendard
+  template: sticker               # 2026-11-04 사용자 선택 (시안 B, 소개 게시물과 같은 손글씨·메모지 느낌)
 
 caption:
   hashtags: ["#오늘의뉴스", "#뉴스요약", "#출근길뉴스", "#경제뉴스", "#3분뉴스"]
