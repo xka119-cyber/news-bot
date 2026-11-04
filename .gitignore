@@ -12,3 +12,4 @@ __pycache__/
 # 생성물 (공개 게시용은 media 브랜치에 따로 저장)
 out/
 state/
+.media/

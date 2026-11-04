@@ -108,6 +108,13 @@ class Approval(_Strict):
     on_timeout: Literal["skip", "publish"]
 
 
+class Publish(_Strict):
+    # 시스템 사용자 토큰은 graph.facebook.com에서만 된다(설계서의 graph.instagram.com과 다름, 2026-11-04 확인).
+    graph_host: str = "https://graph.facebook.com"
+    api_version: str = Field(default="v26.0", pattern=r"^v\d+\.\d+$")
+    media_repo: str = "xka119-cyber/news-bot"  # 카드 이미지를 올릴 공개 저장소(media 브랜치)
+
+
 class AccountConfig(_Strict):
     account_key: str = Field(pattern=r"^[a-z][a-z0-9_]*$")
     enabled: bool
@@ -123,6 +130,7 @@ class AccountConfig(_Strict):
     design: Design
     caption: Caption
     approval: Approval
+    publish: Publish = Field(default_factory=Publish)
 
     @field_validator("timezone")
     @classmethod

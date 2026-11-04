@@ -10,7 +10,6 @@ from pydantic import ValidationError
 from newsbot.config import ROOT, AccountConfig, load_account
 
 PLANNED = {
-    "publish": ("승인된 초안을 인스타에 게시", "M5"),
     "refresh-token": ("인스타 토큰 만료일 확인·갱신", "M6"),
     "prune": ("오래된 미디어 정리", "M6"),
     "report": ("게시물 성과 수집·주간 요약", "M8"),
@@ -113,6 +112,39 @@ def run_approvals() -> int:
     for d in decisions:
         print(f"{'✅' if d.status == 'approved' else '⏭' if d.status == 'skipped' else '·'} {d.draft_id}: {d.status} {d.note}")
     return 0
+
+
+def run_publish(account_key: str, only_id: str | None) -> int:
+    """버튼 응답 읽기 → 시간 지난 미승인 초안 정리 → 승인된 초안 게시 → 텔레그램 보고."""
+    from datetime import datetime, timezone
+
+    from newsbot.approve.responses import process_updates
+    from newsbot.publish import flow
+    from newsbot.publish.instagram import InstagramClient, InstagramError
+    from newsbot.storage.media_branch import upload
+
+    account = load_account(account_key)
+    load_dotenv(ROOT / ".env")
+    tg, chat_id = telegram_from_env()
+    now = datetime.now(timezone.utc)
+    for d in process_updates(tg, chat_id, DRAFTS_ROOT, TELEGRAM_STATE, now):
+        print(f"버튼 응답: {d.draft_id} → {d.status} {d.note}")
+    try:
+        ig = InstagramClient(
+            os.environ.get(account.secrets.ig_access_token, "").strip(),
+            os.environ.get(account.secrets.ig_user_id, "").strip(),
+            account.publish.graph_host, account.publish.api_version,
+        )
+    except InstagramError as error:
+        print(f"❌ {error}")
+        return 1
+    outcomes = flow.run(account, DRAFTS_ROOT, ig, tg, chat_id, upload, ROOT / "state" / "history.json", now, only_id)
+    if not outcomes:
+        print("게시할 승인 초안이 없습니다.")
+    icons = {"published": "📸", "failed": "❌", "expired": "⌛"}
+    for o in outcomes:
+        print(f"{icons.get(o.status, '·')} {o.draft_id}: {o.status} {o.note}")
+    return 1 if any(o.status == "failed" for o in outcomes) else 0
 
 
 def run_check(account_key: str) -> int:
@@ -260,6 +292,9 @@ def build_parser() -> argparse.ArgumentParser:
     gen.add_argument("--slot", default=None, help="게시 시각 HH:MM (비우면 30~150분 뒤 시각을 자동 선택)")
     gen.add_argument("--mock-llm", action="store_true", help="Claude 대신 샘플 문구(비용 0)")
     commands.add_parser("approvals", help="텔레그램 버튼 응답을 읽어 초안 상태에 기록")
+    pub = commands.add_parser("publish", help="승인된 초안을 인스타에 게시하고 링크를 텔레그램으로 보고")
+    pub.add_argument("--account", default="today_news")
+    pub.add_argument("--draft", default=None, help="이 초안만 시각과 상관없이 게시 (예: today_news/20261104-2130)")
     cards = commands.add_parser("cards", help="마지막 작성 결과(out/draft.json)로 카드 4장 만들기")
     cards.add_argument("--account", default="today_news")
     cards.add_argument("--template", default=None, help="시안 이름(sticker/clean/bold). 비우면 설정값")
@@ -282,6 +317,8 @@ def main(argv: list[str] | None = None) -> int:
         return run_generate(args.account, args.slot, args.mock_llm)
     if args.command == "approvals":
         return run_approvals()
+    if args.command == "publish":
+        return run_publish(args.account, args.draft)
     if args.command == "cards":
         return run_cards(args.account, args.template)
     print(f"'{args.command}' 명령은 {PLANNED[args.command][1]}에서 구현됩니다.")

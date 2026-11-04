@@ -64,6 +64,17 @@ def load(root: Path, draft_id_: str) -> dict | None:
         return None
 
 
+def all_records(root: Path, account_key: str) -> list[dict]:
+    """한 계정의 초안 기록 전부(게시 시각 순)."""
+    records = []
+    for path in sorted((root / account_key).glob("*/*/draft.json")):
+        try:
+            records.append(json.loads(path.read_text(encoding="utf-8")))
+        except ValueError:
+            continue
+    return sorted(records, key=lambda r: r.get("slot", ""))
+
+
 def set_status(root: Path, record: dict, status: str, now: datetime, note: str = "") -> dict:
     record["status"] = status
     record.setdefault("history", []).append({"status": status, "at": now.isoformat(), "note": note})
