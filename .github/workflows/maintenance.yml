@@ -1,0 +1,41 @@
+# 주 1회: 인스타 연결 점검 + 오래된 초안 정리 (설계서 4.7·4.8)
+name: maintenance
+
+on:
+  schedule:
+    - cron: "10 19 * * 0"   # 한국 월요일 04:10
+  workflow_dispatch:
+
+permissions:
+  contents: write   # media 브랜치 정리
+
+concurrency:
+  group: newsbot-media
+  cancel-in-progress: false
+
+jobs:
+  maintenance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: 패키지 설치
+        run: pip install -r requirements.txt
+      - name: git 사용자 설정
+        run: |
+          git config --global user.name "newsbot"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: 인스타 연결 점검 (문제 있으면 텔레그램 알림)
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m newsbot token-check
+      - name: 7일 지난 초안 정리
+        if: always()
+        run: python -m newsbot prune --keep-days 7

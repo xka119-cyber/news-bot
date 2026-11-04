@@ -1,0 +1,58 @@
+# 각 게시 시각: 텔레그램 버튼 응답 읽기 → 승인된 초안만 인스타 게시 → 결과 보고 (설계서 4.7)
+name: publish
+
+on:
+  schedule:
+    - cron: "30 22 * * *"   # 한국 07:30
+    - cron: "2 3 * * *"     # 한국 12:02
+    - cron: "2 9 * * *"     # 한국 18:02
+    - cron: "30 12 * * *"   # 한국 21:30
+  workflow_dispatch:
+    inputs:
+      account:
+        description: "계정 (accounts/ 파일 이름)"
+        default: today_news
+      draft:
+        description: "이 초안만 시각과 상관없이 게시 (예: today_news/20261105-0730-1). 비우면 평소대로"
+        required: false
+
+permissions:
+  contents: write   # 승인된 카드 이미지·상태 파일을 media 브랜치에 올림
+
+concurrency:
+  group: newsbot-media
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: 패키지 설치
+        run: pip install -r requirements.txt
+      - name: 카드용 브라우저·이모지 폰트 설치 (승인된 카드를 다시 그릴 때 필요)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-color-emoji
+          python -m playwright install --with-deps --only-shell chromium
+      - name: git 사용자 설정
+        run: |
+          git config --global user.name "newsbot"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: 게시
+        env:
+          ACCOUNT: ${{ inputs.account || 'today_news' }}
+          DRAFT: ${{ inputs.draft }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          args=(publish --account "$ACCOUNT")
+          if [ -n "$DRAFT" ]; then args+=(--draft "$DRAFT"); fi
+          python -m newsbot "${args[@]}"

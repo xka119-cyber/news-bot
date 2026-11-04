@@ -1,0 +1,64 @@
+# 각 게시 시각 약 1시간 전: 수집 → Claude 작성 → 카드 → 텔레그램 미리보기 (설계서 4.7)
+name: generate
+
+on:
+  schedule:
+    # GitHub cron은 UTC(한국시간 −9시간). 정각은 붐벼서 몇 분 비켜 둠.
+    - cron: "25 21 * * *"   # 한국 06:25 → 07:30 게시분
+    - cron: "55 1 * * *"    # 한국 10:55 → 12:00 게시분
+    - cron: "55 7 * * *"    # 한국 16:55 → 18:00 게시분
+    - cron: "25 11 * * *"   # 한국 20:25 → 21:30 게시분
+  workflow_dispatch:
+    inputs:
+      account:
+        description: "계정 (accounts/ 파일 이름)"
+        default: today_news
+      slot:
+        description: "게시 시각 HH:MM (비우면 30~150분 뒤 시각 자동 선택)"
+        required: false
+      mock_llm:
+        description: "Claude 대신 샘플 문구 사용 (비용 0, 시험용)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write   # media 브랜치에 상태 파일 저장
+
+concurrency:
+  group: newsbot-media   # 모든 워크플로가 같은 그룹: media 브랜치를 동시에 고치지 않게
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: 패키지 설치
+        run: pip install -r requirements.txt
+      - name: 카드용 브라우저·이모지 폰트 설치
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-color-emoji
+          python -m playwright install --with-deps --only-shell chromium
+      - name: git 사용자 설정
+        run: |
+          git config --global user.name "newsbot"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: 미리보기 만들기
+        env:
+          ACCOUNT: ${{ inputs.account || 'today_news' }}
+          SLOT: ${{ inputs.slot }}
+          MOCK_LLM: ${{ inputs.mock_llm }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          args=(generate --account "$ACCOUNT")
+          if [ -n "$SLOT" ]; then args+=(--slot "$SLOT"); fi
+          if [ "$MOCK_LLM" = "true" ]; then args+=(--mock-llm); fi
+          python -m newsbot "${args[@]}"

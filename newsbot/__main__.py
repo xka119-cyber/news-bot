@@ -10,8 +10,6 @@ from pydantic import ValidationError
 from newsbot.config import ROOT, AccountConfig, load_account
 
 PLANNED = {
-    "refresh-token": ("인스타 토큰 만료일 확인·갱신", "M6"),
-    "prune": ("오래된 미디어 정리", "M6"),
     "report": ("게시물 성과 수집·주간 요약", "M8"),
 }
 
@@ -26,8 +24,30 @@ def required_env_names(account: AccountConfig) -> list[str]:
     ]
 
 
-DRAFTS_ROOT = ROOT / "state" / "drafts"
-TELEGRAM_STATE = ROOT / "state" / "telegram.json"
+# 초안·상태 파일은 media 브랜치(.media/)에 둔다. Actions처럼 매번 새로 시작해도 이어진다(설계서 4.6).
+DATA_DIR = ROOT / ".media"
+DRAFTS_ROOT = DATA_DIR / "drafts"
+STATE_DIR = DATA_DIR / "state"
+TELEGRAM_STATE = STATE_DIR / "telegram.json"
+HISTORY = STATE_DIR / "history.json"
+COSTS = STATE_DIR / "costs.json"
+
+
+def sync_data() -> None:
+    """media 브랜치를 최신으로 받는다(없으면 만든다)."""
+    from newsbot.storage.media_branch import ensure_worktree
+
+    ensure_worktree(DATA_DIR)
+
+
+def save_data(message: str) -> None:
+    """바뀐 초안·상태 파일을 media 브랜치에 올린다. 실패해도 이번 작업 결과는 로컬에 남는다."""
+    from newsbot.storage.media_branch import MediaError, save
+
+    try:
+        save(message, DATA_DIR)
+    except MediaError as error:
+        print(f"⚠️ 상태 저장(media 브랜치) 실패: {error}")
 
 
 def telegram_from_env():
@@ -73,7 +93,7 @@ def run_generate(account_key: str, slot_hhmm: str | None, mock_llm: bool) -> int
     stage = "수집"
     sent = 0
     try:
-        candidates = collect(account, history_path=ROOT / "state" / "history.json").candidates
+        candidates = collect(account, history_path=HISTORY).candidates
         for number, draft_id in enumerate(ids, start=1):
             if drafts.load(DRAFTS_ROOT, draft_id):
                 continue
@@ -82,7 +102,7 @@ def run_generate(account_key: str, slot_hhmm: str | None, mock_llm: bool) -> int
             if mock_llm:
                 result = mock_post(pool)
             else:
-                result = write_post(account, pool, ROOT / "state" / "costs.json", avoid=avoid)
+                result = write_post(account, pool, COSTS, avoid=avoid)
             chosen_links.add(result.draft["source_url"])
             avoid.append(result.draft["source_title"])
             caption = build_caption(result.draft, account)
@@ -158,13 +178,57 @@ def run_publish(account_key: str, only_id: str | None) -> int:
     except InstagramError as error:
         print(f"❌ {error}")
         return 1
-    outcomes = flow.run(account, DRAFTS_ROOT, ig, tg, chat_id, upload, ROOT / "state" / "history.json", now, only_id)
+    outcomes = flow.run(account, DRAFTS_ROOT, ig, tg, chat_id, upload, HISTORY, now, only_id)
     if not outcomes:
         print("게시할 승인 초안이 없습니다.")
     icons = {"published": "📸", "failed": "❌", "expired": "⌛"}
     for o in outcomes:
         print(f"{icons.get(o.status, '·')} {o.draft_id}: {o.status} {o.note}")
     return 1 if any(o.status == "failed" for o in outcomes) else 0
+
+
+def run_token_check(account_key: str) -> int:
+    """인스타 토큰이 살아 있는지 확인하고, 문제가 있으면 텔레그램으로 알린다.
+    시스템 사용자 토큰은 만료되지 않아 설계서의 60일 갱신 대신 점검만 한다(2026-11-04 결정)."""
+    from newsbot.approve.telegram import TelegramError, send_text
+    from newsbot.publish.instagram import InstagramClient, InstagramError
+
+    account = load_account(account_key)
+    load_dotenv(ROOT / ".env")
+    tg, chat_id = telegram_from_env()
+    try:
+        ig = InstagramClient(
+            os.environ.get(account.secrets.ig_access_token, "").strip(),
+            os.environ.get(account.secrets.ig_user_id, "").strip(),
+            account.publish.graph_host, account.publish.api_version,
+        )
+        name = ig.request("GET", ig.user_id, fields="username").get("username", "?")
+        left = ig.quota_left()
+    except InstagramError as error:
+        print(f"❌ 인스타 토큰 점검 실패: {error}")
+        try:
+            send_text(tg, chat_id, f"⚠️ {account.brand_name}: 인스타 연결 점검에 실패했어요.\n이유: {error}\n"
+                                   "설명서(RUNBOOK)의 '문제 해결'을 확인해 주세요.")
+        except TelegramError:
+            pass
+        return 1
+    print(f"✅ 인스타 연결 정상: {name} (오늘 남은 게시 한도 {left}회)")
+    return 0
+
+
+def run_prune(keep_days: int) -> int:
+    """오래된 초안 폴더를 지우고 media 브랜치 기록을 새로 만든다(상태 파일은 유지)."""
+    from datetime import datetime, timezone
+
+    from newsbot.storage.media_branch import MediaError, prune
+
+    try:
+        removed = prune(datetime.now(timezone.utc), keep_days, DATA_DIR)
+    except MediaError as error:
+        print(f"❌ 정리 실패: {error}")
+        return 1
+    print(f"✅ 정리 완료: {len(removed)}일치 삭제 {removed}")
+    return 0
 
 
 def run_check(account_key: str) -> int:
@@ -198,7 +262,7 @@ def run_collect(account_key: str, show_excluded: bool) -> int:
     from newsbot.collect.rss import MIN_CANDIDATES, collect
 
     account = load_account(account_key)
-    result = collect(account, history_path=ROOT / "state" / "history.json")
+    result = collect(account, history_path=HISTORY)
     tz = ZoneInfo(account.timezone)
 
     print(f"기사 {result.fetched}개 받음 → 최근 {account.collect.lookback_hours}시간 {result.recent}개")
@@ -232,9 +296,9 @@ def run_write(account_key: str, mock_llm: bool) -> int:
 
     account = load_account(account_key)
     load_dotenv(ROOT / ".env")
-    candidates = collect(account, history_path=ROOT / "state" / "history.json").candidates
+    candidates = collect(account, history_path=HISTORY).candidates
     print(f"후보 {len(candidates)}개 모음\n")
-    costs_path = ROOT / "state" / "costs.json"
+    costs_path = COSTS
     try:
         result = mock_post(candidates) if mock_llm else write_post(account, candidates, costs_path)
     except WriteError as error:
@@ -315,6 +379,10 @@ def build_parser() -> argparse.ArgumentParser:
     pub = commands.add_parser("publish", help="승인된 초안을 인스타에 게시하고 링크를 텔레그램으로 보고")
     pub.add_argument("--account", default="today_news")
     pub.add_argument("--draft", default=None, help="이 초안만 시각과 상관없이 게시 (예: today_news/20261104-2130)")
+    token = commands.add_parser("token-check", help="인스타 토큰·연결 점검 (문제 있으면 텔레그램 알림)")
+    token.add_argument("--account", default="today_news")
+    prune = commands.add_parser("prune", help="오래된 초안 정리, media 브랜치 용량 줄이기")
+    prune.add_argument("--keep-days", type=int, default=7)
     cards = commands.add_parser("cards", help="마지막 작성 결과(out/draft.json)로 카드 4장 만들기")
     cards.add_argument("--account", default="today_news")
     cards.add_argument("--template", default=None, help="시안 이름(sticker/clean/bold). 비우면 설정값")
@@ -329,16 +397,27 @@ def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     if args.command == "check":
         return run_check(args.account)
+    if args.command == "token-check":
+        return run_token_check(args.account)
+    if args.command in ("collect", "write", "generate", "approvals", "publish", "prune"):
+        sync_data()  # 사용한 기사·비용·승인 상태를 media 브랜치에서 최신으로
     if args.command == "collect":
         return run_collect(args.account, args.show_excluded)
     if args.command == "write":
-        return run_write(args.account, args.mock_llm)
-    if args.command == "generate":
-        return run_generate(args.account, args.slot, args.mock_llm)
-    if args.command == "approvals":
-        return run_approvals()
-    if args.command == "publish":
-        return run_publish(args.account, args.draft)
+        code = run_write(args.account, args.mock_llm)
+        save_data("state: 작성 비용 기록")
+        return code
+    if args.command in ("generate", "approvals", "publish"):
+        try:
+            if args.command == "generate":
+                return run_generate(args.account, args.slot, args.mock_llm)
+            if args.command == "approvals":
+                return run_approvals()
+            return run_publish(args.account, args.draft)
+        finally:
+            save_data(f"state: {args.command}")
+    if args.command == "prune":
+        return run_prune(args.keep_days)
     if args.command == "cards":
         return run_cards(args.account, args.template)
     print(f"'{args.command}' 명령은 {PLANNED[args.command][1]}에서 구현됩니다.")

@@ -48,6 +48,11 @@ def publish_one(record: dict, account: AccountConfig, root: Path, ig: InstagramC
         if not record.get("media_urls"):
             folder = drafts.draft_dir(root, draft_id)
             files = [folder / name for name in record["cards"]]
+            if not all(f.exists() for f in files):
+                # 카드 이미지는 승인 전에는 저장소에 올리지 않으므로, 새로 시작한 실행(Actions)에서는 다시 그린다
+                from newsbot.design.cards import render_cards
+
+                files = render_cards(record["draft"], account, folder, datetime.fromisoformat(record["slot"])).paths
             record["media_urls"] = upload(files, media_dest(draft_id), account.publish.media_repo, f"media: {draft_id}")
             drafts.save(root, record)
         progress = record.setdefault("publish", {})
