@@ -123,6 +123,7 @@ class AccountConfig(_Strict):
     secrets: Secrets
     slots: list[str] = Field(min_length=1)
     generate_lead_minutes: int = Field(gt=0)
+    posts_per_slot: int = Field(default=1, ge=1, le=5)  # 게시 시각마다 만들 게시물 수(하나씩 따로 승인)
     format_plan: FormatPlan
     reels_enabled: bool
     collect: Collect

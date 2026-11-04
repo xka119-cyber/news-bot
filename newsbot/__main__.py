@@ -40,10 +40,11 @@ def telegram_from_env():
 
 
 def run_generate(account_key: str, slot_hhmm: str | None, mock_llm: bool) -> int:
-    """수집 → 작성 → 카드 → 초안 저장 → 텔레그램 미리보기. 같은 시각 초안이 이미 있으면 건너뛴다."""
+    """수집 → (게시물 수만큼) 작성 → 카드 → 초안 저장 → 텔레그램 미리보기.
+    게시물마다 미리보기·버튼이 따로 가서 하나씩 승인한다. 이미 만든 번호는 건너뛴다."""
     from datetime import datetime, timezone
 
-    from newsbot.approve.telegram import TelegramError, preview_text, send_preview, send_text
+    from newsbot.approve.telegram import TelegramError, preview_text, send_approve_all, send_preview, send_text
     from newsbot.collect.rss import collect
     from newsbot.design.cards import render_cards
     from newsbot.storage import drafts
@@ -58,33 +59,54 @@ def run_generate(account_key: str, slot_hhmm: str | None, mock_llm: bool) -> int
     if slot is None:
         print("가까운 게시 시각(30~150분 뒤)이 없어 할 일이 없습니다.")
         return 0
-    draft_id = drafts.draft_id(account.account_key, slot, account.timezone)
-    if drafts.load(DRAFTS_ROOT, draft_id):
-        print(f"이미 초안이 있습니다: {draft_id}")
+    total = account.posts_per_slot
+    ids = [drafts.draft_id(account.account_key, slot, account.timezone, n) for n in range(1, total + 1)]
+    existing = [r for r in (drafts.load(DRAFTS_ROOT, i) for i in ids) if r]
+    if len(existing) == total:
+        print(f"이미 초안 {total}개가 있습니다: {ids[0]} 외")
         return 0
+    label = drafts.slot_label(slot, account.timezone)
+    slot_id = drafts.draft_id(account.account_key, slot, account.timezone)
+    chosen_links = {r["draft"]["source_url"] for r in existing}
+    avoid = [r["draft"]["source_title"] for r in existing]
 
     stage = "수집"
+    sent = 0
     try:
         candidates = collect(account, history_path=ROOT / "state" / "history.json").candidates
-        stage = "작성"
-        result = mock_post(candidates) if mock_llm else write_post(account, candidates, ROOT / "state" / "costs.json")
-        caption = build_caption(result.draft, account)
-        stage = "카드 디자인"
-        folder = drafts.draft_dir(DRAFTS_ROOT, draft_id)
-        rendered = render_cards(result.draft, account, folder, slot)
-        warnings = result.warnings + rendered.warnings
-        label = drafts.slot_label(slot, account.timezone)
-        record = {
-            "id": draft_id, "account": account.account_key, "slot": slot.isoformat(), "slot_label": label,
-            "format": "carousel", "draft": result.draft, "caption": caption, "warnings": warnings,
-            "cards": [p.name for p in rendered.paths], "cost_usd": result.cost_usd,
-        }
-        drafts.set_status(DRAFTS_ROOT, record, "generated", now)
-        stage = "텔레그램 전송"
-        record["telegram_message_id"] = send_preview(
-            client, chat_id, rendered.paths, preview_text(result.draft, caption, label, warnings, account.brand_name), draft_id
-        )
-        drafts.save(DRAFTS_ROOT, record)
+        for number, draft_id in enumerate(ids, start=1):
+            if drafts.load(DRAFTS_ROOT, draft_id):
+                continue
+            stage = f"{number}번째 작성"
+            pool = [c for c in candidates if c.link not in chosen_links]
+            if mock_llm:
+                result = mock_post(pool)
+            else:
+                result = write_post(account, pool, ROOT / "state" / "costs.json", avoid=avoid)
+            chosen_links.add(result.draft["source_url"])
+            avoid.append(result.draft["source_title"])
+            caption = build_caption(result.draft, account)
+            stage = f"{number}번째 카드 디자인"
+            rendered = render_cards(result.draft, account, drafts.draft_dir(DRAFTS_ROOT, draft_id), slot)
+            warnings = result.warnings + rendered.warnings
+            record = {
+                "id": draft_id, "account": account.account_key, "slot": slot.isoformat(), "slot_label": label,
+                "number": number, "format": "carousel", "draft": result.draft, "caption": caption,
+                "warnings": warnings, "cards": [p.name for p in rendered.paths], "cost_usd": result.cost_usd,
+            }
+            drafts.set_status(DRAFTS_ROOT, record, "generated", now)
+            stage = f"{number}번째 텔레그램 전송"
+            text = preview_text(result.draft, caption, label, warnings, account.brand_name, order=f"{number}/{total}")
+            record["telegram_message_id"] = send_preview(client, chat_id, rendered.paths, text, draft_id)
+            drafts.save(DRAFTS_ROOT, record)
+            sent += 1
+            print(f"✅ 미리보기 {number}/{total}: {draft_id} 「{result.draft['cover_title']}」 (${result.cost_usd:.4f})")
+            for warning in warnings:
+                print(f"   ⚠️ {warning}")
+        waiting = [r for r in drafts.slot_records(DRAFTS_ROOT, slot_id) if r.get("status") == "generated"]
+        if sent and len(waiting) > 1:
+            stage = "모두 승인 버튼 전송"
+            send_approve_all(client, chat_id, slot_id, len(waiting), label)
     except (WriteError, TelegramError, OSError) as error:
         print(f"❌ {stage} 단계 실패: {error}")
         try:
@@ -92,9 +114,7 @@ def run_generate(account_key: str, slot_hhmm: str | None, mock_llm: bool) -> int
         except TelegramError:
             pass
         return 1
-    print(f"✅ 미리보기를 보냈습니다: {draft_id} ({label} 게시 예정)")
-    for warning in warnings:
-        print(f"⚠️ {warning}")
+    print(f"미리보기 {sent}개를 보냈습니다 ({label} 게시 예정, 하나씩 따로 승인).")
     return 0
 
 
@@ -284,7 +304,7 @@ def build_parser() -> argparse.ArgumentParser:
     gather = commands.add_parser("collect", help="RSS에서 기사 후보를 모아 표로 출력")
     gather.add_argument("--account", default="today_news")
     gather.add_argument("--show-excluded", action="store_true", help="제외된 기사와 이유도 출력")
-    write = commands.add_parser("write", help="수집 후 Claude가 기사 3개를 골라 카드 문구·캡션 작성")
+    write = commands.add_parser("write", help="수집 후 Claude가 기사 1개를 골라 카드 문구·캡션 작성")
     write.add_argument("--account", default="today_news")
     write.add_argument("--mock-llm", action="store_true", help="Claude를 부르지 않고 샘플 문구 사용(비용 0)")
     gen = commands.add_parser("generate", help="수집 → 작성 → 카드 → 텔레그램 미리보기 전송")

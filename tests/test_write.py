@@ -70,6 +70,12 @@ def test_prompt_contains_candidates_and_rules(account):
     assert "{" not in prompt  # 빈칸이 다 채워졌는지
 
 
+def test_prompt_avoids_already_chosen(account):
+    assert "이미 고른 소식" not in build_prompt(account, CANDIDATES)
+    prompt = build_prompt(account, CANDIDATES, avoid=["반도체 수출 10월 역대 최대"])
+    assert "이미 고른 소식" in prompt and "- 반도체 수출 10월 역대 최대" in prompt
+
+
 def test_write_success_records_cost(account, tmp_path):
     client = FakeClient([GOOD])
     costs = tmp_path / "costs.json"

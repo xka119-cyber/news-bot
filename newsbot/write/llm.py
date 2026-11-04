@@ -98,16 +98,24 @@ def format_candidates(candidates: list[Article]) -> str:
     return "\n".join(lines)
 
 
-def build_prompt(account: AccountConfig, candidates: list[Article]) -> str:
+def build_prompt(account: AccountConfig, candidates: list[Article], avoid: list[str] = ()) -> str:
+    """avoid: 같은 시각에 이미 고른 소식(제목). 같은 주제를 또 고르지 않게 프롬프트 끝에 붙인다."""
     template = (PROMPTS_DIR / f"{account.account_key}.md").read_text(encoding="utf-8")
     c = account.collect
-    return template.format(
+    prompt = template.format(
         brand_name=account.brand_name,
         include_categories=", ".join(c.include_categories),
         exclude_categories=", ".join(c.exclude_categories),
         tone=account.write.tone,
         candidates=format_candidates(candidates),
     )
+    if avoid:
+        prompt += (
+            "\n## 이미 고른 소식 (같은 시각에 함께 올라감)\n"
+            + "\n".join(f"- {title}" for title in avoid)
+            + "\n위 소식과 같은 사건·주제는 고르지 말고, 가능하면 다른 분야의 소식을 고르세요.\n"
+        )
+    return prompt
 
 
 # ---------- 검증 ----------
@@ -181,6 +189,7 @@ def write_post(
     costs_path: Path,
     client=None,
     now: datetime | None = None,
+    avoid: list[str] = (),
 ) -> WriteResult:
     now = now or datetime.now(timezone.utc)
     if not candidates:
@@ -197,7 +206,7 @@ def write_post(
         client = anthropic.Anthropic()
 
     result = WriteResult(draft={})
-    messages = [{"role": "user", "content": build_prompt(account, candidates)}]
+    messages = [{"role": "user", "content": build_prompt(account, candidates, avoid)}]
     draft: LLMDraft | None = None
     checks: dict[str, list[str]] = {"retry": [], "warn": []}
 

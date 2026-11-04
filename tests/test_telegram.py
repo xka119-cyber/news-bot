@@ -73,6 +73,8 @@ def test_preview_text_escapes_and_lists():
     text = preview_text(draft, "캡션 & 내용", "11월 4일(수) 07:30", ["원문에 없는 숫자: 7"], "오늘의 3분 뉴스")
     assert "&lt;금리&gt;" in text and "캡션 &amp; 내용" in text
     assert "⚠️ 확인할 점" in text and "07:30" in text
+    numbered = preview_text(draft, "캡션", "11월 4일(수) 07:30", [], "오늘의 3분 뉴스", order="2/2")
+    assert "미리보기 (2/2)" in numbered
 
 
 def test_approve_records_status_and_offset(tmp_path):
@@ -106,6 +108,34 @@ def test_already_decided_is_not_changed(tmp_path):
     decisions = process_updates(FakeClient([callback(1, f"a|{did}")]), CHAT, tmp_path, tmp_path / "tg.json", NOW)
     assert decisions[0].status == "ignored"
     assert drafts.load(tmp_path, did)["status"] == "skipped"
+
+
+def make_numbered(root, number, status="generated"):
+    account = load_account("today_news")
+    slot = drafts.slot_at(account, "07:30", NOW)
+    did = drafts.draft_id("today_news", slot, account.timezone, number)
+    record = {"id": did, "slot": slot.isoformat(), "slot_label": drafts.slot_label(slot, account.timezone),
+              "status": status, "telegram_message_id": 100 + number}
+    drafts.save(root, record)
+    return did
+
+
+def test_approve_all_approves_only_waiting(tmp_path):
+    first, second, third = make_numbered(tmp_path, 1), make_numbered(tmp_path, 2, "skipped"), make_numbered(tmp_path, 3)
+    client = FakeClient([callback(1, "A|today_news/20261104-0730")])
+    decisions = process_updates(client, CHAT, tmp_path, tmp_path / "tg.json", NOW)
+    assert [(d.draft_id, d.status) for d in decisions] == [(first, "approved"), (third, "approved")]
+    assert drafts.load(tmp_path, second)["status"] == "skipped"
+    cleared = [p["message_id"] for m, p in client.calls if m == "editMessageReplyMarkup"]
+    assert cleared == [101, 103, 50]  # 각 미리보기 버튼 + 모두 승인 버튼
+    answer = next(p for m, p in client.calls if m == "answerCallbackQuery")
+    assert "2개 모두 승인됨" in answer["text"]
+
+
+def test_approve_all_when_nothing_waiting(tmp_path):
+    make_numbered(tmp_path, 1, "approved")
+    decisions = process_updates(FakeClient([callback(1, "A|today_news/20261104-0730")]), CHAT, tmp_path, tmp_path / "tg.json", NOW)
+    assert decisions[0].status == "ignored"
 
 
 def test_client_errors_never_contain_token(monkeypatch):

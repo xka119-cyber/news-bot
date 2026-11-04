@@ -1,4 +1,5 @@
-"""초안 상태 파일: state/drafts/{account}/{YYYY-MM-DD}/{HHMM}/draft.json
+"""초안 상태 파일: state/drafts/{account}/{YYYY-MM-DD}/{HHMM}/{번호}/draft.json
+(게시 시각마다 posts_per_slot개를 만들고 하나씩 따로 승인한다. 2026-11-04 사용자 결정)
 
 상태 흐름: generated → approved / skipped / expired → published / failed
 (M6에서 이 폴더를 media 브랜치로 옮긴다.)
@@ -19,15 +20,18 @@ def slot_label(slot: datetime, timezone: str) -> str:
     return f"{local.month}월 {local.day}일({WEEKDAYS[local.weekday()]}) {local:%H:%M}"
 
 
-def draft_id(account_key: str, slot: datetime, timezone: str) -> str:
+def draft_id(account_key: str, slot: datetime, timezone: str, number: int | None = None) -> str:
+    """예: today_news/20261105-0730-1 (같은 시각의 1번째 게시물). number가 없으면 예전 형식."""
     local = slot.astimezone(ZoneInfo(timezone))
-    return f"{account_key}/{local:%Y%m%d-%H%M}"
+    stamp = f"{account_key}/{local:%Y%m%d-%H%M}"
+    return f"{stamp}-{number}" if number else stamp
 
 
 def draft_dir(root: Path, draft_id_: str) -> Path:
     account, stamp = draft_id_.split("/")
-    day, hhmm = stamp.split("-")
-    return root / account / f"{day[:4]}-{day[4:6]}-{day[6:]}" / hhmm
+    day, hhmm, *number = stamp.split("-")
+    folder = root / account / f"{day[:4]}-{day[4:6]}-{day[6:]}" / hhmm
+    return folder / number[0] if number else folder
 
 
 def slot_at(account: AccountConfig, hhmm: str, now: datetime) -> datetime:
@@ -67,12 +71,24 @@ def load(root: Path, draft_id_: str) -> dict | None:
 def all_records(root: Path, account_key: str) -> list[dict]:
     """한 계정의 초안 기록 전부(게시 시각 순)."""
     records = []
-    for path in sorted((root / account_key).glob("*/*/draft.json")):
+    paths = list((root / account_key).glob("*/*/draft.json")) + list((root / account_key).glob("*/*/*/draft.json"))
+    for path in sorted(paths):
         try:
             records.append(json.loads(path.read_text(encoding="utf-8")))
         except ValueError:
             continue
-    return sorted(records, key=lambda r: r.get("slot", ""))
+    return sorted(records, key=lambda r: (r.get("slot", ""), r.get("id", "")))
+
+
+def slot_records(root: Path, slot_id: str) -> list[dict]:
+    """같은 게시 시각의 번호 붙은 초안들 (slot_id 예: today_news/20261105-0730)."""
+    records = []
+    for path in sorted(draft_dir(root, slot_id).glob("*/draft.json")):
+        try:
+            records.append(json.loads(path.read_text(encoding="utf-8")))
+        except ValueError:
+            continue
+    return records
 
 
 def set_status(root: Path, record: dict, status: str, now: datetime, note: str = "") -> dict:

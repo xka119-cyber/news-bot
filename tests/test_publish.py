@@ -132,6 +132,14 @@ def test_client_retries_server_errors(monkeypatch):
     assert sleeps == [1, 2, 4]
 
 
+def test_numbered_draft_ids_and_folders(tmp_path):
+    slot = datetime(2026, 11, 4, 22, 30, tzinfo=timezone.utc)  # 한국 11월 5일 07:30
+    assert drafts.draft_id("today_news", slot, "Asia/Seoul", 2) == "today_news/20261105-0730-2"
+    assert drafts.draft_id("today_news", slot, "Asia/Seoul") == "today_news/20261105-0730"
+    assert drafts.draft_dir(tmp_path, "today_news/20261105-0730-2") == tmp_path / "today_news" / "2026-11-05" / "0730" / "2"
+    assert drafts.draft_dir(tmp_path, "today_news/20261105-0730") == tmp_path / "today_news" / "2026-11-05" / "0730"
+
+
 def test_raw_url():
     assert raw_url("o/r", "drafts/a/b.jpg") == "https://raw.githubusercontent.com/o/r/media/drafts/a/b.jpg"
 
@@ -143,8 +151,8 @@ def account():
     return load_account("today_news")
 
 
-def make_record(root, status, slot=SLOT, hhmm="2130"):
-    draft_id = f"today_news/20261104-{hhmm}"
+def make_record(root, status, slot=SLOT, hhmm="2130", number=None):
+    draft_id = f"today_news/20261104-{hhmm}" + (f"-{number}" if number else "")
     folder = drafts.draft_dir(root, draft_id)
     folder.mkdir(parents=True)
     for i in range(1, 5):
@@ -179,6 +187,17 @@ def test_approved_and_due_is_published(account, tmp_path):
     assert record["status"] == "published" and record["permalink"].endswith("/media1/")
     assert "📸" in tg.sent[-1][1]["text"]
     assert json.loads((tmp_path / "history.json").read_text(encoding="utf-8"))["items"][0]["link"] == "https://a.kr/1"
+
+
+def test_two_posts_same_slot_each_by_own_approval(account, tmp_path):
+    first = make_record(tmp_path, "approved", number=1)
+    second = make_record(tmp_path, "skipped", number=2)
+    third = make_record(tmp_path, "approved", hhmm="2130", number=3)
+    uploads = []
+    outcomes = run(account, tmp_path, FakeIG(), FakeTG(), uploads)
+    assert [(o.draft_id, o.status) for o in outcomes] == [(first, "published"), (third, "published")]
+    assert drafts.load(tmp_path, second)["status"] == "skipped"
+    assert uploads[0][0] == "drafts/today_news/2026-11-04/2130/1"
 
 
 def test_second_run_does_nothing(account, tmp_path):

@@ -16,6 +16,7 @@ log = logging.getLogger(__name__)
 API = "https://api.telegram.org"
 CALLBACK_APPROVE = "a"
 CALLBACK_SKIP = "s"
+CALLBACK_APPROVE_ALL = "A"  # 같은 시각 게시물 모두 승인 (뒤에 붙는 ID는 시각 ID, 예: today_news/20261105-0730)
 
 
 class TelegramError(RuntimeError):
@@ -85,14 +86,16 @@ def callback_data(action: str, draft_id: str) -> str:
 
 def parse_callback(data: str) -> tuple[str, str] | None:
     action, _, draft_id = (data or "").partition("|")
-    if action not in (CALLBACK_APPROVE, CALLBACK_SKIP) or not draft_id:
+    if action not in (CALLBACK_APPROVE, CALLBACK_SKIP, CALLBACK_APPROVE_ALL) or not draft_id:
         return None
     return action, draft_id
 
 
-def preview_text(draft: dict, caption: str, slot_label: str, warnings: list[str], brand: str) -> str:
+def preview_text(draft: dict, caption: str, slot_label: str, warnings: list[str], brand: str, order: str = "") -> str:
+    """order: 같은 시각 게시물 중 몇 번째인지(예: "1/2"). 하나씩 따로 승인한다."""
     e = html.escape
-    lines = [f"<b>📮 {e(brand)} 미리보기</b>", f"게시 예정: <b>{e(slot_label)}</b> · 카드뉴스 4장", ""]
+    title = f"<b>📮 {e(brand)} 미리보기" + (f" ({e(order)})" if order else "") + "</b>"
+    lines = [title, f"게시 예정: <b>{e(slot_label)}</b> · 카드뉴스 4장", ""]
     lines += [f"<b>{e(draft['cover_title'])}</b>", "", "<b>캡션</b>", f"<blockquote expandable>{e(caption)}</blockquote>"]
     lines.append(f'<b>원문</b>: <a href="{e(draft["source_url"], quote=True)}">{e(draft["source_name"])} · {e(draft["source_title"])}</a>')
     if warnings:
@@ -115,6 +118,18 @@ def send_preview(client: TelegramClient, chat_id: int, cards: list[Path], text: 
     message = client.call(
         "sendMessage", chat_id=chat_id, text=text, parse_mode="HTML",
         link_preview_options={"is_disabled": True}, reply_markup=buttons(draft_id),
+    )
+    return message["message_id"]
+
+
+def send_approve_all(client: TelegramClient, chat_id: int, slot_id: str, count: int, slot_label: str) -> int:
+    """미리보기 여러 개 아래에 [모두 승인] 버튼 메시지를 하나 더 보낸다. 버튼을 하나씩 기다리며 누를 필요가 없게."""
+    message = client.call(
+        "sendMessage", chat_id=chat_id,
+        text=f"위 {count}개를 한 번에 승인하려면 아래 버튼을 누르세요.\n({slot_label}에 함께 올라가요. 하나씩 고르려면 각 미리보기 버튼을 쓰세요.)",
+        reply_markup={"inline_keyboard": [[
+            {"text": f"✅ 모두 승인 ({count}개)", "callback_data": callback_data(CALLBACK_APPROVE_ALL, slot_id)},
+        ]]},
     )
     return message["message_id"]
 
