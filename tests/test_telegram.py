@@ -132,6 +132,20 @@ def test_approve_all_approves_only_waiting(tmp_path):
     assert "2개 모두 승인됨" in answer["text"]
 
 
+def test_last_single_decision_removes_approve_all_button(tmp_path):
+    first, second = make_numbered(tmp_path, 1), make_numbered(tmp_path, 2)
+    for did in (first, second):
+        record = drafts.load(tmp_path, did)
+        record["approve_all_message_id"] = 77
+        drafts.save(tmp_path, record)
+    client = FakeClient([callback(1, f"a|{first}")])
+    process_updates(client, CHAT, tmp_path, tmp_path / "tg.json", NOW)
+    assert 77 not in [p["message_id"] for m, p in client.calls if m == "editMessageReplyMarkup"]  # 아직 하나 남음
+    client = FakeClient([callback(2, f"s|{second}")])
+    process_updates(client, CHAT, tmp_path, tmp_path / "tg.json", NOW)
+    assert 77 in [p["message_id"] for m, p in client.calls if m == "editMessageReplyMarkup"]
+
+
 def test_approve_all_when_nothing_waiting(tmp_path):
     make_numbered(tmp_path, 1, "approved")
     decisions = process_updates(FakeClient([callback(1, "A|today_news/20261104-0730")]), CHAT, tmp_path, tmp_path / "tg.json", NOW)

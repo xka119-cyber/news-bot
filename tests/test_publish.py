@@ -225,6 +225,17 @@ def test_unapproved_past_slot_expires(account, tmp_path):
     assert tg.sent[0][0] == "editMessageReplyMarkup"
 
 
+def test_expiry_also_removes_approve_all_button(account, tmp_path):
+    draft_id = make_record(tmp_path, "generated", number=1)
+    record = drafts.load(tmp_path, draft_id)
+    record["approve_all_message_id"] = 99
+    drafts.save(tmp_path, record)
+    tg = FakeTG()
+    run(account, tmp_path, FakeIG(), tg, [])
+    cleared = [p["message_id"] for m, p in tg.sent if m == "editMessageReplyMarkup"]
+    assert 99 in cleared and 7 in cleared
+
+
 def test_approved_but_not_due_waits(account, tmp_path):
     make_record(tmp_path, "approved", slot=NOW + timedelta(hours=2))
     ig = FakeIG()

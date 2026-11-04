@@ -106,6 +106,14 @@ def handle_callback(client: TelegramClient, query: dict, chat_id: int, drafts_ro
     reply = _reply_for(record, status)
     _answer(client, query["id"], reply)
     _close_buttons(client, chat_id, message.get("message_id"), reply)
+    slot_id = draft_id.rsplit("-", 1)[0]
+    others = drafts.slot_records(drafts_root, slot_id) if draft_id.count("-") == 2 else []
+    if record.get("approve_all_message_id") and not any(r.get("status") == "generated" for r in others):
+        try:  # 하나씩 다 정했으면 [모두 승인] 버튼은 필요 없다
+            client.call("editMessageReplyMarkup", chat_id=chat_id, message_id=record["approve_all_message_id"],
+                        reply_markup={"inline_keyboard": []})
+        except TelegramError:
+            pass
     return [Decision(draft_id, status)]
 
 

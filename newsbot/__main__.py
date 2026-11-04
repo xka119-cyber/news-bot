@@ -126,7 +126,10 @@ def run_generate(account_key: str, slot_hhmm: str | None, mock_llm: bool) -> int
         waiting = [r for r in drafts.slot_records(DRAFTS_ROOT, slot_id) if r.get("status") == "generated"]
         if sent and len(waiting) > 1:
             stage = "모두 승인 버튼 전송"
-            send_approve_all(client, chat_id, slot_id, len(waiting), label)
+            message_id = send_approve_all(client, chat_id, slot_id, len(waiting), label)
+            for record in waiting:  # 시간이 지나거나 다 정해지면 이 버튼도 지우려고 기억해 둔다
+                record["approve_all_message_id"] = message_id
+                drafts.save(DRAFTS_ROOT, record)
     except (WriteError, TelegramError, OSError) as error:
         print(f"❌ {stage} 단계 실패: {error}")
         try:

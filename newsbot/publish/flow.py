@@ -37,6 +37,17 @@ def _notify(tg: TelegramClient, chat_id: int, record: dict, text: str, clear_but
         log.warning("텔레그램 보고 실패: %s", error)
 
 
+def close_approve_all(tg: TelegramClient, chat_id: int, record: dict) -> None:
+    """같은 시각의 [모두 승인] 버튼을 없앤다(시간이 지났거나 이미 처리됨). 이미 없어졌으면 조용히 넘어간다."""
+    message_id = record.get("approve_all_message_id")
+    if not message_id:
+        return
+    try:
+        tg.call("editMessageReplyMarkup", chat_id=chat_id, message_id=message_id, reply_markup={"inline_keyboard": []})
+    except TelegramError:
+        pass
+
+
 def media_dest(draft_id: str) -> str:
     return drafts.draft_dir(Path("drafts"), draft_id).as_posix()
 
@@ -80,6 +91,7 @@ def run(account: AccountConfig, root: Path, ig: InstagramClient, tg: TelegramCli
         due = datetime.fromisoformat(record["slot"]) <= now
         status = record.get("status")
         if status == "generated" and due:
+            close_approve_all(tg, chat_id, record)
             if account.approval.on_timeout == "publish":
                 drafts.set_status(root, record, "approved", now, note="시간 초과 자동 승인")
                 status = "approved"
