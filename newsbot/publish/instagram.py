@@ -76,8 +76,11 @@ class InstagramClient:
         data = self.request("GET", f"{self.user_id}/content_publishing_limit", fields="config,quota_usage")["data"][0]
         return data["config"]["quota_total"] - data["quota_usage"]
 
-    def create_item(self, image_url: str) -> str:
-        return self.request("POST", f"{self.user_id}/media", image_url=image_url, is_carousel_item="true")["id"]
+    def create_item(self, image_url: str, alt_text: str | None = None) -> str:
+        params = {"image_url": image_url, "is_carousel_item": "true"}
+        if alt_text:
+            params["alt_text"] = alt_text[:1000]  # 검색·접근성용 대체 텍스트(최대 1000자)
+        return self.request("POST", f"{self.user_id}/media", **params)["id"]
 
     def create_carousel(self, children: list[str], caption: str) -> str:
         return self.request("POST", f"{self.user_id}/media", media_type="CAROUSEL",
@@ -109,7 +112,7 @@ class InstagramClient:
 
 
 def publish_carousel(client: InstagramClient, image_urls: list[str], caption: str, progress: dict,
-                     save=lambda: None) -> Published:
+                     save=lambda: None, alt_texts: list[str] | None = None) -> Published:
     """캐러셀을 게시한다. progress(초안 기록의 일부)에 부모 컨테이너 ID를 남기고 save()로 바로 저장해,
     중간에 끊긴 뒤 다시 실행해도 두 번 올라가지 않게 한다."""
     if not 2 <= len(image_urls) <= 20:
@@ -121,7 +124,8 @@ def publish_carousel(client: InstagramClient, image_urls: list[str], caption: st
     else:
         if client.quota_left() < 1:
             raise InstagramError("오늘 게시 한도를 다 썼어요(24시간 기준). 나중에 다시 시도해야 해요.")
-        children = [client.create_item(url) for url in image_urls]
+        alts = list(alt_texts or []) + [None] * len(image_urls)
+        children = [client.create_item(url, alt) for url, alt in zip(image_urls, alts)]
         for child in children:
             client.wait_ready(child)
         container = client.create_carousel(children, caption)

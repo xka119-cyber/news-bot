@@ -34,6 +34,7 @@ class LLMDraft(BaseModel):
     points: list[LLMPoint]
     why_it_matters: str
     caption_intro: str
+    hashtags: list[str] = []  # 기사 주제어 해시태그 2~3개 (검색 노출용, 2026-11-05 추가)
 
 
 class WriteError(RuntimeError):
@@ -134,6 +135,19 @@ def structure_problems(draft: LLMDraft, account: AccountConfig, n_candidates: in
     return problems
 
 
+MAX_TOPIC_TAGS = 3
+
+
+def clean_hashtags(tags: list[str]) -> list[str]:
+    """'#'을 붙이고 공백·중복·너무 긴 것을 정리한다(최대 3개)."""
+    out: list[str] = []
+    for tag in tags:
+        word = "#" + tag.strip().lstrip("#").replace(" ", "")
+        if 2 <= len(word) <= 16 and word not in out:
+            out.append(word)
+    return out[:MAX_TOPIC_TAGS]
+
+
 def to_output(draft: LLMDraft, candidates: list[Article]) -> dict:
     """카드·캡션에 쓰는 형태로 바꾼다. 언론사·링크는 Claude가 아니라 수집 데이터에서 채운다."""
     source = candidates[draft.candidate_id - 1]
@@ -144,6 +158,7 @@ def to_output(draft: LLMDraft, candidates: list[Article]) -> dict:
         "points": [p.model_dump() for p in draft.points],
         "why_it_matters": draft.why_it_matters,
         "caption_intro": draft.caption_intro,
+        "hashtags": clean_hashtags(draft.hashtags),
         "source_name": source.source,
         "source_url": source.link,
         "source_title": source.title,

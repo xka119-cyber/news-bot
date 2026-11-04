@@ -29,8 +29,8 @@ class FakeIG:
     def quota_left(self):
         return self.quota
 
-    def create_item(self, url):
-        self.calls.append(("item", url))
+    def create_item(self, url, alt_text=None):
+        self.calls.append(("item", url, alt_text))
         return f"child{len(self.calls)}"
 
     def create_carousel(self, children, caption):
@@ -77,6 +77,12 @@ def test_carousel_order():
     assert [c[0] for c in ig.calls] == ["item"] * 4 + ["carousel", "publish"]
     assert ig.calls[4][2] == "캡션"
     assert result.permalink == "https://www.instagram.com/p/media1/"
+
+
+def test_alt_texts_go_to_each_image():
+    ig = FakeIG()
+    publish_carousel(ig, URLS, "캡션", {}, alt_texts=["표지", "핵심1", "핵심2", "정리"])
+    assert [c[2] for c in ig.calls if c[0] == "item"] == ["표지", "핵심1", "핵심2", "정리"]
 
 
 def test_no_double_post_when_container_already_published():
@@ -160,7 +166,9 @@ def make_record(root, status, slot=SLOT, hhmm="2130", number=None):
     record = {
         "id": draft_id, "account": "today_news", "slot": slot.isoformat(), "slot_label": "11월 4일(수) 21:30",
         "caption": "캡션", "cards": [f"card_{i}.jpg" for i in range(1, 5)], "telegram_message_id": 7,
-        "draft": {"cover_title": "제목", "source_name": "연합뉴스", "source_title": "원문 제목", "source_url": "https://a.kr/1"},
+        "draft": {"category": "경제", "cover_title": "제목", "cover_sub": "설명", "why_it_matters": "의미",
+                  "points": [{"title": "하나", "lines": ["가", "나"]}, {"title": "둘", "lines": ["다"]}],
+                  "source_name": "연합뉴스", "source_title": "원문 제목", "source_url": "https://a.kr/1"},
     }
     drafts.set_status(root, record, status, NOW - timedelta(hours=1))
     return draft_id
@@ -186,6 +194,7 @@ def test_approved_and_due_is_published(account, tmp_path):
     record = drafts.load(tmp_path, draft_id)
     assert record["status"] == "published" and record["permalink"].endswith("/media1/")
     assert "📸" in tg.sent[-1][1]["text"]
+    assert ig.calls[0][2].startswith("오늘의 3분 뉴스 카드뉴스 표지")  # 대체 텍스트가 붙음
     assert json.loads((tmp_path / "history.json").read_text(encoding="utf-8"))["items"][0]["link"] == "https://a.kr/1"
 
 

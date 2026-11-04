@@ -14,6 +14,7 @@ from newsbot.config import AccountConfig
 from newsbot.publish.instagram import InstagramClient, InstagramError, publish_carousel
 from newsbot.storage import drafts
 from newsbot.storage.media_branch import MediaError
+from newsbot.write.caption import build_alt_texts
 
 log = logging.getLogger(__name__)
 
@@ -68,7 +69,9 @@ def publish_one(record: dict, account: AccountConfig, root: Path, ig: InstagramC
             record["media_urls"] = upload(files, media_dest(draft_id), account.publish.media_repo, f"media: {draft_id}")
             drafts.save(root, record)
         progress = record.setdefault("publish", {})
-        result = publish_carousel(ig, record["media_urls"], record["caption"], progress, save=lambda: drafts.save(root, record))
+        result = publish_carousel(ig, record["media_urls"], record["caption"], progress,
+                                  save=lambda: drafts.save(root, record),
+                                  alt_texts=build_alt_texts(record["draft"], account))
     except (InstagramError, MediaError, OSError) as error:
         drafts.set_status(root, record, "failed", now, note=str(error))
         _notify(tg, chat_id, record, f"❌ 게시 실패 ({record['slot_label']})\n이유: {error}")

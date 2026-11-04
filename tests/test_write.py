@@ -5,7 +5,7 @@ import pytest
 
 from newsbot.collect.rss import Article
 from newsbot.config import load_account
-from newsbot.write.caption import build_caption
+from newsbot.write.caption import build_alt_texts, build_caption
 from newsbot.write.checks import check_draft, longest_copy, unknown_numbers
 from newsbot.write.llm import (
     BudgetExceeded,
@@ -156,9 +156,25 @@ def test_check_draft_flags_copy_and_numbers(account):
 def test_caption(account):
     out = mock_post(CANDIDATES)
     caption = build_caption(out.draft, account)
-    assert caption.startswith(out.draft["caption_intro"])
+    assert caption.startswith(out.draft["cover_title"] + "\n" + out.draft["caption_intro"])  # 핵심 단어가 맨 앞
     assert "✔ 무엇이 바뀌나" in caption and "💡" in caption
+    assert "📌 저장해 두면" in caption  # 저장·공유 권유
     assert "출처: 연합뉴스" in caption
     assert "AI의 도움을 받아 요약했어요." in caption
     assert caption.count("#") <= 5
+    assert caption.splitlines()[-1] == "#전기요금 #전기요금인상 #관리비 #3분뉴스 #오늘의뉴스"  # 주제 태그 먼저, 고정 태그로 채움
     assert "07:30" not in caption  # 게시 시간은 넣지 않음
+
+
+def test_hashtags_are_cleaned():
+    from newsbot.write.llm import clean_hashtags
+
+    assert clean_hashtags(["#퇴직연금", "DC 형", "퇴직연금", "", "아주아주아주아주긴해시태그열여섯자넘음", "공공분양"]) == ["#퇴직연금", "#DC형", "#공공분양"]
+
+
+def test_alt_texts(account):
+    out = mock_post(CANDIDATES)
+    alts = build_alt_texts(out.draft, account)
+    assert len(alts) == 4 and all(len(a) <= 1000 for a in alts)
+    assert "전기요금 내년 1월부터 오른다" in alts[0] and alts[1].startswith("무엇이 바뀌나:")
+    assert "출처: 연합뉴스" in alts[3]
