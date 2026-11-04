@@ -1,10 +1,10 @@
 {
   "today_news": {
     "2026-11": {
-      "usd": 0.02412,
-      "calls": 12,
-      "input_tokens": 111035,
-      "output_tokens": 26030
+      "usd": 0.030762,
+      "calls": 15,
+      "input_tokens": 139229,
+      "output_tokens": 33673
     }
   }
 }

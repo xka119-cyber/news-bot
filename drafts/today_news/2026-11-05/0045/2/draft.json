@@ -1,0 +1,52 @@
+{
+  "id": "today_news/20261105-0045-2",
+  "account": "today_news",
+  "slot": "2026-11-05T00:45:00+09:00",
+  "slot_label": "11월 5일(목) 00:45",
+  "number": 2,
+  "format": "carousel",
+  "draft": {
+    "category": "IT",
+    "cover_title": "AI 계정 도용해 하루 10만 달러 사용",
+    "cover_sub": "구글이 LLM재킹 공격 보고서를 발표했어요",
+    "points": [
+      {
+        "title": "무슨 일이에요?",
+        "lines": [
+          "해커가 남의 AI 계정이나 API 권한을 빼앗아요.",
+          "빼앗은 권한으로 몰래 AI를 대량 사용하는 수법이에요."
+        ]
+      },
+      {
+        "title": "얼마나 큰 문제인가요?",
+        "lines": [
+          "크립토재킹과 달리 짧은 시간에 큰 비용이 나와요.",
+          "구글은 하루 10만 달러 규모의 부정 사용을 적발했어요."
+        ]
+      }
+    ],
+    "why_it_matters": "AI를 쓴다면 API 키 관리와 사용량 알림을 확인해 보세요. 모르는 사이 요금이 나올 수 있어요.",
+    "caption_intro": "AI 계정이 해킹되면 요금이 얼마나 나올까요?",
+    "source_name": "ZDNet Korea",
+    "source_url": "https://zdnet.co.kr/view/?no=20261104210925",
+    "source_title": "구글, LLM 재킹 주의보...\"하루 10만 달러 부정 사용 적발\""
+  },
+  "caption": "AI 계정이 해킹되면 요금이 얼마나 나올까요?\n\n✔ 무슨 일이에요?\n✔ 얼마나 큰 문제인가요?\n💡 AI를 쓴다면 API 키 관리와 사용량 알림을 확인해 보세요. 모르는 사이 요금이 나올 수 있어요.\n\n출처: ZDNet Korea\nAI의 도움을 받아 요약했어요.\n\n#오늘의뉴스 #뉴스요약 #출근길뉴스 #경제뉴스 #3분뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0024145,
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-04T15:19:29.705381+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 55
+}
