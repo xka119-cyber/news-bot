@@ -64,7 +64,9 @@ def run_generate(account_key: str, slot_hhmm: str | None, mock_llm: bool) -> int
     게시물마다 미리보기·버튼이 따로 가서 하나씩 승인한다. 이미 만든 번호는 건너뛴다."""
     from datetime import datetime, timezone
 
-    from newsbot.approve.telegram import TelegramError, preview_text, send_approve_all, send_preview, send_text
+    from zoneinfo import ZoneInfo
+
+    from newsbot.approve.telegram import TelegramError, preview_text, send_keyboard, send_preview, send_text
     from newsbot.collect.rss import collect
     from newsbot.design.cards import render_cards
     from newsbot.storage import drafts
@@ -124,12 +126,11 @@ def run_generate(account_key: str, slot_hhmm: str | None, mock_llm: bool) -> int
             for warning in warnings:
                 print(f"   ⚠️ {warning}")
         waiting = [r for r in drafts.slot_records(DRAFTS_ROOT, slot_id) if r.get("status") == "generated"]
-        if sent and len(waiting) > 1:
-            stage = "모두 승인 버튼 전송"
-            message_id = send_approve_all(client, chat_id, slot_id, len(waiting), label)
-            for record in waiting:  # 시간이 지나거나 다 정해지면 이 버튼도 지우려고 기억해 둔다
-                record["approve_all_message_id"] = message_id
-                drafts.save(DRAFTS_ROOT, record)
+        if sent and waiting:
+            stage = "승인 버튼 전송"
+            local = slot.astimezone(ZoneInfo(account.timezone))
+            items = [(r["number"], r["draft"]["cover_title"]) for r in waiting]
+            send_keyboard(client, chat_id, items, label, f"{local:%H:%M}")
     except (WriteError, TelegramError, OSError) as error:
         print(f"❌ {stage} 단계 실패: {error}")
         try:

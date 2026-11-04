@@ -1,7 +1,12 @@
-"""텔레그램 버튼 응답을 읽어 초안 상태에 기록한다. 매 실행마다 호출(미확인 응답은 약 24시간만 보관됨)."""
+"""텔레그램 응답을 읽어 초안 상태에 기록한다. 매 실행마다 호출(미확인 글 메시지는 약 24시간 보관됨).
+
+승인은 아래 키보드 버튼이 보낸 글 메시지("✅ 1번 승인 (07:30)" 등)로 받는다.
+예전 메시지 안 버튼(콜백)도 읽지만, 텔레그램이 2~3분 뒤 버려서 정해진 때만 깨어나는 봇에는 잘 안 닿는다.
+"""
 
 import json
 import logging
+import re
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -9,6 +14,7 @@ from pathlib import Path
 from newsbot.approve.telegram import (
     CALLBACK_APPROVE,
     CALLBACK_APPROVE_ALL,
+    REMOVE_KEYBOARD,
     TelegramClient,
     TelegramError,
     parse_callback,
@@ -16,6 +22,9 @@ from newsbot.approve.telegram import (
 from newsbot.storage import drafts
 
 log = logging.getLogger(__name__)
+
+# "✅ 모두 승인 (07:30)", "⏭ 모두 건너뛰기 (07:30)", "✅ 2번 승인 (07:30)", "✅ 승인 (07:30)"
+_KEYBOARD_RE = re.compile(r"^\s*(✅|⏭)\s*(?:(모두)|(\d+)번)?\s*(승인|건너뛰기)\s*(?:\((\d{1,2}:\d{2})\))?\s*$")
 
 
 @dataclass
@@ -79,6 +88,59 @@ def _approve_all(client: TelegramClient, query: dict, chat_id: int, drafts_root:
     return decisions
 
 
+def _waiting_records(drafts_root: Path, hhmm: str | None) -> list[dict]:
+    """승인을 기다리는 초안 중 가장 이른 게시 시각의 것들. hhmm이 있으면 그 시각만."""
+    accounts = sorted(p.name for p in drafts_root.iterdir() if p.is_dir()) if drafts_root.exists() else []
+    time_suffix = f" {int(hhmm.split(':')[0]):02d}:{hhmm.split(':')[1]}" if hhmm else ""
+    waiting = [
+        record
+        for account in accounts
+        for record in drafts.all_records(drafts_root, account)
+        if record.get("status") == "generated" and record.get("slot_label", "").endswith(time_suffix)
+    ]
+    if not waiting:
+        return []
+    first = min(r["slot"] for r in waiting)
+    return [r for r in waiting if r["slot"] == first]
+
+
+def handle_text(client: TelegramClient, message: dict, chat_id: int, drafts_root: Path, now: datetime) -> list[Decision]:
+    """아래 키보드 버튼이 보낸 글 메시지를 처리한다. 내 대화방·내 계정이 보낸 것만 인정."""
+    if (message.get("chat") or {}).get("id") != chat_id or (message.get("from") or {}).get("id") != chat_id:
+        return []
+    match = _KEYBOARD_RE.match(message.get("text") or "")
+    if not match:
+        return []  # 버튼 글이 아닌 일반 메시지는 무시
+    _mark, _every, number, verb, hhmm = match.groups()
+    status = "approved" if verb == "승인" else "skipped"
+    waiting = _waiting_records(drafts_root, hhmm)
+    if number:
+        waiting = [r for r in waiting if r["id"].count("-") == 2 and r["id"].rsplit("-", 1)[1] == number]
+    if not waiting:
+        _reply(client, chat_id, message, "이미 처리됐거나 게시 시각이 지난 버튼이에요.", remove_keyboard=True)
+        return [Decision(message.get("text", ""), "ignored", "기다리는 초안 없음")]
+    decisions = []
+    for record in waiting:
+        drafts.set_status(drafts_root, record, status, now, note="키보드 버튼")
+        decisions.append(Decision(record["id"], status, "키보드 버튼"))
+    label = waiting[0]["slot_label"]
+    names = f"{number}번" if number else (f"{len(waiting)}개 모두" if len(waiting) > 1 else "게시물")
+    text = f"✅ {names} 승인됨 — {label}에 올라가요" if status == "approved" else f"⏭ {names} 건너뛰었어요"
+    slot_left = [r for r in drafts.slot_records(drafts_root, waiting[0]["id"].rsplit("-", 1)[0])
+                 if r.get("status") == "generated"] if waiting[0]["id"].count("-") == 2 else []
+    _reply(client, chat_id, message, text, remove_keyboard=not slot_left)
+    return decisions
+
+
+def _reply(client: TelegramClient, chat_id: int, message: dict, text: str, remove_keyboard: bool = False) -> None:
+    try:
+        client.call("sendMessage", chat_id=chat_id, text=text,
+                    reply_parameters={"message_id": message.get("message_id"), "allow_sending_without_reply": True},
+                    reply_markup=REMOVE_KEYBOARD if remove_keyboard else None)
+    except TelegramError as error:
+        log.warning("답장 실패: %s", error)
+
+
 def handle_callback(client: TelegramClient, query: dict, chat_id: int, drafts_root: Path, now: datetime) -> list[Decision]:
     message = query.get("message") or {}
     from_chat = (message.get("chat") or {}).get("id")
@@ -125,6 +187,8 @@ def process_updates(client: TelegramClient, chat_id: int, drafts_root: Path, off
         query = update.get("callback_query")
         if query:
             decisions += handle_callback(client, query, chat_id, drafts_root, now)
+        elif update.get("message"):
+            decisions += handle_text(client, update["message"], chat_id, drafts_root, now)
         offset = update["update_id"] + 1
     if offset is not None:
         save_offset(offset_path, offset)

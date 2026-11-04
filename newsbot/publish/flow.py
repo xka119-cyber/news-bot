@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
-from newsbot.approve.telegram import TelegramClient, TelegramError
+from newsbot.approve.telegram import REMOVE_KEYBOARD, TelegramClient, TelegramError
 from newsbot.collect.rss import Article, record_used
 from newsbot.config import AccountConfig
 from newsbot.publish.instagram import InstagramClient, InstagramError, publish_carousel
@@ -31,8 +31,9 @@ def _notify(tg: TelegramClient, chat_id: int, record: dict, text: str, clear_but
         if clear_buttons and message_id:
             tg.call("editMessageReplyMarkup", chat_id=chat_id, message_id=message_id, reply_markup={"inline_keyboard": []})
         reply = {"message_id": message_id, "allow_sending_without_reply": True} if message_id else None
+        # 게시·건너뜀 결과를 알릴 때 아래 키보드 버튼도 내린다(그 시각 게시분은 끝났으므로)
         tg.call("sendMessage", chat_id=chat_id, text=text, reply_parameters=reply,
-                link_preview_options={"is_disabled": False})
+                link_preview_options={"is_disabled": False}, reply_markup=REMOVE_KEYBOARD)
     except TelegramError as error:
         log.warning("텔레그램 보고 실패: %s", error)
 

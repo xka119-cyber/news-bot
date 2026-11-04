@@ -8,6 +8,7 @@ from newsbot.approve.telegram import (
     TelegramError,
     buttons,
     callback_data,
+    keyboard_labels,
     parse_callback,
     preview_text,
 )
@@ -150,6 +151,52 @@ def test_approve_all_when_nothing_waiting(tmp_path):
     make_numbered(tmp_path, 1, "approved")
     decisions = process_updates(FakeClient([callback(1, "A|today_news/20261104-0730")]), CHAT, tmp_path, tmp_path / "tg.json", NOW)
     assert decisions[0].status == "ignored"
+
+
+def text_msg(update_id, text, chat=CHAT, user=CHAT):
+    return {"update_id": update_id, "message": {"message_id": 200 + update_id, "text": text,
+                                                "chat": {"id": chat}, "from": {"id": user}}}
+
+
+def test_keyboard_labels():
+    assert keyboard_labels([1, 2], "07:30") == [
+        ["✅ 모두 승인 (07:30)", "⏭ 모두 건너뛰기 (07:30)"], ["✅ 1번 승인 (07:30)", "✅ 2번 승인 (07:30)"]]
+    assert keyboard_labels([1], "07:30") == [["✅ 승인 (07:30)", "⏭ 건너뛰기 (07:30)"]]
+
+
+def test_keyboard_number_approves_only_that_one(tmp_path):
+    first, second = make_numbered(tmp_path, 1), make_numbered(tmp_path, 2)
+    client = FakeClient([text_msg(1, "✅ 2번 승인 (07:30)")])
+    decisions = process_updates(client, CHAT, tmp_path, tmp_path / "tg.json", NOW)
+    assert [(d.draft_id, d.status) for d in decisions] == [(second, "approved")]
+    assert drafts.load(tmp_path, first)["status"] == "generated"
+    reply = next(p for m, p in client.calls if m == "sendMessage")
+    assert "2번 승인됨" in reply["text"] and reply.get("reply_markup") is None  # 1번이 남아 키보드 유지
+
+
+def test_keyboard_all_approve_then_keyboard_removed(tmp_path):
+    first, second = make_numbered(tmp_path, 1), make_numbered(tmp_path, 2)
+    client = FakeClient([text_msg(1, "✅ 모두 승인 (07:30)")])
+    decisions = process_updates(client, CHAT, tmp_path, tmp_path / "tg.json", NOW)
+    assert {d.draft_id for d in decisions} == {first, second}
+    reply = next(p for m, p in client.calls if m == "sendMessage")
+    assert "2개 모두 승인됨" in reply["text"] and reply["reply_markup"] == {"remove_keyboard": True}
+
+
+def test_keyboard_skip_all_and_ignore_others(tmp_path):
+    first = make_numbered(tmp_path, 1)
+    updates = [text_msg(1, "안녕"), text_msg(2, "⏭ 모두 건너뛰기 (07:30)", chat=999, user=999),
+               text_msg(3, "⏭ 모두 건너뛰기 (07:30)")]
+    decisions = process_updates(FakeClient(updates), CHAT, tmp_path, tmp_path / "tg.json", NOW)
+    assert [(d.draft_id, d.status) for d in decisions] == [(first, "skipped")]
+
+
+def test_keyboard_after_slot_done_is_ignored(tmp_path):
+    make_numbered(tmp_path, 1, "expired")
+    client = FakeClient([text_msg(1, "✅ 1번 승인 (07:30)")])
+    decisions = process_updates(client, CHAT, tmp_path, tmp_path / "tg.json", NOW)
+    assert decisions[0].status == "ignored"
+    assert next(p for m, p in client.calls if m == "sendMessage")["reply_markup"] == {"remove_keyboard": True}
 
 
 def test_client_errors_never_contain_token(monkeypatch):
