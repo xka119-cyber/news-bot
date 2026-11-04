@@ -1,0 +1,74 @@
+{
+  "id": "today_news/20261104-2130",
+  "account": "today_news",
+  "slot": "2026-11-04T21:30:00+09:00",
+  "slot_label": "11월 4일(수) 21:30",
+  "format": "carousel",
+  "draft": {
+    "hook": "오늘 카드 3장: 퇴직연금, 게임, 날씨 소식",
+    "items": [
+      {
+        "headline": "퇴직연금 DC형 전환, 2배 넘게 늘어",
+        "summary_lines": [
+          "주식시장 호황으로 DC형 전환 가입자가 2배 넘게 늘었어요",
+          "은퇴 시점에 맞춘 TDF 수익률 순위가 올해 안에 공개돼요",
+          "금감원은 장기 분산 투자 캠페인을 열고 점검 주간도 운영해요"
+        ],
+        "why_it_matters": "내 퇴직연금 운용 방식, 한 번쯤 점검해 볼 때예요",
+        "category": "경제",
+        "source_name": "동아일보",
+        "source_url": "https://www.donga.com/news/Economy/article/all/20261103/134960182/2"
+      },
+      {
+        "headline": "엑스박스 초소형 컨트롤러 등장",
+        "summary_lines": [
+          "MS가 선보인 가장 작고 가벼운 공식 게임패드예요",
+          "주머니나 가방에 쏙 들어가 휴대하기 편해졌어요",
+          "들고 다니며 게임하기 좋은 것이 특징이에요"
+        ],
+        "why_it_matters": "이동 중에도 게임을 편하게 즐기고 싶다면 눈여겨볼 소식이에요",
+        "category": "IT",
+        "source_name": "연합뉴스",
+        "source_url": "https://www.yna.co.kr/view/AKR20261103169800017"
+      },
+      {
+        "headline": "주말 서울 첫 영하권…일교차도 커요",
+        "summary_lines": [
+          "늦가을 날씨 속 추위가 간간이 밀려오고 있어요",
+          "오늘은 큰 추위 없이 늦가을 날씨가 예상돼요",
+          "중부 내륙은 일교차가 커서 겉옷 준비가 필요해요"
+        ],
+        "why_it_matters": "출퇴근길 아침저녁 기온차에 대비해 겉옷을 챙기세요",
+        "category": "날씨·교통",
+        "source_name": "SBS",
+        "source_url": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008829217&plink=RSSLINK&cooper=RSSREADER"
+      }
+    ],
+    "caption_intro": "주말 서울 날씨와 퇴직연금, 무엇부터 챙겨야 할까요?"
+  },
+  "caption": "주말 서울 날씨와 퇴직연금, 무엇부터 챙겨야 할까요?\n\n1️⃣ 퇴직연금 DC형 전환, 2배 넘게 늘어\n2️⃣ 엑스박스 초소형 컨트롤러 등장\n3️⃣ 주말 서울 첫 영하권…일교차도 커요\n\n출처: 동아일보, 연합뉴스, SBS\nAI의 도움을 받아 요약했어요.\n\n#오늘의뉴스 #뉴스요약 #출근길뉴스 #경제뉴스 #3분뉴스",
+  "warnings": [
+    "1번 제목 21자 (최대 20자)"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0042836,
+  "status": "skipped",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-03T19:00:55.792096+00:00",
+      "note": ""
+    },
+    {
+      "status": "skipped",
+      "at": "2026-11-03T19:09:46.585966+00:00",
+      "note": "텔레그램 버튼"
+    }
+  ],
+  "telegram_message_id": 7
+}
