@@ -47,12 +47,17 @@
     "card_4.jpg"
   ],
   "cost_usd": 0.002336,
-  "status": "generated",
+  "status": "approved",
   "history": [
     {
       "status": "generated",
       "at": "2026-11-05T21:43:43.774586+00:00",
       "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-05T22:35:52.557231+00:00",
+      "note": "키보드 버튼"
     }
   ],
   "telegram_message_id": 125
