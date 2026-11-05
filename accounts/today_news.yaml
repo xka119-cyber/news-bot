@@ -13,7 +13,7 @@ slots:
   - "18:00"
   - "21:30"
 generate_lead_minutes: 60
-posts_per_slot: 2                 # 2026-11-04 사용자 결정: 시각마다 2개, 건별 승인, 승인한 것은 같은 시각에 게시 (하루 최대 8개)
+posts_per_slot: 1                 # 2026-11-05 사용자 결정: 팔로워를 모으는 동안 시각마다 1개(하루 4개). 11-04에는 2개(하루 8개)였음. 성장 후 2로 되돌릴 수 있음
 
 format_plan:
   test_start_date: null
