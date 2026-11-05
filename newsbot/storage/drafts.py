@@ -80,6 +80,22 @@ def all_records(root: Path, account_key: str) -> list[dict]:
     return sorted(records, key=lambda r: (r.get("slot", ""), r.get("id", "")))
 
 
+def recent_titles(root: Path, account_key: str, now: datetime, exclude_ids: set[str] = frozenset(), days: int = 1) -> list[str]:
+    """최근 하루 안에 만들었거나 올린(대기·승인·게시) 초안의 표지 제목.
+    같은 소식이 다른 기사로 다시 뽑히는 걸 막기 위해 작성 프롬프트에 '피할 소식'으로 넘긴다(2026-11-05 18:00·21:30 중복)."""
+    titles = []
+    for record in all_records(root, account_key):
+        if record["id"] in exclude_ids or record.get("status") not in ("generated", "approved", "published"):
+            continue
+        try:
+            slot = datetime.fromisoformat(record["slot"])
+        except (KeyError, ValueError):
+            continue
+        if now - slot < timedelta(days=days):
+            titles.append(record["draft"]["cover_title"])
+    return titles
+
+
 def slot_records(root: Path, slot_id: str) -> list[dict]:
     """같은 게시 시각의 번호 붙은 초안들 (slot_id 예: today_news/20261105-0730)."""
     records = []

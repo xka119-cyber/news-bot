@@ -112,9 +112,9 @@ def build_prompt(account: AccountConfig, candidates: list[Article], avoid: list[
     )
     if avoid:
         prompt += (
-            "\n## 이미 고른 소식 (같은 시각에 함께 올라감)\n"
+            "\n## 이미 고른 소식 (같은 시각에 함께 올라가거나, 최근에 이미 다룬 소식)\n"
             + "\n".join(f"- {title}" for title in avoid)
-            + "\n위 소식과 같은 사건·주제는 고르지 말고, 가능하면 다른 분야의 소식을 고르세요.\n"
+            + "\n위 소식과 같은 사건·주제는 다른 기사라도 고르지 말고, 가능하면 다른 분야의 소식을 고르세요.\n"
         )
     return prompt
 

@@ -67,7 +67,7 @@ def run_generate(account_key: str, slot_hhmm: str | None, mock_llm: bool) -> int
     from zoneinfo import ZoneInfo
 
     from newsbot.approve.telegram import TelegramError, preview_text, send_keyboard, send_preview, send_text
-    from newsbot.collect.rss import collect
+    from newsbot.collect.rss import collect, load_history
     from newsbot.design.cards import render_cards
     from newsbot.storage import drafts
     from newsbot.write.caption import build_caption
@@ -91,6 +91,10 @@ def run_generate(account_key: str, slot_hhmm: str | None, mock_llm: bool) -> int
     slot_id = drafts.draft_id(account.account_key, slot, account.timezone)
     chosen_links = {r["draft"]["source_url"] for r in existing}
     avoid = [r["draft"]["source_title"] for r in existing]
+    # 최근 3일에 올린 기사와 오늘 다른 시각의 초안 주제도 피한다(다른 기사로 같은 소식이 또 뽑힌 2026-11-05 18:00·21:30)
+    avoid += [item["title"] for item in load_history(HISTORY, now)]
+    avoid += drafts.recent_titles(DRAFTS_ROOT, account.account_key, now, exclude_ids=set(ids))
+    avoid = list(dict.fromkeys(avoid))
 
     stage = "수집"
     sent = 0

@@ -146,6 +146,16 @@ def test_numbered_draft_ids_and_folders(tmp_path):
     assert drafts.draft_dir(tmp_path, "today_news/20261105-0730") == tmp_path / "today_news" / "2026-11-05" / "0730"
 
 
+def test_recent_titles_cover_today_but_not_skipped_or_old(tmp_path):
+    published = make_record(tmp_path, "published", number=1)
+    make_record(tmp_path, "skipped", number=2)
+    waiting = make_record(tmp_path, "approved", slot=NOW + timedelta(hours=1), hhmm="2300", number=1)
+    make_record(tmp_path, "published", slot=NOW - timedelta(days=2), hhmm="0730", number=1)
+    titles = drafts.recent_titles(tmp_path, "today_news", NOW)
+    assert titles == ["제목", "제목"]  # 오늘 게시 1건 + 승인 대기 1건
+    assert drafts.recent_titles(tmp_path, "today_news", NOW, exclude_ids={published, waiting}) == []
+
+
 def test_raw_url():
     assert raw_url("o/r", "drafts/a/b.jpg") == "https://raw.githubusercontent.com/o/r/media/drafts/a/b.jpg"
 
