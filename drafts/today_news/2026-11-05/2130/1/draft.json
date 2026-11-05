@@ -49,7 +49,7 @@
     "card_4.jpg"
   ],
   "cost_usd": 0.0020269,
-  "status": "approved",
+  "status": "published",
   "history": [
     {
       "status": "generated",
@@ -60,7 +60,23 @@
       "status": "approved",
       "at": "2026-11-05T12:35:12.438632+00:00",
       "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-05T12:35:12.438632+00:00",
+      "note": ""
     }
   ],
-  "telegram_message_id": 110
+  "telegram_message_id": 110,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/2130/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/2130/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/2130/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/2130/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17887008612512661"
+  },
+  "media_id": "17917033374521734",
+  "permalink": "https://www.instagram.com/p/DfXC4O4kg6J/"
 }
