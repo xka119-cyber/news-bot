@@ -208,6 +208,35 @@ def test_client_errors_never_contain_token(monkeypatch):
 
     monkeypatch.setattr(urllib.request, "urlopen", boom)
     with pytest.raises(TelegramError) as info:
-        TelegramClient(FAKE_TOKEN).call("getMe")
+        TelegramClient(FAKE_TOKEN, sleep=lambda s: None).call("getMe")
     assert FAKE_TOKEN not in str(info.value)
     assert info.value.__cause__ is None and info.value.__suppress_context__
+
+
+def test_client_retries_connection_errors_then_succeeds(monkeypatch):
+    import io
+    import urllib.error
+    import urllib.request
+
+    attempts, sleeps = [], []
+
+    def flaky(request, timeout):
+        attempts.append(1)
+        if len(attempts) < 3:
+            raise urllib.error.URLError("끊김")
+        return io.BytesIO(b'{"ok": true, "result": {"id": 1}}')
+
+    monkeypatch.setattr(urllib.request, "urlopen", flaky)
+    assert TelegramClient(FAKE_TOKEN, sleep=sleeps.append).call("getMe") == {"id": 1}
+    assert len(attempts) == 3 and sleeps == [1, 2]
+
+
+def test_client_gives_up_after_retries(monkeypatch):
+    import urllib.error
+    import urllib.request
+
+    sleeps = []
+    monkeypatch.setattr(urllib.request, "urlopen", lambda request, timeout: (_ for _ in ()).throw(urllib.error.URLError("x")))
+    with pytest.raises(TelegramError, match="4번 시도"):
+        TelegramClient(FAKE_TOKEN, sleep=sleeps.append).call("getMe")
+    assert sleeps == [1, 2, 4]

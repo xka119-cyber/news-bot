@@ -6,6 +6,7 @@
 import html
 import json
 import logging
+import time
 import urllib.error
 import urllib.request
 import uuid
@@ -24,25 +25,32 @@ class TelegramError(RuntimeError):
 
 
 class TelegramClient:
-    def __init__(self, token: str, timeout: int = 30):
+    def __init__(self, token: str, timeout: int = 30, retries: int = 3, sleep=time.sleep):
         if not token:
             raise TelegramError("TELEGRAM_BOT_TOKEN이 비어 있습니다.")
         self._token = token
         self.timeout = timeout
+        self.retries = retries
+        self._sleep = sleep
 
     def _request(self, method: str, data: bytes | None = None, headers: dict | None = None) -> object:
         request = urllib.request.Request(f"{API}/bot{self._token}/{method}", data=data, headers=headers or {})
-        try:
-            with urllib.request.urlopen(request, timeout=self.timeout) as response:
-                payload = json.load(response)
-        except urllib.error.HTTPError as error:
+        # GitHub 컴퓨터에서 텔레그램 연결이 잠깐 끊기는 일이 있어(2026-11-05 18:04 게시 실패) 연결 오류만 1→2→4초 뒤 다시 시도한다
+        for attempt in range(self.retries + 1):
             try:
-                description = json.load(error).get("description", "")
-            except ValueError:
-                description = ""
-            raise TelegramError(f"텔레그램 {method} 실패 (HTTP {error.code}) {description}".strip()) from None
-        except (urllib.error.URLError, TimeoutError) as error:
-            raise TelegramError(f"텔레그램 {method} 연결 실패 ({type(error).__name__})") from None
+                with urllib.request.urlopen(request, timeout=self.timeout) as response:
+                    payload = json.load(response)
+                break
+            except urllib.error.HTTPError as error:
+                try:
+                    description = json.load(error).get("description", "")
+                except ValueError:
+                    description = ""
+                raise TelegramError(f"텔레그램 {method} 실패 (HTTP {error.code}) {description}".strip()) from None
+            except (urllib.error.URLError, TimeoutError) as error:
+                if attempt >= self.retries:
+                    raise TelegramError(f"텔레그램 {method} 연결 실패 ({type(error).__name__}, {attempt + 1}번 시도)") from None
+                self._sleep(2 ** attempt)
         if not payload.get("ok"):
             raise TelegramError(f"텔레그램 {method} 실패: {payload.get('description', '')}")
         return payload["result"]
