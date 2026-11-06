@@ -122,7 +122,9 @@ class AccountConfig(_Strict):
     timezone: str
     secrets: Secrets
     slots: list[str] = Field(min_length=1)
-    generate_lead_minutes: int = Field(gt=0)
+    # 미리보기를 게시 몇 분 전에 만들지: [가장 늦어도, 가장 일러도]. 10분마다 깨어나는 tick이 이 창 안에 들어오면 만든다.
+    # (설계서의 generate_lead_minutes: 60 대신. GitHub 예약이 몇 시간씩 늦어 창으로 바꿈, 2026-11-06)
+    generate_window_minutes: tuple[int, int] = (30, 90)
     posts_per_slot: int = Field(default=1, ge=1, le=5)  # 게시 시각마다 만들 게시물 수(하나씩 따로 승인)
     format_plan: FormatPlan
     reels_enabled: bool
@@ -140,6 +142,14 @@ class AccountConfig(_Strict):
             ZoneInfo(value)
         except (ZoneInfoNotFoundError, ValueError) as error:
             raise ValueError(f"알 수 없는 시간대입니다: {value}") from error
+        return value
+
+    @field_validator("generate_window_minutes")
+    @classmethod
+    def _valid_window(cls, value: tuple[int, int]) -> tuple[int, int]:
+        earliest_end, latest_start = value
+        if not 0 < earliest_end < latest_start:
+            raise ValueError("generate_window_minutes는 [가장 늦어도, 가장 일러도] 순서의 분이어야 합니다 (예: [30, 90])")
         return value
 
     @field_validator("slots")

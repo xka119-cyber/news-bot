@@ -1,21 +1,17 @@
-# 각 게시 시각 약 1시간 전: 수집 → Claude 작성 → 카드 → 텔레그램 미리보기 (설계서 4.7)
+# 수집 → Claude 작성 → 카드 → 텔레그램 미리보기 (설계서 4.7)
+# 자동 실행은 tick.yml이 맡는다(10분마다 깨어나 게시 90~30분 전이면 같은 단계를 실행).
+# 이 파일은 직접 실행(Run workflow / Claude의 수동 실행)용으로 남겨 둔다.
+# 2026-11-06까지는 여기에 시각별 예약(cron)이 있었지만 GitHub가 4~11시간 늦게 돌려 tick 방식으로 바꿨다.
 name: generate
 
 on:
-  schedule:
-    # GitHub cron은 UTC(한국시간 −9시간). 정각은 붐벼서 몇 분 비켜 둠.
-    # 2026-11-05 첫 아침 예약이 전혀 돌지 않아 분을 바꿔 다시 등록(GitHub 안내: cron을 고치면 멈춘 예약이 다시 켜짐)
-    - cron: "23 21 * * *"   # 한국 06:23 → 07:30 게시분
-    - cron: "53 1 * * *"    # 한국 10:53 → 12:00 게시분
-    - cron: "53 7 * * *"    # 한국 16:53 → 18:00 게시분
-    - cron: "23 11 * * *"   # 한국 20:23 → 21:30 게시분
   workflow_dispatch:
     inputs:
       account:
         description: "계정 (accounts/ 파일 이름)"
         default: today_news
       slot:
-        description: "게시 시각 HH:MM (비우면 30~150분 뒤 시각 자동 선택)"
+        description: "게시 시각 HH:MM (비우면 설정의 창, 기본 30~90분 뒤 시각을 자동 선택)"
         required: false
       mock_llm:
         description: "Claude 대신 샘플 문구 사용 (비용 0, 시험용)"

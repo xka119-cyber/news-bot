@@ -1,0 +1,63 @@
+# 10분마다 깨어나 "지금 할 일이 있나?"를 보고, 있을 때만 미리보기(generate)·게시(publish)를 한다 (2026-11-06).
+#
+# 왜: 정해진 시각 8개에 건 GitHub 예약(cron)이 11-05·06 이틀 동안 매번 4~11시간 늦게 오거나 오지 않았다
+#     (저장소·계정 설정은 모두 정상. GitHub 문서도 "바쁠 때는 늦거나 빠질 수 있다"고 적어 둠).
+#     10분마다 깨어나 '현재 시각' 기준으로 판단하면 예약이 늦게 와도 그때 맞는 일을 하고, 한 번 빠져도 다음 깨어남이 이어받는다.
+#     generate·publish는 여러 번 돌아도 안전(멱등)해서 겹쳐도 괜찮다. 설명: docs/RUNBOOK.md '자동 실행'
+name: tick
+
+on:
+  schedule:
+    - cron: "4,14,24,34,44,54 * * * *"   # 10분마다 (UTC지만 간격이라 시간대와 무관). 정각·30분은 붐벼서 피함
+  workflow_dispatch:
+
+permissions:
+  contents: write   # media 브랜치에 초안·상태 저장
+
+concurrency:
+  group: newsbot-media   # generate/publish/maintenance와 같은 그룹: media 브랜치를 동시에 고치지 않게
+  cancel-in-progress: false
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: 패키지 설치
+        run: pip install -r requirements.txt
+      - name: 할 일 확인
+        id: todo
+        run: python -m newsbot todo --account today_news --output "$GITHUB_OUTPUT"
+      # 아래 단계들은 할 일이 있을 때만 돈다. 할 일이 없는 깨어남은 여기서 끝(30초쯤).
+      - name: git 사용자 설정
+        if: steps.todo.outputs.generate == 'true' || steps.todo.outputs.publish == 'true'
+        run: |
+          git config --global user.name "newsbot"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: 카드용 브라우저·이모지 폰트 설치
+        if: steps.todo.outputs.generate == 'true' || steps.todo.outputs.publish == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-color-emoji
+          python -m playwright install --with-deps --only-shell chromium
+      - name: 미리보기 만들기
+        if: steps.todo.outputs.generate == 'true'
+        env:
+          SLOT: ${{ steps.todo.outputs.slot }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m newsbot generate --account today_news --slot "$SLOT"
+      - name: 게시
+        if: ${{ !cancelled() && steps.todo.outputs.publish == 'true' }}   # 미리보기가 실패해도 게시는 따로 진행
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m newsbot publish --account today_news

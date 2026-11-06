@@ -3,7 +3,7 @@ name: maintenance
 
 on:
   schedule:
-    - cron: "10 19 * * 0"   # 한국 월요일 04:10
+    - cron: "10 19 * * 0"   # 한국 월요일 04:10. GitHub 예약이 몇 시간 늦어도 주 1회 작업이라 상관없음 (2026-11-06 확인)
   workflow_dispatch:
 
 permissions:

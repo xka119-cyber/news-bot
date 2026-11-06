@@ -79,7 +79,8 @@ def run_generate(account_key: str, slot_hhmm: str | None, mock_llm: bool) -> int
     now = datetime.now(timezone.utc)
     slot = drafts.slot_at(account, slot_hhmm, now) if slot_hhmm else drafts.upcoming_slot(account, now)
     if slot is None:
-        print("가까운 게시 시각(30~150분 뒤)이 없어 할 일이 없습니다.")
+        lo, hi = account.generate_window_minutes
+        print(f"가까운 게시 시각({lo}~{hi}분 뒤)이 없어 할 일이 없습니다. 특정 시각 것을 만들려면 --slot HH:MM 을 붙입니다.")
         return 0
     total = account.posts_per_slot
     ids = [drafts.draft_id(account.account_key, slot, account.timezone, n) for n in range(1, total + 1)]
@@ -143,6 +144,24 @@ def run_generate(account_key: str, slot_hhmm: str | None, mock_llm: bool) -> int
             pass
         return 1
     print(f"미리보기 {sent}개를 보냈습니다 ({label} 게시 예정, 하나씩 따로 승인).")
+    return 0
+
+
+def run_todo(account_key: str, output: str | None) -> int:
+    """10분마다 깨어나는 tick 작업용: 지금 미리보기·게시를 할 때인지 판단해 GitHub Actions 출력 파일에 적는다 (2026-11-06)."""
+    from datetime import datetime, timezone
+
+    from newsbot.tick import decide
+
+    account = load_account(account_key)
+    todo = decide(account, DRAFTS_ROOT, datetime.now(timezone.utc))
+    for reason in todo.reasons:
+        print(("▶ " if todo.generate or todo.publish else "· ") + reason)
+    if output:
+        with open(output, "a", encoding="utf-8") as handle:
+            handle.write(todo.as_outputs())
+    else:
+        print(todo.as_outputs(), end="")
     return 0
 
 
@@ -381,8 +400,11 @@ def build_parser() -> argparse.ArgumentParser:
     write.add_argument("--mock-llm", action="store_true", help="Claude를 부르지 않고 샘플 문구 사용(비용 0)")
     gen = commands.add_parser("generate", help="수집 → 작성 → 카드 → 텔레그램 미리보기 전송")
     gen.add_argument("--account", default="today_news")
-    gen.add_argument("--slot", default=None, help="게시 시각 HH:MM (비우면 30~150분 뒤 시각을 자동 선택)")
+    gen.add_argument("--slot", default=None, help="게시 시각 HH:MM (비우면 설정의 generate_window_minutes 안의 시각을 자동 선택)")
     gen.add_argument("--mock-llm", action="store_true", help="Claude 대신 샘플 문구(비용 0)")
+    todo = commands.add_parser("todo", help="(tick 작업용) 지금 미리보기·게시를 할 때인지 판단해 generate=/slot=/publish= 줄로 출력")
+    todo.add_argument("--account", default="today_news")
+    todo.add_argument("--output", default=None, help="결과를 덧붙여 쓸 파일 (GitHub Actions의 $GITHUB_OUTPUT). 비우면 화면에 출력")
     commands.add_parser("approvals", help="텔레그램 버튼 응답을 읽어 초안 상태에 기록")
     pub = commands.add_parser("publish", help="승인된 초안을 인스타에 게시하고 링크를 텔레그램으로 보고")
     pub.add_argument("--account", default="today_news")
@@ -407,8 +429,10 @@ def main(argv: list[str] | None = None) -> int:
         return run_check(args.account)
     if args.command == "token-check":
         return run_token_check(args.account)
-    if args.command in ("collect", "write", "generate", "approvals", "publish", "prune"):
+    if args.command in ("collect", "write", "generate", "approvals", "publish", "prune", "todo"):
         sync_data()  # 사용한 기사·비용·승인 상태를 media 브랜치에서 최신으로
+    if args.command == "todo":
+        return run_todo(args.account, args.output)  # 읽기만 하므로 저장(save_data)은 없음
     if args.command == "collect":
         return run_collect(args.account, args.show_excluded)
     if args.command == "write":

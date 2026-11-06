@@ -43,13 +43,21 @@ def slot_at(account: AccountConfig, hhmm: str, now: datetime) -> datetime:
     return slot if slot > local_now else slot + timedelta(days=1)
 
 
-def upcoming_slot(account: AccountConfig, now: datetime, min_minutes: int = 30, max_minutes: int = 150) -> datetime | None:
-    """앞으로 30~150분 안의 게시 시각(설계서 4.7). 없으면 None."""
-    for hhmm in account.slots:
-        slot = slot_at(account, hhmm, now)
-        if timedelta(minutes=min_minutes) <= slot - now <= timedelta(minutes=max_minutes):
-            return slot
-    return None
+def upcoming_slots(account: AccountConfig, now: datetime, min_minutes: int | None = None, max_minutes: int | None = None) -> list[datetime]:
+    """앞으로 generate_window_minutes(기본 30~90분) 안의 게시 시각들(가까운 순). 게시 간격이 창보다 짧은 계정이면 둘 이상일 수 있다.
+    (설계서 4.7의 30~150분을 2026-11-06에 설정값으로 바꿈: 10분마다 깨어나는 tick이 이 창 안에서 미리보기를 만든다.)"""
+    if min_minutes is None:
+        min_minutes = account.generate_window_minutes[0]
+    if max_minutes is None:
+        max_minutes = account.generate_window_minutes[1]
+    slots = [slot_at(account, hhmm, now) for hhmm in account.slots]
+    return sorted(s for s in slots if timedelta(minutes=min_minutes) <= s - now <= timedelta(minutes=max_minutes))
+
+
+def upcoming_slot(account: AccountConfig, now: datetime, min_minutes: int | None = None, max_minutes: int | None = None) -> datetime | None:
+    """창 안에서 가장 가까운 게시 시각. 없으면 None."""
+    slots = upcoming_slots(account, now, min_minutes, max_minutes)
+    return slots[0] if slots else None
 
 
 def save(root: Path, record: dict) -> Path:
