@@ -1,6 +1,7 @@
 """인스타 게시 (Graph API, 설계서 4.5).
 
 캐러셀: 이미지마다 자식 컨테이너 → CAROUSEL 부모 컨테이너(캡션) → 준비 완료 확인 → media_publish → permalink.
+릴스: REELS 컨테이너(video_url·cover_url·캡션) → 영상 처리 끝날 때까지 기다림 → media_publish → permalink (M7).
 토큰은 Authorization 헤더로만 보내고 오류 메시지·로그에는 넣지 않는다.
 """
 
@@ -86,6 +87,13 @@ class InstagramClient:
         return self.request("POST", f"{self.user_id}/media", media_type="CAROUSEL",
                             children=",".join(children), caption=caption)["id"]
 
+    def create_reel(self, video_url: str, caption: str, cover_url: str | None = None, share_to_feed: bool = False) -> str:
+        params = {"media_type": "REELS", "video_url": video_url, "caption": caption,
+                  "share_to_feed": "true" if share_to_feed else "false"}
+        if cover_url:
+            params["cover_url"] = cover_url
+        return self.request("POST", f"{self.user_id}/media", **params)["id"]
+
     def status(self, container_id: str) -> str:
         return self.request("GET", container_id, fields="status_code")["status_code"]
 
@@ -97,7 +105,7 @@ class InstagramClient:
             if status in ("FINISHED", "PUBLISHED"):
                 return status
             if status in ("ERROR", "EXPIRED") or waited >= timeout:
-                raise InstagramError(f"인스타가 이미지를 준비하지 못했어요 (상태 {status})")
+                raise InstagramError(f"인스타가 이미지·영상을 준비하지 못했어요 (상태 {status})")
             self.sleep(interval)
             waited += interval
 
@@ -140,4 +148,40 @@ def publish_carousel(client: InstagramClient, image_urls: list[str], caption: st
                 if client.status(container) != "PUBLISHED":
                     raise
                 media_id = client.latest_media_id()
+    return Published(media_id, client.permalink(media_id))
+
+
+def _publish_container(client: InstagramClient, container: str, interval: int, timeout: int) -> str:
+    """준비를 기다렸다가 게시한다. 게시 응답을 못 받았어도 실제로 올라갔으면 성공으로 본다."""
+    if client.wait_ready(container, interval=interval, timeout=timeout) == "PUBLISHED":
+        return client.latest_media_id()
+    try:
+        return client.publish(container)
+    except InstagramError:
+        if client.status(container) != "PUBLISHED":
+            raise
+        return client.latest_media_id()
+
+
+def publish_reel(client: InstagramClient, video_url: str, caption: str, progress: dict, save=lambda: None,
+                 cover_url: str | None = None, share_to_feed: bool = False, wait_timeout: int = 600) -> Published:
+    """릴스를 게시한다. 캐러셀과 같이 컨테이너 ID를 progress에 먼저 저장해 두 번 올라가지 않게 한다.
+    영상 처리는 보통 30초~몇 분 걸려서 10초 간격으로 최대 wait_timeout초 기다린다."""
+    container = progress.get("container_id")
+    state = None
+    if container:
+        try:
+            state = client.status(container)
+        except InstagramError:
+            state = "EXPIRED"  # 지난 컨테이너를 못 찾음(지워짐·24시간 지남) → 새로 만든다
+    if state == "PUBLISHED":
+        media_id = client.latest_media_id()
+    else:
+        if not container or state in ("ERROR", "EXPIRED"):
+            if client.quota_left() < 1:
+                raise InstagramError("오늘 게시 한도를 다 썼어요(24시간 기준). 나중에 다시 시도해야 해요.")
+            container = client.create_reel(video_url, caption, cover_url, share_to_feed)
+            progress["container_id"] = container
+            save()
+        media_id = _publish_container(client, container, interval=10, timeout=wait_timeout)
     return Published(media_id, client.permalink(media_id))

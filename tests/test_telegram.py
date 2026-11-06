@@ -240,3 +240,35 @@ def test_client_gives_up_after_retries(monkeypatch):
     with pytest.raises(TelegramError, match="4번 시도"):
         TelegramClient(FAKE_TOKEN, sleep=sleeps.append).call("getMe")
     assert sleeps == [1, 2, 4]
+
+
+def test_preview_text_mentions_reel():
+    draft = {"cover_title": "제목", "source_url": "https://a.kr", "source_name": "연합뉴스", "source_title": "기사"}
+    text = preview_text(draft, "캡션", "11월 7일(토) 07:30", [], "오늘의 3분 뉴스", reel_seconds=15.0)
+    assert "릴스 15초" in text and "둘 다" in text
+    assert "릴스" not in preview_text(draft, "캡션", "11월 7일(토) 07:30", [], "오늘의 3분 뉴스")
+
+
+def test_send_preview_sends_video_and_survives_video_error(tmp_path):
+    from newsbot.approve.telegram import TelegramError, send_preview
+
+    class Client:
+        def __init__(self, fail):
+            self.fail, self.sent = fail, []
+
+        def send_photos(self, chat_id, photos):
+            self.sent.append("photos")
+
+        def send_video(self, chat_id, video, caption=""):
+            self.sent.append("video")
+            if self.fail:
+                raise TelegramError("too big")
+
+        def call(self, method, **params):
+            self.sent.append(method)
+            return {"message_id": 5}
+
+    for fail in (False, True):
+        client = Client(fail)
+        assert send_preview(client, 1, [tmp_path / "c.jpg"], "글", "id", reel=tmp_path / "reel.mp4") == 5
+        assert client.sent == ["photos", "video", "sendMessage"]

@@ -87,3 +87,13 @@ def test_prune_removes_old_days_and_keeps_state(repos):
     assert (work2 / "state" / "history.json").exists()
     assert not (work2 / "drafts" / "acc" / "2026-10-20").exists()
     assert git("rev-list", "--count", "HEAD", cwd=work2).strip() == "1"
+
+
+def test_old_gitignore_gets_mp4_line(repos):
+    remote, repo, tmp = repos
+    work = mb.ensure_worktree(repo / ".media", repo)
+    (work / ".gitignore").write_text("# 옛 설명\ndrafts/**/*.jpg\ndrafts/**/_html/\n", encoding="utf-8")
+    mb.ensure_worktree(repo / ".media", repo)
+    lines = (work / ".gitignore").read_text(encoding="utf-8").splitlines()
+    assert "drafts/**/*.mp4" in lines and lines.count("drafts/**/*.jpg") == 1
+    assert sum(line.startswith("#") for line in lines) == 1

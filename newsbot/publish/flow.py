@@ -1,4 +1,7 @@
-"""publish 명령의 흐름: 시간이 지난 초안 정리 → 승인된 초안만 게시 → 결과를 텔레그램으로 보고.
+"""publish 명령의 흐름: 시간이 지난 초안 정리 → 승인된 초안만 게시(카드뉴스, 이어서 릴스) → 결과를 텔레그램으로 보고.
+
+릴스(M7, 2026-11-07)는 같은 승인으로 카드뉴스 다음에 올린다. 릴스가 실패해도 카드뉴스는 그대로 두고,
+`publish --draft ID`로 다시 실행하면 이미 올라간 카드는 건너뛰고 릴스만 다시 시도한다.
 
 여러 번 실행해도 안전하다(멱등): 이미 게시·건너뜀·만료된 초안은 다시 건드리지 않는다.
 """
@@ -11,7 +14,7 @@ from pathlib import Path
 from newsbot.approve.telegram import REMOVE_KEYBOARD, TelegramClient, TelegramError
 from newsbot.collect.rss import Article, record_used
 from newsbot.config import AccountConfig
-from newsbot.publish.instagram import InstagramClient, InstagramError, publish_carousel
+from newsbot.publish.instagram import InstagramClient, InstagramError, publish_carousel, publish_reel
 from newsbot.storage import drafts
 from newsbot.storage.media_branch import MediaError
 from newsbot.write.caption import build_alt_texts
@@ -24,6 +27,8 @@ class Outcome:
     draft_id: str
     status: str  # published / failed / expired
     note: str = ""
+    reel_status: str = ""  # 릴스를 시도했을 때만: published / failed
+    reel_note: str = ""
 
 
 def _notify(tg: TelegramClient, chat_id: int, record: dict, text: str, clear_buttons: bool = False) -> None:
@@ -54,35 +59,87 @@ def media_dest(draft_id: str) -> str:
     return drafts.draft_dir(Path("drafts"), draft_id).as_posix()
 
 
+def ensure_cards(record: dict, account: AccountConfig, root: Path) -> list[Path]:
+    """카드 이미지는 승인 전에는 저장소에 올리지 않으므로, 새로 시작한 실행(Actions)에서는 다시 그린다."""
+    folder = drafts.draft_dir(root, record["id"])
+    files = [folder / name for name in record["cards"]]
+    if not all(f.exists() for f in files):
+        from newsbot.design.cards import render_cards
+
+        files = render_cards(record["draft"], account, folder, datetime.fromisoformat(record["slot"])).paths
+    return files
+
+
+def wants_reel(record: dict, account: AccountConfig) -> bool:
+    """릴스를 (아직) 올려야 하는 초안인가. 릴스 기능을 켜기 전에 만든 초안은 기록에 reel이 없어 올리지 않는다."""
+    reel = record.get("reel")
+    return account.reels.enabled and bool(reel) and reel.get("status") != "published"
+
+
+def publish_reel_part(record: dict, account: AccountConfig, root: Path, ig: InstagramClient, upload) -> tuple[str, str]:
+    """릴스를 만들고(없으면) 올린다. (상태, 링크 또는 실패 이유)를 돌려주고 기록에 남긴다."""
+    reel = record["reel"]
+    draft_id = record["id"]
+    try:
+        if not reel.get("video_url"):
+            folder = drafts.draft_dir(root, draft_id)
+            video, cover = folder / reel.get("video", "reel.mp4"), folder / reel.get("cover", "reel_cover.jpg")
+            if not (video.exists() and cover.exists()):
+                from newsbot.design.reels import render_reel
+
+                made = render_reel(record["draft"], account, ensure_cards(record, account, root), folder)
+                video, cover = made.video, made.cover
+            reel["video_url"], reel["cover_url"] = upload([video, cover], media_dest(draft_id),
+                                                          account.publish.media_repo, f"media: {draft_id} 릴스")
+            drafts.save(root, record)
+        progress = reel.setdefault("publish", {})
+        result = publish_reel(ig, reel["video_url"], record["caption"], progress, save=lambda: drafts.save(root, record),
+                              cover_url=reel.get("cover_url"), share_to_feed=account.reels.share_to_feed)
+    except Exception as error:  # noqa: BLE001 — 카드뉴스는 이미 올라갔다: 영상(Chromium·ffmpeg) 어떤 오류든 릴스 실패로 기록하고 보고까지 간다
+        log.warning("릴스 실패 %s: %s", draft_id, error)
+        reel["status"], reel["note"] = "failed", f"{type(error).__name__}: {error}"[:500]
+        drafts.save(root, record)
+        return "failed", reel["note"]
+    reel.update(status="published", media_id=result.media_id, permalink=result.permalink, note="")
+    drafts.save(root, record)
+    return "published", result.permalink
+
+
 def publish_one(record: dict, account: AccountConfig, root: Path, ig: InstagramClient, tg: TelegramClient,
                 chat_id: int, upload, history_path: Path, now: datetime) -> Outcome:
     draft_id = record["id"]
-    try:
-        if not record.get("media_urls"):
-            folder = drafts.draft_dir(root, draft_id)
-            files = [folder / name for name in record["cards"]]
-            if not all(f.exists() for f in files):
-                # 카드 이미지는 승인 전에는 저장소에 올리지 않으므로, 새로 시작한 실행(Actions)에서는 다시 그린다
-                from newsbot.design.cards import render_cards
+    if record.get("status") != "published":
+        try:
+            if not record.get("media_urls"):
+                files = ensure_cards(record, account, root)
+                record["media_urls"] = upload(files, media_dest(draft_id), account.publish.media_repo, f"media: {draft_id}")
+                drafts.save(root, record)
+            progress = record.setdefault("publish", {})
+            result = publish_carousel(ig, record["media_urls"], record["caption"], progress,
+                                      save=lambda: drafts.save(root, record),
+                                      alt_texts=build_alt_texts(record["draft"], account))
+        except (InstagramError, MediaError, OSError) as error:
+            drafts.set_status(root, record, "failed", now, note=str(error))
+            _notify(tg, chat_id, record, f"❌ 게시 실패 ({record['slot_label']})\n이유: {error}")
+            return Outcome(draft_id, "failed", str(error))
 
-                files = render_cards(record["draft"], account, folder, datetime.fromisoformat(record["slot"])).paths
-            record["media_urls"] = upload(files, media_dest(draft_id), account.publish.media_repo, f"media: {draft_id}")
-            drafts.save(root, record)
-        progress = record.setdefault("publish", {})
-        result = publish_carousel(ig, record["media_urls"], record["caption"], progress,
-                                  save=lambda: drafts.save(root, record),
-                                  alt_texts=build_alt_texts(record["draft"], account))
-    except (InstagramError, MediaError, OSError) as error:
-        drafts.set_status(root, record, "failed", now, note=str(error))
-        _notify(tg, chat_id, record, f"❌ 게시 실패 ({record['slot_label']})\n이유: {error}")
-        return Outcome(draft_id, "failed", str(error))
+        record["media_id"], record["permalink"] = result.media_id, result.permalink
+        drafts.set_status(root, record, "published", now)
+        draft = record["draft"]
+        record_used(history_path, [Article(draft["source_name"], draft["source_title"], "", draft["source_url"], now)], now)
+        reel_next = "\n🎬 릴스는 이어서 올리는 중이에요" if wants_reel(record, account) else ""
+        # 카드 결과는 바로 알린다(릴스 영상 처리 대기가 길어도 먼저 알 수 있게)
+        _notify(tg, chat_id, record, f"📸 올라갔어요! {draft['cover_title']}\n{result.permalink}{reel_next}")
 
-    record["media_id"], record["permalink"] = result.media_id, result.permalink
-    drafts.set_status(root, record, "published", now)
-    draft = record["draft"]
-    record_used(history_path, [Article(draft["source_name"], draft["source_title"], "", draft["source_url"], now)], now)
-    _notify(tg, chat_id, record, f"📸 올라갔어요! {draft['cover_title']}\n{result.permalink}")
-    return Outcome(draft_id, "published", result.permalink)
+    outcome = Outcome(draft_id, "published", record.get("permalink", ""))
+    if wants_reel(record, account):
+        outcome.reel_status, outcome.reel_note = publish_reel_part(record, account, root, ig, upload)
+        if outcome.reel_status == "published":
+            _notify(tg, chat_id, record, f"🎬 릴스도 올라갔어요\n{outcome.reel_note}")
+        else:
+            _notify(tg, chat_id, record, f"⚠️ 릴스는 실패했어요(카드뉴스는 올라감)\n이유: {outcome.reel_note}\n"
+                                         "Claude에게 '릴스 다시 올려줘'라고 하면 릴스만 다시 올려요.")
+    return outcome
 
 
 def run(account: AccountConfig, root: Path, ig: InstagramClient, tg: TelegramClient, chat_id: int, upload,
@@ -105,7 +162,9 @@ def run(account: AccountConfig, root: Path, ig: InstagramClient, tg: TelegramCli
                 outcomes.append(Outcome(record["id"], "expired"))
                 continue
         retry_failed = only_id is not None and status == "failed"
-        if (status == "approved" and (due or only_id)) or retry_failed:
+        # 카드는 올라갔는데 릴스만 실패한 초안: 직접 실행(publish --draft)에서만 릴스를 다시 시도한다
+        retry_reel = only_id is not None and status == "published" and wants_reel(record, account)
+        if (status == "approved" and (due or only_id)) or retry_failed or retry_reel:
             outcomes.append(publish_one(record, account, root, ig, tg, chat_id, upload, history_path, now))
         elif only_id:
             outcomes.append(Outcome(record["id"], status or "?", "승인된 초안이 아니라서 게시하지 않았어요"))

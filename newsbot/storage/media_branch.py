@@ -15,7 +15,7 @@ from newsbot.util.masking import mask_text
 
 BRANCH = "media"
 WORKTREE = ROOT / ".media"
-MEDIA_GITIGNORE = "# 카드 이미지는 승인된 것만 게시 직전에 git add -f로 올린다\ndrafts/**/*.jpg\ndrafts/**/_html/\n"
+MEDIA_GITIGNORE = "# 카드 이미지·릴스 영상은 승인된 것만 게시 직전에 git add -f로 올린다\ndrafts/**/*.jpg\ndrafts/**/*.mp4\ndrafts/**/_html/\n"
 
 
 class MediaError(RuntimeError):
@@ -57,8 +57,13 @@ def ensure_worktree(worktree: Path = WORKTREE, repo: Path = ROOT) -> Path:
             # 아직 못 올린 내 커밋·변경은 지키면서 원격 최신 위에 얹는다
             _git("rebase", "-q", "--autostash", f"origin/{BRANCH}", cwd=worktree)
     ignore = worktree / ".gitignore"
-    if not ignore.exists():
-        ignore.write_text(MEDIA_GITIGNORE, encoding="utf-8")
+    current = ignore.read_text(encoding="utf-8") if ignore.exists() else ""
+    missing = [line for line in MEDIA_GITIGNORE.splitlines()
+               if line not in current.splitlines() and (not current or not line.startswith("#"))]
+    if missing:
+        # 이미 있는 파일에도 새 줄(예: 2026-11-07 릴스 *.mp4)을 더한다
+        joined = "\n".join(missing) + "\n"
+        ignore.write_text(current + ("" if not current or current.endswith("\n") else "\n") + joined, encoding="utf-8")
     return worktree
 
 

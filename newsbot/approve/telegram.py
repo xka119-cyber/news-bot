@@ -60,24 +60,34 @@ class TelegramClient:
         data = json.dumps(body, ensure_ascii=False).encode("utf-8")
         return self._request(method, data, {"Content-Type": "application/json"})
 
-    def send_photos(self, chat_id: int, photos: list[Path]) -> list[dict]:
-        """사진 여러 장을 앨범 하나로 보낸다(sendMediaGroup, 파일 직접 업로드)."""
+    def _multipart(self, method: str, fields: list[tuple[str, str | None, bytes, str | None]]) -> object:
+        """fields: (이름, 파일 이름 또는 None, 내용, Content-Type 또는 None)"""
         boundary = uuid.uuid4().hex
-        media = [{"type": "photo", "media": f"attach://p{i}"} for i in range(len(photos))]
-        parts = [
-            ("chat_id", None, str(chat_id).encode()),
-            ("media", None, json.dumps(media).encode()),
-        ] + [(f"p{i}", path.name, path.read_bytes()) for i, path in enumerate(photos)]
         body = bytearray()
-        for name, filename, content in parts:
+        for name, filename, content, content_type in fields:
             body += f"--{boundary}\r\n".encode()
             disposition = f'form-data; name="{name}"' + (f'; filename="{filename}"' if filename else "")
             body += f"Content-Disposition: {disposition}\r\n".encode()
-            if filename:
-                body += b"Content-Type: image/jpeg\r\n"
+            if content_type:
+                body += f"Content-Type: {content_type}\r\n".encode()
             body += b"\r\n" + content + b"\r\n"
         body += f"--{boundary}--\r\n".encode()
-        return self._request("sendMediaGroup", bytes(body), {"Content-Type": f"multipart/form-data; boundary={boundary}"})
+        return self._request(method, bytes(body), {"Content-Type": f"multipart/form-data; boundary={boundary}"})
+
+    def send_photos(self, chat_id: int, photos: list[Path]) -> list[dict]:
+        """사진 여러 장을 앨범 하나로 보낸다(sendMediaGroup, 파일 직접 업로드)."""
+        media = [{"type": "photo", "media": f"attach://p{i}"} for i in range(len(photos))]
+        fields = [("chat_id", None, str(chat_id).encode(), None), ("media", None, json.dumps(media).encode(), None)]
+        fields += [(f"p{i}", path.name, path.read_bytes(), "image/jpeg") for i, path in enumerate(photos)]
+        return self._multipart("sendMediaGroup", fields)
+
+    def send_video(self, chat_id: int, video: Path, caption: str = "", width: int = 1080, height: int = 1920) -> dict:
+        """릴스 미리보기 영상(sendVideo, 50MB 이하). 폰에서 바로 재생되게 supports_streaming."""
+        fields = [("chat_id", None, str(chat_id).encode(), None), ("caption", None, caption.encode(), None),
+                  ("width", None, str(width).encode(), None), ("height", None, str(height).encode(), None),
+                  ("supports_streaming", None, b"true", None),
+                  ("video", video.name, video.read_bytes(), "video/mp4")]
+        return self._multipart("sendVideo", fields)
 
     def get_updates(self, offset: int | None, timeout: int = 0) -> list[dict]:
         return self.call("getUpdates", offset=offset, timeout=timeout, allowed_updates=["message", "callback_query"])
@@ -99,11 +109,14 @@ def parse_callback(data: str) -> tuple[str, str] | None:
     return action, draft_id
 
 
-def preview_text(draft: dict, caption: str, slot_label: str, warnings: list[str], brand: str, order: str = "") -> str:
-    """order: 같은 시각 게시물 중 몇 번째인지(예: "1/2"). 하나씩 따로 승인한다."""
+def preview_text(draft: dict, caption: str, slot_label: str, warnings: list[str], brand: str, order: str = "",
+                 reel_seconds: float | None = None) -> str:
+    """order: 같은 시각 게시물 중 몇 번째인지(예: "1/2"). 하나씩 따로 승인한다.
+    reel_seconds가 있으면 승인 한 번으로 카드뉴스와 릴스가 같이 올라간다고 적는다(2026-11-07)."""
     e = html.escape
     title = f"<b>📮 {e(brand)} 미리보기" + (f" ({e(order)})" if order else "") + "</b>"
-    lines = [title, f"게시 예정: <b>{e(slot_label)}</b> · 카드뉴스 4장", ""]
+    kinds = "카드뉴스 4장" + (f" + 릴스 {reel_seconds:g}초 (승인하면 둘 다 올라가요)" if reel_seconds else "")
+    lines = [title, f"게시 예정: <b>{e(slot_label)}</b> · {kinds}", ""]
     lines += [f"<b>{e(draft['cover_title'])}</b>", "", "<b>캡션</b>", f"<blockquote expandable>{e(caption)}</blockquote>"]
     lines.append(f'<b>원문</b>: <a href="{e(draft["source_url"], quote=True)}">{e(draft["source_name"])} · {e(draft["source_title"])}</a>')
     if warnings:
@@ -120,9 +133,16 @@ def buttons(draft_id: str) -> dict:
     ]]}
 
 
-def send_preview(client: TelegramClient, chat_id: int, cards: list[Path], text: str, draft_id: str) -> int:
-    """앨범 + 내용 메시지를 보내고, 내용 메시지 번호를 돌려준다. 승인은 아래 키보드 버튼으로 받는다."""
+def send_preview(client: TelegramClient, chat_id: int, cards: list[Path], text: str, draft_id: str,
+                 reel: Path | None = None) -> int:
+    """앨범(+ 릴스 영상) + 내용 메시지를 보내고, 내용 메시지 번호를 돌려준다. 승인은 아래 키보드 버튼으로 받는다."""
     client.send_photos(chat_id, cards)
+    if reel is not None:
+        try:
+            client.send_video(chat_id, reel, caption="🎬 릴스 미리보기")
+        except TelegramError as error:
+            # 영상 미리보기가 안 가도 카드 미리보기·승인은 그대로 진행한다
+            log.warning("릴스 미리보기 전송 실패: %s", error)
     message = client.call(
         "sendMessage", chat_id=chat_id, text=text, parse_mode="HTML", link_preview_options={"is_disabled": True},
     )

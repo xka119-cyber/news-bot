@@ -1,0 +1,23 @@
+{% extends "_base.html.j2" %}
+{# 릴스 바탕(1080x1920, 2026-11-07). 인스타가 위 ~200px·아래 ~320px에 버튼·캡션을 덮으므로 중요한 글은 그 사이에 둔다.
+   : 위 = 제목(소리 없이 봐도 무슨 뉴스인지), 가운데 = 카드 자리(파이썬이 얹음), 아래 = 브랜드·팔로우 권유.
+   진행 막대는 프레임마다 파이썬이 그린다(.bar 자리). #}
+{% block style %}
+body { background: var(--primary); color: #fff; }
+.top { position: absolute; left: 60px; right: 60px; top: {{ top_y }}px; height: {{ top_h }}px; display: flex; flex-direction: column; justify-content: center; }
+.tag { align-self: flex-start; background: var(--accent); color: var(--primary); font-family: "Pen"; font-size: 46px; padding: 0 24px 4px; border-radius: 18px; }
+.title { margin-top: 14px; font-family: "Jua"; font-size: calc(var(--s) * 64px); line-height: 1.22; }
+.bottom { position: absolute; left: 60px; right: 60px; top: {{ bottom_y + 44 }}px; text-align: center; }
+.brand { font-family: "Jua"; font-size: 44px; color: var(--accent); }
+.follow { margin-top: 8px; font-family: "Pen"; font-size: 48px; color: #fff; }
+{% endblock %}
+{% block body %}
+<div class="top fit-box">
+  <div class="tag"><span class="emoji">{{ emoji }}</span> {{ category }} · 3분 뉴스</div>
+  <div class="title">{{ title }}</div>
+</div>
+<div class="bottom">
+  <div class="brand">{{ brand }}</div>
+  <div class="follow">팔로우하면 하루 4번, 3분 요약 받아요</div>
+</div>
+{% endblock %}

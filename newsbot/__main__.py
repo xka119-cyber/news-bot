@@ -114,17 +114,33 @@ def run_generate(account_key: str, slot_hhmm: str | None, mock_llm: bool) -> int
             avoid.append(result.draft["source_title"])
             caption = build_caption(result.draft, account)
             stage = f"{number}번째 카드 디자인"
-            rendered = render_cards(result.draft, account, drafts.draft_dir(DRAFTS_ROOT, draft_id), slot)
+            folder = drafts.draft_dir(DRAFTS_ROOT, draft_id)
+            rendered = render_cards(result.draft, account, folder, slot)
             warnings = result.warnings + rendered.warnings
+            reel = None
+            if account.reels.enabled:
+                stage = f"{number}번째 릴스 영상"
+                from newsbot.design.reels import render_reel
+
+                try:
+                    reel = render_reel(result.draft, account, rendered.paths, folder)
+                    warnings += reel.warnings
+                except Exception as error:  # noqa: BLE001 — Chromium(Playwright Error)·ffmpeg 어떤 오류든
+                    # 영상이 안 돼도 카드뉴스는 그대로 진행한다. 게시 때 한 번 더 만들어 본다.
+                    warnings.append(f"릴스 영상을 만들지 못했어요(게시 때 다시 시도): {error}")
             record = {
                 "id": draft_id, "account": account.account_key, "slot": slot.isoformat(), "slot_label": label,
                 "number": number, "format": "carousel", "draft": result.draft, "caption": caption,
                 "warnings": warnings, "cards": [p.name for p in rendered.paths], "cost_usd": result.cost_usd,
             }
+            if account.reels.enabled:
+                record["reel"] = {"status": "pending", "video": "reel.mp4", "cover": "reel_cover.jpg"}
             drafts.set_status(DRAFTS_ROOT, record, "generated", now)
             stage = f"{number}번째 텔레그램 전송"
-            text = preview_text(result.draft, caption, label, warnings, account.brand_name, order=f"{number}/{total}")
-            record["telegram_message_id"] = send_preview(client, chat_id, rendered.paths, text, draft_id)
+            text = preview_text(result.draft, caption, label, warnings, account.brand_name, order=f"{number}/{total}",
+                                reel_seconds=reel.seconds if reel else None)
+            record["telegram_message_id"] = send_preview(client, chat_id, rendered.paths, text, draft_id,
+                                                         reel=reel.video if reel else None)
             drafts.save(DRAFTS_ROOT, record)
             sent += 1
             print(f"✅ 미리보기 {number}/{total}: {draft_id} 「{result.draft['cover_title']}」 (${result.cost_usd:.4f})")
@@ -211,7 +227,9 @@ def run_publish(account_key: str, only_id: str | None) -> int:
     icons = {"published": "📸", "failed": "❌", "expired": "⌛"}
     for o in outcomes:
         print(f"{icons.get(o.status, '·')} {o.draft_id}: {o.status} {o.note}")
-    return 1 if any(o.status == "failed" for o in outcomes) else 0
+        if o.reel_status:
+            print(f"   🎬 릴스: {o.reel_status} {o.reel_note}")
+    return 1 if any(o.status == "failed" or o.reel_status == "failed" for o in outcomes) else 0
 
 
 def run_token_check(account_key: str) -> int:

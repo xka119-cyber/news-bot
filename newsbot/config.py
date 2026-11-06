@@ -43,6 +43,17 @@ class FormatPlan(_Strict):
     week2: dict[str, PostFormat]
 
 
+class Reels(_Strict):
+    """같은 뉴스를 카드뉴스와 함께 릴스(세로 영상)로도 올린다 (M7, 2026-11-07 사용자 결정: 둘 다, A/B 안 함, 약 15초, 무음)."""
+
+    enabled: bool = False
+    cover_seconds: float = Field(default=3.0, ge=1, le=10)  # 표지 카드
+    card_seconds: float = Field(default=4.0, ge=2, le=10)   # 나머지 카드 한 장씩
+    fps: int = Field(default=30, ge=24, le=60)
+    # false = 릴스 탭에만(프로필 격자에 같은 뉴스가 카드·릴스로 두 번 보이지 않게)
+    share_to_feed: bool = False
+
+
 class Feed(_Strict):
     source: str = Field(min_length=1)  # 카드·캡션에 적을 언론사명
     section: str = ""
@@ -126,8 +137,9 @@ class AccountConfig(_Strict):
     # (설계서의 generate_lead_minutes: 60 대신. GitHub 예약이 몇 시간씩 늦어 창으로 바꿈, 2026-11-06)
     generate_window_minutes: tuple[int, int] = (30, 90)
     posts_per_slot: int = Field(default=1, ge=1, le=5)  # 게시 시각마다 만들 게시물 수(하나씩 따로 승인)
-    format_plan: FormatPlan
-    reels_enabled: bool
+    # 설계서의 2주 A/B(시각별로 카드·릴스 번갈아) 계획. 2026-11-07 사용자가 '둘 다 올리기'를 골라 지금은 쓰지 않는다(비워 둠)
+    format_plan: FormatPlan | None = None
+    reels: Reels = Field(default_factory=Reels)
     collect: Collect
     write: Write
     design: Design
@@ -164,6 +176,8 @@ class AccountConfig(_Strict):
 
     @model_validator(mode="after")
     def _plan_matches_slots(self) -> "AccountConfig":
+        if self.format_plan is None:
+            return self
         slots = set(self.slots)
         if set(self.format_plan.week1) != slots or set(self.format_plan.week2) != slots:
             raise ValueError("format_plan의 시각이 slots와 일치하지 않습니다")

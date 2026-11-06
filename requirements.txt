@@ -8,3 +8,4 @@ pytest>=8,<10
 jinja2>=3,<4
 playwright>=1.48,<2
 Pillow>=10
+imageio-ffmpeg>=0.5,<1          # 릴스 영상용 ffmpeg (윈도우·리눅스 실행 파일이 들어 있어 따로 설치 안 해도 됨)

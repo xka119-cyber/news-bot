@@ -7,7 +7,7 @@ import pytest
 
 from newsbot.config import load_account
 from newsbot.publish import flow
-from newsbot.publish.instagram import InstagramClient, InstagramError, publish_carousel
+from newsbot.publish.instagram import InstagramClient, InstagramError, publish_carousel, publish_reel
 from newsbot.storage import drafts
 from newsbot.storage.media_branch import raw_url
 
@@ -19,8 +19,9 @@ TOKEN = "EAA" + "x" * 40
 class FakeIG:
     """InstagramClient와 같은 메서드를 가진 가짜. 호출 순서를 기록한다."""
 
-    def __init__(self, quota=100, statuses=None, fail_publish=False):
+    def __init__(self, quota=100, statuses=None, fail_publish=False, fail_reel=False):
         self.calls = []
+        self.fail_reel = fail_reel
         self.quota = quota
         self.statuses = statuses or {}
         self.fail_publish = fail_publish
@@ -37,12 +38,18 @@ class FakeIG:
         self.calls.append(("carousel", tuple(children), caption))
         return "parent"
 
+    def create_reel(self, video_url, caption, cover_url=None, share_to_feed=False):
+        self.calls.append(("reel", video_url, cover_url, share_to_feed))
+        if self.fail_reel:
+            raise InstagramError("영상 형식 오류")
+        return "reel1"
+
     def status(self, cid):
         if cid == "parent" and self.published:
             return "PUBLISHED"
         return self.statuses.get(cid, "FINISHED")
 
-    def wait_ready(self, cid):
+    def wait_ready(self, cid, interval=5, timeout=300):
         return self.status(cid)
 
     def publish(self, cid):
@@ -167,7 +174,7 @@ def account():
     return load_account("today_news")
 
 
-def make_record(root, status, slot=SLOT, hhmm="2130", number=None):
+def make_record(root, status, slot=SLOT, hhmm="2130", number=None, reel=False):
     draft_id = f"today_news/20261104-{hhmm}" + (f"-{number}" if number else "")
     folder = drafts.draft_dir(root, draft_id)
     folder.mkdir(parents=True)
@@ -180,6 +187,10 @@ def make_record(root, status, slot=SLOT, hhmm="2130", number=None):
                   "points": [{"title": "하나", "lines": ["가", "나"]}, {"title": "둘", "lines": ["다"]}],
                   "source_name": "연합뉴스", "source_title": "원문 제목", "source_url": "https://a.kr/1"},
     }
+    if reel:
+        (folder / "reel.mp4").write_bytes(b"mp4")
+        (folder / "reel_cover.jpg").write_bytes(b"jpg")
+        record["reel"] = {"status": "pending", "video": "reel.mp4", "cover": "reel_cover.jpg"}
     drafts.set_status(root, record, status, NOW - timedelta(hours=1))
     return draft_id
 
@@ -276,3 +287,100 @@ def test_failure_is_recorded_and_reported(account, tmp_path):
     assert outcomes[0].status == "failed"
     assert drafts.load(tmp_path, draft_id)["status"] == "failed"
     assert "❌" in tg.sent[-1][1]["text"]
+
+
+# ---------- 릴스 (M7, 2026-11-07) ----------
+
+def test_publish_reel_creates_waits_and_publishes():
+    ig, progress = FakeIG(), {}
+    result = publish_reel(ig, "https://x/reel.mp4", "캡션", progress, cover_url="https://x/c.jpg")
+    assert ig.calls[0] == ("reel", "https://x/reel.mp4", "https://x/c.jpg", False)
+    assert ("publish", "reel1") in ig.calls and progress["container_id"] == "reel1"
+    assert result.permalink.endswith("/media1/")
+
+
+def test_publish_reel_not_twice_when_already_published():
+    ig = FakeIG(statuses={"reel1": "PUBLISHED"})
+    publish_reel(ig, "https://x/reel.mp4", "캡션", {"container_id": "reel1"})
+    assert ig.calls == []
+
+
+def test_publish_reel_reuses_container_still_processing_and_remakes_expired():
+    ig = FakeIG(statuses={"old": "IN_PROGRESS"})
+    publish_reel(ig, "u", "c", {"container_id": "old"})
+    assert ig.calls == [("publish", "old")]
+    ig = FakeIG(statuses={"old": "EXPIRED"})
+    progress = {"container_id": "old"}
+    publish_reel(ig, "u", "c", progress)
+    assert ig.calls[0][0] == "reel" and progress["container_id"] == "reel1"
+
+
+def test_reel_follows_carousel_with_same_approval(account, tmp_path):
+    draft_id = make_record(tmp_path, "approved", reel=True)
+    ig, tg, uploads = FakeIG(), FakeTG(), []
+    outcomes = run(account, tmp_path, ig, tg, uploads)
+    assert [(o.status, o.reel_status) for o in outcomes] == [("published", "published")]
+    assert uploads[1] == ("drafts/today_news/2026-11-04/2130", ["reel.mp4", "reel_cover.jpg"])
+    reel_call = next(c for c in ig.calls if c[0] == "reel")
+    assert reel_call[1].endswith("/reel.mp4") and reel_call[2].endswith("/reel_cover.jpg") and reel_call[3] is False
+    record = drafts.load(tmp_path, draft_id)
+    assert record["status"] == "published" and record["reel"]["status"] == "published"
+    texts = [params["text"] for method, params in tg.sent if method == "sendMessage"]
+    assert "📸" in texts[0] and "이어서" in texts[0] and "🎬 릴스도" in texts[1]  # 카드 결과를 먼저 알림
+    assert run(account, tmp_path, FakeIG(), FakeTG(), []) == []  # 두 번째 실행은 아무것도 안 함
+
+
+def test_reel_failure_keeps_carousel_and_can_be_retried(account, tmp_path):
+    draft_id = make_record(tmp_path, "approved", reel=True)
+    tg = FakeTG()
+    outcome = run(account, tmp_path, FakeIG(fail_reel=True), tg, [])[0]
+    assert (outcome.status, outcome.reel_status) == ("published", "failed")
+    record = drafts.load(tmp_path, draft_id)
+    assert record["status"] == "published" and record["reel"]["status"] == "failed"
+    assert "릴스는 실패" in tg.sent[-1][1]["text"]
+    # 자동 실행은 실패한 릴스를 계속 다시 시도하지 않는다
+    ig = FakeIG()
+    assert run(account, tmp_path, ig, FakeTG(), []) == []
+    # 직접 실행(publish --draft)은 카드는 건너뛰고 릴스만 올린다
+    ig = FakeIG()
+    outcome = run(account, tmp_path, ig, FakeTG(), [], only_id=draft_id)[0]
+    assert outcome.reel_status == "published"
+    assert [c[0] for c in ig.calls] == ["reel", "publish"]
+
+
+def test_old_draft_without_reel_posts_carousel_only(account, tmp_path):
+    make_record(tmp_path, "approved")
+    ig = FakeIG()
+    outcome = run(account, tmp_path, ig, FakeTG(), [])[0]
+    assert outcome.reel_status == "" and not any(c[0] == "reel" for c in ig.calls)
+
+
+def test_any_reel_error_is_recorded_not_crashing(account, tmp_path):
+    """영상 쪽(Chromium·ffmpeg) 오류가 어떤 종류든 카드는 올라간 상태로 남고 실패가 기록·보고된다 (QA 11-07)."""
+    draft_id = make_record(tmp_path, "approved", reel=True)
+
+    class BrowserError(Exception):
+        pass
+
+    def upload(files, dest, repo, message):
+        if any(f.name == "reel.mp4" for f in files):
+            raise BrowserError("chromium crashed")
+        return [raw_url(repo, f"{dest}/{f.name}") for f in files]
+
+    tg = FakeTG()
+    outcome = flow.run(account, tmp_path, FakeIG(), tg, 1, upload, tmp_path / "history.json", NOW)[0]
+    assert (outcome.status, outcome.reel_status) == ("published", "failed")
+    assert "BrowserError" in drafts.load(tmp_path, draft_id)["reel"]["note"]
+    assert "릴스는 실패" in tg.sent[-1][1]["text"]
+
+
+def test_publish_reel_remakes_container_it_cannot_read():
+    class Gone(FakeIG):
+        def status(self, cid):
+            if cid == "gone":
+                raise InstagramError("없는 컨테이너")
+            return super().status(cid)
+
+    ig, progress = Gone(), {"container_id": "gone"}
+    publish_reel(ig, "u", "c", progress)
+    assert ig.calls[0][0] == "reel" and progress["container_id"] == "reel1"
