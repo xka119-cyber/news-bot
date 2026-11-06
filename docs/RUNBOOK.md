@@ -58,7 +58,7 @@ Cloudflare 시계가 깨우고 GitHub Actions가 실행합니다(둘 다 무료)
    - 끝에 `Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)`가 찍히면 Node(24) 종료 버그라 무시해도 됩니다. 성공 여부는 ✅/❌ 줄로 봅니다.
 4. 확인: 10분 안에 Actions 탭에 `tick · cloudflare` 실행이 생기고, 그 뒤로 10분마다 이어집니다. (Claude에게 "시계 돌아가?"라고 물어도 됩니다.) 2026-11-06 19:50 첫 깨우기 성공.
 
-- 만료가 있는 토큰을 골랐다면 그 날이 지나면 정각마다 텔레그램 알림(응답 401)이 옵니다 → 1~3번을 다시 하면 됩니다. 만료일을 알려 주면 여기 적어 둡니다. (만료일: 미정)
+- 지금 토큰은 **만료 없음**(No expiration)으로 만들었습니다(2026-11-06). 그래서 갱신할 일은 없고, GitHub에서 토큰을 지우거나 새로 만들었을 때만 1~3번을 다시 합니다. 토큰이 막히면 정각마다 텔레그램 알림(응답 401)이 옵니다.
 - 시계 코드를 바꿨을 때 올리기: `clock/` 폴더에서 `npm run deploy` (처음 한 번 `npx wrangler login` — 이 PC는 함께달력 때 이미 로그인됨). 검사는 `npm test`(진짜 GitHub·텔레그램에는 요청 안 함).
 - 시계 상태 보기: dash.cloudflare.com → Workers & Pages → `newsbot-clock` → Logs. 보통은 볼 일이 없습니다(문제는 텔레그램으로 옵니다).
 
