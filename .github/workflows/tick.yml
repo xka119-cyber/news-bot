@@ -4,12 +4,20 @@
 #     (저장소·계정 설정은 모두 정상. GitHub 문서도 "바쁠 때는 늦거나 빠질 수 있다"고 적어 둠).
 #     10분마다 깨어나 '현재 시각' 기준으로 판단하면 예약이 늦게 와도 그때 맞는 일을 하고, 한 번 빠져도 다음 깨어남이 이어받는다.
 #     generate·publish는 여러 번 돌아도 안전(멱등)해서 겹쳐도 괜찮다. 설명: docs/RUNBOOK.md '자동 실행'
+# 누가 깨우나: 주 시계는 Cloudflare Worker(clock/)가 10분마다(정각·10·20…분) 보내는 workflow_dispatch(source=cloudflare).
+#     아래 GitHub 자체 예약(schedule)은 보조로 남겨 둔다(늦게라도 오면 같은 판단을 하므로 해롭지 않다).
 name: tick
+run-name: "tick · ${{ inputs.source || 'GitHub 예약' }}"   # Actions 탭에서 누가 깨웠는지 보이게
 
 on:
   schedule:
-    - cron: "4,14,24,34,44,54 * * * *"   # 10분마다 (UTC지만 간격이라 시간대와 무관). 정각·30분은 붐벼서 피함
+    - cron: "4,14,24,34,44,54 * * * *"   # 보조. 10분마다 (UTC지만 간격이라 시간대와 무관). 시계(정각·10·20…분)와 4분 어긋나게
   workflow_dispatch:
+    inputs:
+      source:
+        description: "누가 깨웠나 (cloudflare = 시계 Worker, manual = 직접 실행). 실행 이름에만 쓰임"
+        required: false
+        default: manual
 
 permissions:
   contents: write   # media 브랜치에 초안·상태 저장

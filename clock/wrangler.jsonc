@@ -1,0 +1,18 @@
+// 뉴스봇 시계 설정 — 배포: clock/ 에서 npm run deploy (처음 한 번 npx wrangler login).
+// 비밀값(GH_DISPATCH_TOKEN, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID)은 scripts/set_clock_secrets.py가 .env에서 옮긴다. 여기엔 적지 않는다.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "newsbot-clock",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-20",
+  // 인터넷 주소를 만들지 않는다(HTTP 요청을 받지 않음). 하는 일은 cron으로 깨어나 GitHub를 깨우는 것뿐.
+  "workers_dev": false,
+  // 10분마다 (정각·10·20·…분). 무료 한도: 계정당 cron 5개 — 함께달력 알림 1개 + 이것 1개 = 2개 사용. 하루 요청 144번 (무료 10만).
+  "triggers": { "crons": ["*/10 * * * *"] },
+  "vars": {
+    "GITHUB_REPO": "xka119-cyber/news-bot",
+    "WORKFLOW_FILE": "tick.yml",
+    "GIT_REF": "main"
+  },
+  "observability": { "enabled": true }
+}

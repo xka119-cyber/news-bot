@@ -1,0 +1,14 @@
+{
+  "name": "newsbot-clock",
+  "private": true,
+  "description": "뉴스봇 시계: 10분마다 GitHub Actions의 tick을 깨우는 Cloudflare Worker (무료 cron)",
+  "type": "module",
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\"",
+    "dev": "wrangler dev --test-scheduled --port 8789",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "4.155.0"
+  }
+}

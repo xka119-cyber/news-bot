@@ -13,3 +13,8 @@ __pycache__/
 out/
 state/
 .media/
+
+# 시계 Worker (clock/): 설치 파일·로컬 실행 파일·로컬 비밀값
+clock/node_modules/
+clock/.wrangler/
+clock/.dev.vars
