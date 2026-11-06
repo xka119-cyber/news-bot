@@ -45,7 +45,7 @@ Cloudflare 시계가 깨우고 GitHub Actions가 실행합니다(둘 다 무료)
 
 ### 시계 켜기 (Cloudflare Worker) — 한 번만
 
-시계 프로그램은 2026-11-06 18:42에 Cloudflare에 올려 두었습니다(함께달력 알림 서버와 같은 계정). GitHub를 깨울 **열쇠(GitHub 토큰)** 를 넣고 아래 3번을 한 번 돌리면 다음 10분부터 작동합니다. 그 전까지는 10분마다 깨어나 "토큰 없음"만 기록하고 조용히 있습니다.
+시계는 2026-11-06 18:42에 Cloudflare에 올렸고(함께달력 알림 서버와 같은 계정), 19:49에 **열쇠(GitHub 토큰)** 를 넣어 19:50부터 GitHub를 깨우고 있습니다. 아래는 토큰을 새로 만들 때(만료·분실) 다시 하는 순서입니다. 토큰이 없으면 시계는 10분마다 깨어나 "토큰 없음"만 기록하고 조용히 있습니다.
 
 1. GitHub 토큰 만들기: github.com 로그인 → 오른쪽 위 프로필 → **Settings** → 왼쪽 맨 아래 **Developer settings** → **Personal access tokens** → **Fine-grained tokens** → **Generate new token**.
    - Token name: `newsbot-clock` · Expiration: **No expiration**(만료 없음)을 고릅니다. 그 항목이 없으면 Custom으로 1년 뒤 날짜(7·30·60·90일을 고르면 그만큼 지나서 다시 발급해야 합니다) · Resource owner: xka119-cyber
@@ -53,15 +53,17 @@ Cloudflare 시계가 깨우고 GitHub Actions가 실행합니다(둘 다 무료)
    - Permissions → Repository permissions → **Actions: Read and write** (Metadata는 자동으로 Read). 다른 권한은 건드리지 않음
    - **Generate token** → 값은 이때 한 번만 보입니다. 복사.
 2. 메모장으로 `news-bot/.env`를 열면 맨 아래에 `GH_DISPATCH_TOKEN=` 줄이 있습니다(없으면 새 줄로 직접 씁니다). `=` 바로 뒤에 띄어쓰기 없이 붙여 넣고 저장합니다. 채팅에는 붙이지 않습니다.
-3. `news-bot` 폴더에서 `.venv\Scripts\python.exe scripts\set_clock_secrets.py`를 실행합니다(Claude 채팅의 ▶ Run 버튼 또는 터미널). `.env`의 토큰과 텔레그램 값 3개를 화면에 보이지 않게 Cloudflare로 옮기고, 등록된 **이름만** 보여 줍니다. Claude에게 부탁해도 되지만 비밀값 저장은 Claude가 혼자 못 하게 막혀 있어 "허용"을 눌러 줘야 합니다.
-4. 확인: 10분 안에 Actions 탭에 `tick · cloudflare` 실행이 생기고, 그 뒤로 10분마다 이어집니다. (Claude에게 "시계 돌아가?"라고 물어도 됩니다.)
+3. Claude에게 "시계 비밀값 넣어줘"라고 합니다. `scripts/set_clock_secrets.py`가 `.env`의 토큰과 텔레그램 값 3개를 화면에 보이지 않게 Cloudflare로 옮기고, 등록된 **이름만** 보여 줍니다(2026-11-06 19:49 이렇게 넣음).
+   - 훈의 터미널에서 직접 돌리면 `You are not authenticated` 또는 `non-interactive environment ... CLOUDFLARE_API_TOKEN` 오류가 납니다. Cloudflare 로그인(`wrangler login`)이 **Claude가 명령을 돌리는 환경에만** 되어 있고 훈의 터미널에는 없기 때문입니다(2026-11-06 확인). 직접 돌리고 싶으면 먼저 `clock/` 폴더에서 `npx wrangler login`을 한 번 하고(브라우저에서 허용) 같은 명령을 실행합니다.
+   - 끝에 `Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)`가 찍히면 Node(24) 종료 버그라 무시해도 됩니다. 성공 여부는 ✅/❌ 줄로 봅니다.
+4. 확인: 10분 안에 Actions 탭에 `tick · cloudflare` 실행이 생기고, 그 뒤로 10분마다 이어집니다. (Claude에게 "시계 돌아가?"라고 물어도 됩니다.) 2026-11-06 19:50 첫 깨우기 성공.
 
 - 만료가 있는 토큰을 골랐다면 그 날이 지나면 정각마다 텔레그램 알림(응답 401)이 옵니다 → 1~3번을 다시 하면 됩니다. 만료일을 알려 주면 여기 적어 둡니다. (만료일: 미정)
 - 시계 코드를 바꿨을 때 올리기: `clock/` 폴더에서 `npm run deploy` (처음 한 번 `npx wrangler login` — 이 PC는 함께달력 때 이미 로그인됨). 검사는 `npm test`(진짜 GitHub·텔레그램에는 요청 안 함).
 - 시계 상태 보기: dash.cloudflare.com → Workers & Pages → `newsbot-clock` → Logs. 보통은 볼 일이 없습니다(문제는 텔레그램으로 옵니다).
 
 ### 비밀값 (Cloudflare 시계)
-- Worker `newsbot-clock`에 3개: `GH_DISPATCH_TOKEN`(GitHub 깨우기), `TELEGRAM_BOT_TOKEN`·`TELEGRAM_CHAT_ID`(실패 알림). 위 '시계 켜기' 3번이 세 개를 한 번에 넣습니다(2026-11-06 저녁 기준 아직 0개).
+- Worker `newsbot-clock`에 3개: `GH_DISPATCH_TOKEN`(GitHub 깨우기), `TELEGRAM_BOT_TOKEN`·`TELEGRAM_CHAT_ID`(실패 알림). 위 '시계 켜기' 3번이 세 개를 한 번에 넣습니다(2026-11-06 19:49 3개 등록).
 - 넣는 방법은 항상 `scripts/set_clock_secrets.py`(`.env` → Cloudflare, 값은 화면에 안 나옴). 이름만 확인하려면 `clock/`에서 `npx wrangler secret list`.
 
 ### 비밀값 (GitHub Secrets)
