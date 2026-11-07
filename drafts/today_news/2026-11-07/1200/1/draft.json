@@ -50,12 +50,17 @@
     "video": "reel.mp4",
     "cover": "reel_cover.jpg"
   },
-  "status": "generated",
+  "status": "expired",
   "history": [
     {
       "status": "generated",
       "at": "2026-11-07T01:31:22.294151+00:00",
       "note": ""
+    },
+    {
+      "status": "expired",
+      "at": "2026-11-07T03:01:32.353037+00:00",
+      "note": "승인 없이 게시 시각이 지남"
     }
   ],
   "telegram_message_id": 169
