@@ -1,0 +1,62 @@
+{
+  "id": "today_news/20261107-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-07T18:00:00+09:00",
+  "slot_label": "11월 7일(토) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "생활",
+    "cover_title": "오징어 값 부담에 남미산 수입 폭증",
+    "cover_sub": "지난해 페루산 4만7000톤, 전년보다 109.7%↑",
+    "points": [
+      {
+        "title": "무슨 일이에요?",
+        "lines": [
+          "국내 오징어 어획량이 오래 줄면서 가격 부담이 커졌어요.",
+          "그 빈자리를 남미산 오징어 수입이 크게 메우고 있어요."
+        ]
+      },
+      {
+        "title": "얼마나 늘었나",
+        "lines": [
+          "지난해 페루산 수입은 4만7000톤, 109.7% 늘었어요.",
+          "에콰도르산은 1만6000톤으로 1만6501.5% 급증했어요."
+        ]
+      }
+    ],
+    "why_it_matters": "짬뽕 같은 외식 메뉴에 쓰이는 오징어 공급이 달라지고 있어요.",
+    "caption_intro": "오징어 값이 오르는데 남미산 오징어는 왜 많이 들어올까요?",
+    "hashtags": [
+      "#남미산오징어",
+      "#대왕오징어",
+      "#오징어수입"
+    ],
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/Economy/article/all/20261107/134983553/1",
+    "source_title": "“오징어의 귀환”…남미 어획량 회복에 수입 폭증"
+  },
+  "caption": "오징어 값 부담에 남미산 수입 폭증\n오징어 값이 오르는데 남미산 오징어는 왜 많이 들어올까요?\n\n✔ 무슨 일이에요?\n✔ 얼마나 늘었나\n💡 짬뽕 같은 외식 메뉴에 쓰이는 오징어 공급이 달라지고 있어요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#남미산오징어 #대왕오징어 #오징어수입 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0044252,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg"
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-07T07:31:34.546354+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 177
+}
