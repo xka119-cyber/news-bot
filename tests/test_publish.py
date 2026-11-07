@@ -7,7 +7,7 @@ import pytest
 
 from newsbot.config import load_account
 from newsbot.publish import flow
-from newsbot.publish.instagram import InstagramClient, InstagramError, publish_carousel, publish_reel
+from newsbot.publish.instagram import InstagramClient, InstagramError, find_posted, publish_carousel, publish_reel
 from newsbot.storage import drafts
 from newsbot.storage.media_branch import raw_url
 
@@ -17,18 +17,27 @@ TOKEN = "EAA" + "x" * 40
 
 
 class FakeIG:
-    """InstagramClient와 같은 메서드를 가진 가짜. 호출 순서를 기록한다."""
+    """InstagramClient와 같은 메서드를 가진 가짜. 호출 순서를 기록한다(읽기만 하는 status·recent_media는 기록하지 않음)."""
 
-    def __init__(self, quota=100, statuses=None, fail_publish=False, fail_reel=False):
+    def __init__(self, quota=100, statuses=None, fail_publish=False, fail_reel=False, recent=None):
         self.calls = []
         self.fail_reel = fail_reel
         self.quota = quota
         self.statuses = statuses or {}
         self.fail_publish = fail_publish
         self.published = False
+        self.recent = list(recent or [])  # recent_media()가 돌려줄 최근 글 (최신순)
+        self.captions = {}                # 컨테이너 → 캡션
+        self.sleeps = []
+
+    def sleep(self, seconds):
+        self.sleeps.append(seconds)
 
     def quota_left(self):
         return self.quota
+
+    def recent_media(self, limit=5):
+        return self.recent[:limit]
 
     def create_item(self, url, alt_text=None):
         self.calls.append(("item", url, alt_text))
@@ -36,12 +45,14 @@ class FakeIG:
 
     def create_carousel(self, children, caption):
         self.calls.append(("carousel", tuple(children), caption))
+        self.captions["parent"] = caption
         return "parent"
 
     def create_reel(self, video_url, caption, cover_url=None, share_to_feed=False):
         self.calls.append(("reel", video_url, cover_url, share_to_feed))
         if self.fail_reel:
             raise InstagramError("영상 형식 오류")
+        self.captions["reel1"] = caption
         return "reel1"
 
     def status(self, cid):
@@ -384,3 +395,172 @@ def test_publish_reel_remakes_container_it_cannot_read():
     ig, progress = Gone(), {"container_id": "gone"}
     publish_reel(ig, "u", "c", progress)
     assert ig.calls[0][0] == "reel" and progress["container_id"] == "reel1"
+
+
+# ---------- 인스타가 '오류'라고 답했지만 실제로는 올라간 경우 (2026-11-07 21:30) ----------
+
+class LyingIG(FakeIG):
+    """게시 요청에 403 '활동 제한'이라 답하지만 실제로는 글을 올리고, 그 뒤 컨테이너 상태를 ERROR라고 하는 인스타."""
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.lied = set()
+
+    def publish(self, cid):
+        self.calls.append(("publish", cid))
+        self.lied.add(cid)
+        product = "REELS" if cid == "reel1" else "FEED"
+        self.recent.insert(0, {"id": f"real-{cid}", "caption": self.captions.get(cid, ""), "media_product_type": product})
+        raise InstagramError("인스타 media_publish 실패 (HTTP 403, 코드 4-2207051) 활동을 제한합니다")
+
+    def status(self, cid):
+        return "ERROR" if cid in self.lied else super().status(cid)
+
+
+def test_false_error_response_is_detected_from_recent_posts():
+    ig = LyingIG()
+    result = publish_carousel(ig, URLS, "캡션", {})
+    assert result.media_id == "real-parent" and result.recovered is True
+    kinds = [c[0] for c in ig.calls]
+    assert kinds.count("carousel") == 1 and kinds.count("publish") == 1  # 두 번 올리지 않음
+    assert ig.sleeps == [3]
+
+
+def test_retry_after_false_error_finds_post_instead_of_posting_again():
+    """실패로 기록된 초안을 '다시 올려줘'로 돌릴 때: 컨테이너는 ERROR지만 최근 글에 같은 캡션이 있으면 새로 만들지 않는다."""
+    ig = FakeIG(statuses={"parent": "ERROR"}, recent=[{"id": "real1", "caption": "캡션", "media_product_type": "FEED"}])
+    result = publish_carousel(ig, URLS, "캡션", {"container_id": "parent"})
+    assert result.media_id == "real1" and result.recovered is True
+    assert ig.calls == []
+
+
+def test_retry_with_error_container_and_no_post_makes_a_new_one():
+    ig = FakeIG(statuses={"parent": "ERROR"}, recent=[{"id": "other", "caption": "다른 글", "media_product_type": "FEED"}])
+    result = publish_carousel(ig, URLS, "캡션", {"container_id": "parent"})
+    assert [c[0] for c in ig.calls] == ["item"] * 4 + ["carousel", "publish"] and result.recovered is False
+
+
+def test_recent_post_match_ignores_whitespace_but_not_type():
+    ig = FakeIG(recent=[{"id": "r", "caption": "첫 줄\r\n\r\n#태그", "media_product_type": "REELS"},
+                        {"id": "f", "caption": "첫 줄\n\n#태그 ", "media_product_type": "FEED"}])
+    assert find_posted(ig, "첫 줄\n#태그", "FEED") == "f"
+    assert find_posted(ig, "첫 줄\n#태그", "REELS") == "r"
+    assert find_posted(ig, "없는 글", "FEED") is None
+
+
+def test_normal_publish_never_looks_at_recent_posts():
+    class NoPeeking(FakeIG):
+        def recent_media(self, limit=5):
+            raise AssertionError("정상 게시에는 최근 글을 보지 않는다 (추가 요청 0번)")
+
+    result = publish_carousel(NoPeeking(), URLS, "캡션", {})
+    assert result.media_id == "media1" and result.recovered is False
+    assert publish_reel(NoPeeking(), "u", "캡션", {}).recovered is False
+
+
+def test_reel_false_error_is_detected_too():
+    result = publish_reel(LyingIG(), "u", "캡션", {})
+    assert result.media_id == "real-reel1" and result.recovered is True
+    ig = FakeIG(statuses={"reel1": "ERROR"}, recent=[{"id": "rr", "caption": "캡션", "media_product_type": "REELS"}])
+    assert publish_reel(ig, "u", "캡션", {"container_id": "reel1"}).media_id == "rr"
+    assert ig.calls == []
+
+
+def test_lookup_failure_after_error_reports_the_original_error():
+    class Broken(LyingIG):
+        def recent_media(self, limit=5):
+            raise InstagramError("인스타 media 실패 (HTTP 500)")
+
+    with pytest.raises(InstagramError, match="media_publish"):
+        publish_carousel(Broken(), URLS, "캡션", {})
+
+
+def test_flow_false_error_marks_published_and_goes_on_to_reel(account, tmp_path):
+    draft_id = make_record(tmp_path, "approved", reel=True)
+    ig, tg = LyingIG(), FakeTG()
+    outcome = run(account, tmp_path, ig, tg, [])[0]
+    assert (outcome.status, outcome.reel_status) == ("published", "published")
+    record = drafts.load(tmp_path, draft_id)
+    assert record["status"] == "published" and record["media_id"] == "real-parent"
+    assert record["reel"]["status"] == "published" and record["reel"]["media_id"] == "real-reel1"
+    texts = [params["text"] for method, params in tg.sent if method == "sendMessage"]
+    assert "📸 올라가 있었어요" in texts[0] and "🎬 릴스도 올라가 있었어요" in texts[1]
+    assert run(account, tmp_path, FakeIG(), FakeTG(), []) == []  # 두 번째 실행은 아무것도 안 함
+
+
+def test_failure_with_code_4_gets_a_hint(account, tmp_path):
+    class Blocked(FakeIG):
+        def publish(self, cid):
+            raise InstagramError("인스타 media_publish 실패 (HTTP 403, 코드 4-2207051) 활동을 제한합니다")
+
+    make_record(tmp_path, "approved")
+    tg = FakeTG()
+    assert run(account, tmp_path, Blocked(), tg, [])[0].status == "failed"
+    assert "다시 올려줘" in tg.sent[-1][1]["text"]
+
+
+def test_client_error_message_includes_subcode(monkeypatch):
+    client = InstagramClient(TOKEN, "123", "https://graph.facebook.com", "v26.0", sleep=lambda s: None)
+    body = json.dumps({"error": {"message": "limit", "error_user_msg": "활동을 제한합니다",
+                                 "code": 4, "error_subcode": 2207051}}).encode()
+
+    def boom(*args, **kwargs):
+        raise urllib.error.HTTPError("u", 403, "forbidden", {}, io.BytesIO(body))
+
+    monkeypatch.setattr("urllib.request.urlopen", boom)
+    with pytest.raises(InstagramError, match="코드 4-2207051"):
+        client.quota_left()
+
+
+def test_retry_lookback_is_wider_than_the_quick_check():
+    """재시도는 최근 25개를 본다(5개면 반나절 뒤 재시도에서 같은 글이 밀려나 두 번 올라감 — QA 11-07)."""
+    others = [{"id": f"o{i}", "caption": f"다른 글 {i}", "media_product_type": "FEED"} for i in range(7)]
+    mine = {"id": "mine", "caption": "캡션", "media_product_type": "FEED"}
+    ig = FakeIG(statuses={"parent": "ERROR"}, recent=others + [mine])
+    assert find_posted(ig, "캡션", "FEED") is None  # 오류 직후의 빠른 확인은 5개만 본다
+    assert publish_carousel(ig, URLS, "캡션", {"container_id": "parent"}).media_id == "mine"
+    assert ig.calls == []
+
+
+def test_published_container_without_caption_match_takes_newest_of_same_kind():
+    ig = FakeIG(statuses={"parent": "PUBLISHED"},
+                recent=[{"id": "someone-reel", "caption": "x", "media_product_type": "REELS"},
+                        {"id": "feed-new", "caption": "y", "media_product_type": "FEED"}])
+    assert publish_carousel(ig, URLS, "캡션", {"container_id": "parent"}).media_id == "feed-new"
+    assert publish_reel(ig, "u", "캡션", {"container_id": "parent"}).media_id == "someone-reel"
+
+
+def test_container_published_while_waiting_is_not_published_again():
+    ig = FakeIG(statuses={"parent": "PUBLISHED"}, recent=[{"id": "f1", "caption": "캡션", "media_product_type": "FEED"}])
+    result = publish_carousel(ig, URLS, "캡션", {})
+    assert result.media_id == "f1" and not any(c[0] == "publish" for c in ig.calls)
+
+
+def test_reel_error_container_without_post_is_remade():
+    ig = FakeIG(statuses={"reel1": "ERROR"})
+    publish_reel(ig, "u", "캡션", {"container_id": "reel1"})
+    assert ig.calls[0][0] == "reel" and ("publish", "reel1") in ig.calls
+
+
+def test_hint_only_for_code_4_not_other_4xx(account, tmp_path):
+    class Expired(FakeIG):
+        def publish(self, cid):
+            raise InstagramError("인스타 media_publish 실패 (HTTP 400, 코드 463) 토큰 만료")
+
+    make_record(tmp_path, "approved")
+    tg = FakeTG()
+    assert run(account, tmp_path, Expired(), tg, [])[0].status == "failed"
+    assert "다시 올려줘" not in tg.sent[-1][1]["text"]
+
+
+def test_client_wraps_dropped_connections_and_retries(monkeypatch):
+    sleeps = []
+    client = InstagramClient(TOKEN, "123", "https://graph.facebook.com", "v26.0", sleep=sleeps.append)
+
+    def drop(*args, **kwargs):
+        raise ConnectionResetError("reset")
+
+    monkeypatch.setattr("urllib.request.urlopen", drop)
+    with pytest.raises(InstagramError, match=r"연결 실패 \(ConnectionResetError\)"):
+        client.quota_left()
+    assert sleeps == [1, 2, 4]

@@ -100,7 +100,7 @@ def publish_reel_part(record: dict, account: AccountConfig, root: Path, ig: Inst
         reel["status"], reel["note"] = "failed", f"{type(error).__name__}: {error}"[:500]
         drafts.save(root, record)
         return "failed", reel["note"]
-    reel.update(status="published", media_id=result.media_id, permalink=result.permalink, note="")
+    reel.update(status="published", media_id=result.media_id, permalink=result.permalink, note="", recovered=result.recovered)
     drafts.save(root, record)
     return "published", result.permalink
 
@@ -120,7 +120,11 @@ def publish_one(record: dict, account: AccountConfig, root: Path, ig: InstagramC
                                       alt_texts=build_alt_texts(record["draft"], account))
         except (InstagramError, MediaError, OSError) as error:
             drafts.set_status(root, record, "failed", now, note=str(error))
-            _notify(tg, chat_id, record, f"❌ 게시 실패 ({record['slot_label']})\n이유: {error}")
+            hint = ""
+            if "코드 4)" in str(error) or "코드 4-" in str(error):  # 인스타의 '활동 제한'(자동 게시를 스팸으로 의심). 2026-11-07 21:30에 겪음. 463(토큰 만료) 등은 제외
+                hint = ("\n인스타가 자동 게시를 잠깐 의심한 것일 수 있어요. 인스타 앱에 안내가 떠 있으면 '실수예요'를 누르고, "
+                        "몇 시간 뒤 Claude에게 '다시 올려줘'라고 하면 돼요(이미 올라가 있으면 다시 올리지 않아요).")
+            _notify(tg, chat_id, record, f"❌ 게시 실패 ({record['slot_label']})\n이유: {error}{hint}")
             return Outcome(draft_id, "failed", str(error))
 
         record["media_id"], record["permalink"] = result.media_id, result.permalink
@@ -128,14 +132,17 @@ def publish_one(record: dict, account: AccountConfig, root: Path, ig: InstagramC
         draft = record["draft"]
         record_used(history_path, [Article(draft["source_name"], draft["source_title"], "", draft["source_url"], now)], now)
         reel_next = "\n🎬 릴스는 이어서 올리는 중이에요" if wants_reel(record, account) else ""
+        heading = "📸 올라가 있었어요 (인스타가 오류라고 답했지만 실제로는 게시됨)" if result.recovered else "📸 올라갔어요!"
         # 카드 결과는 바로 알린다(릴스 영상 처리 대기가 길어도 먼저 알 수 있게)
-        _notify(tg, chat_id, record, f"📸 올라갔어요! {draft['cover_title']}\n{result.permalink}{reel_next}")
+        _notify(tg, chat_id, record, f"{heading} {draft['cover_title']}\n{result.permalink}{reel_next}")
 
     outcome = Outcome(draft_id, "published", record.get("permalink", ""))
     if wants_reel(record, account):
         outcome.reel_status, outcome.reel_note = publish_reel_part(record, account, root, ig, upload)
         if outcome.reel_status == "published":
-            _notify(tg, chat_id, record, f"🎬 릴스도 올라갔어요\n{outcome.reel_note}")
+            heading = ("🎬 릴스도 올라가 있었어요 (인스타가 오류라고 답했지만 실제로는 게시됨)"
+                       if record["reel"].get("recovered") else "🎬 릴스도 올라갔어요")
+            _notify(tg, chat_id, record, f"{heading}\n{outcome.reel_note}")
         else:
             _notify(tg, chat_id, record, f"⚠️ 릴스는 실패했어요(카드뉴스는 올라감)\n이유: {outcome.reel_note}\n"
                                          "Claude에게 '릴스 다시 올려줘'라고 하면 릴스만 다시 올려요.")

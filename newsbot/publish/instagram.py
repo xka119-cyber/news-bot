@@ -5,6 +5,7 @@
 토큰은 Authorization 헤더로만 보내고 오류 메시지·로그에는 넣지 않는다.
 """
 
+import http.client
 import json
 import time
 import urllib.error
@@ -23,6 +24,7 @@ class InstagramError(RuntimeError):
 class Published:
     media_id: str
     permalink: str
+    recovered: bool = False  # 인스타가 오류·실패라고 답했지만 실제로는 올라가 있어서 결과만 찾아온 경우
 
 
 class InstagramClient:
@@ -62,10 +64,14 @@ class InstagramClient:
                     detail = {}
                 message = mask_text(str(detail.get("error_user_msg") or detail.get("message") or ""), [self._token])
                 if error.code < 500 or attempt == self.retries:
+                    code = detail.get("code")
+                    if detail.get("error_subcode"):
+                        code = f"{code}-{detail['error_subcode']}"  # 예: 4-2207051 = '활동 제한'(스팸 의심). 문서 찾을 때 필요
                     raise InstagramError(
-                        f"인스타 {path.split('/')[-1]} 실패 (HTTP {error.code}, 코드 {detail.get('code')}) {message}".strip()
+                        f"인스타 {path.split('/')[-1]} 실패 (HTTP {error.code}, 코드 {code}) {message}".strip()
                     ) from None
-            except (urllib.error.URLError, TimeoutError) as error:
+            except (OSError, http.client.HTTPException, ValueError) as error:
+                # 연결 끊김(URLError·ConnectionResetError·RemoteDisconnected)과 깨진 응답(IncompleteRead·JSON 아님)도 다시 시도 (QA 11-07)
                 if attempt == self.retries:
                     raise InstagramError(f"인스타 연결 실패 ({type(error).__name__})") from None
             self.sleep(2 ** attempt)
@@ -118,6 +124,79 @@ class InstagramClient:
     def latest_media_id(self) -> str:
         return self.request("GET", f"{self.user_id}/media", fields="id", limit=1)["data"][0]["id"]
 
+    def recent_media(self, limit: int = 5) -> list[dict]:
+        """최근 글(최신순)의 캡션·종류(FEED/REELS). 인스타가 '오류'라고 답한 글이 실제로 올라갔는지 볼 때 요청 1번으로 가져온다."""
+        return self.request("GET", f"{self.user_id}/media", fields="id,caption,media_product_type,timestamp",
+                            limit=limit).get("data", [])
+
+
+def _norm(text: str) -> str:
+    """캡션 비교용: 줄바꿈·연속 공백 차이는 무시한다(인스타가 저장하며 공백을 다듬을 수 있어서)."""
+    return " ".join(text.split())
+
+
+RETRY_LOOKBACK = 25  # 다시 올리기 전에 되볼 최근 글 수(요청은 1번). 하루 8개(카드+릴스)면 사흘치. 5개면 반나절 뒤 재시도에서 밀려나 중복될 수 있음(QA 11-07)
+
+
+def find_posted(client: InstagramClient, caption: str, product: str, limit: int = 5,
+                fallback_newest: bool = False) -> str | None:
+    """최근 글 limit개 안에 같은 캡션·같은 종류(FEED=카드뉴스, REELS=릴스)의 글이 있으면 그 media id, 없으면 None.
+    fallback_newest=True(컨테이너가 PUBLISHED라 올라간 건 확실한데 캡션을 못 맞춘 경우)면 같은 종류의 가장 새 글,
+    그것도 없으면 계정의 가장 새 글을 돌려준다(다른 종류의 글을 잘못 잡지 않게 — QA 11-07).
+    인스타는 글을 올려 놓고도 '오류'라고 답할 때가 있다(2026-11-07 21:30: 응답 403 코드 4-2207051 '활동 제한',
+    컨테이너 상태는 ERROR, 그런데 글은 올라가 있었음). 그래서 오류가 났을 때와 다시 올리기 전에만 되묻는다.
+    정상 게시 때는 부르지 않는다(추가 요청 0번)."""
+    wanted = _norm(caption)
+    newest = None
+    for media in client.recent_media(limit):
+        if media.get("media_product_type") != product:
+            continue
+        if _norm(media.get("caption") or "") == wanted:
+            return media["id"]
+        newest = newest or media["id"]
+    if fallback_newest:
+        return newest or client.latest_media_id()
+    return None
+
+
+def _container_state(client: InstagramClient, container: str) -> str:
+    try:
+        return client.status(container)
+    except InstagramError:
+        return "EXPIRED"  # 지난 컨테이너를 못 찾음(지워짐·24시간 지남)
+
+
+def _posted_before(client: InstagramClient, container: str, caption: str, product: str) -> tuple[str, str | None]:
+    """지난 실행에서 만든 컨테이너의 상태와, 그 글이 이미 올라가 있으면 media id (없으면 None).
+    상태가 PUBLISHED가 아니어도(ERROR 포함) 최근 글에 같은 캡션이 있으면 올라간 것으로 본다 → 두 번 올리지 않는다."""
+    state = _container_state(client, container)
+    return state, find_posted(client, caption, product, limit=RETRY_LOOKBACK, fallback_newest=(state == "PUBLISHED"))
+
+
+def _publish_container(client: InstagramClient, container: str, caption: str, product: str,
+                       interval: int, timeout: int) -> tuple[str, bool]:
+    """준비를 기다렸다가 게시한다. (media id, 인스타가 오류라고 답했지만 실제로는 올라가 있었는지)를 돌려준다.
+    게시 응답을 못 받았거나 '오류'라고 답해도 실제로 올라갔으면 성공으로 본다."""
+    if client.wait_ready(container, interval=interval, timeout=timeout) == "PUBLISHED":
+        return find_posted(client, caption, product, fallback_newest=True), True
+    try:
+        return client.publish(container), False
+    except InstagramError:
+        client.sleep(3)  # 인스타가 글을 올려 놓고 오류라고 답하는 경우(2026-11-07 21:30): 잠깐 뒤 최근 글에서 찾는다
+        posted = _posted_quietly(client, container, caption, product)
+        if not posted:
+            raise
+        return posted, True
+
+
+def _posted_quietly(client: InstagramClient, container: str, caption: str, product: str) -> str | None:
+    """오류 뒤의 되묻기. 이 확인 요청마저 실패하면 '못 찾음'으로 보고 원래 오류를 그대로 알린다."""
+    try:
+        published = _container_state(client, container) == "PUBLISHED"
+        return find_posted(client, caption, product, fallback_newest=published)
+    except InstagramError:
+        return None
+
 
 def publish_carousel(client: InstagramClient, image_urls: list[str], caption: str, progress: dict,
                      save=lambda: None, alt_texts: list[str] | None = None) -> Published:
@@ -126,10 +205,12 @@ def publish_carousel(client: InstagramClient, image_urls: list[str], caption: st
     if not 2 <= len(image_urls) <= 20:
         raise InstagramError(f"캐러셀은 이미지 2~20장이어야 해요 (지금 {len(image_urls)}장)")
     container = progress.get("container_id")
-    if container and client.status(container) == "PUBLISHED":
-        # 지난번에 게시는 됐는데 결과를 못 받은 경우: 다시 올리지 않고 결과만 찾는다.
-        media_id = client.latest_media_id()
-    else:
+    media_id = None
+    if container:
+        # 지난번에 게시는 됐는데 결과를 못 받은 경우(오류라고 답했지만 올라간 경우 포함): 다시 올리지 않고 결과만 찾는다.
+        _, media_id = _posted_before(client, container, caption, "FEED")
+    recovered = media_id is not None
+    if media_id is None:
         if client.quota_left() < 1:
             raise InstagramError("오늘 게시 한도를 다 썼어요(24시간 기준). 나중에 다시 시도해야 해요.")
         alts = list(alt_texts or []) + [None] * len(image_urls)
@@ -139,28 +220,8 @@ def publish_carousel(client: InstagramClient, image_urls: list[str], caption: st
         container = client.create_carousel(children, caption)
         progress["container_id"] = container
         save()
-        if client.wait_ready(container) == "PUBLISHED":
-            media_id = client.latest_media_id()
-        else:
-            try:
-                media_id = client.publish(container)
-            except InstagramError:
-                if client.status(container) != "PUBLISHED":
-                    raise
-                media_id = client.latest_media_id()
-    return Published(media_id, client.permalink(media_id))
-
-
-def _publish_container(client: InstagramClient, container: str, interval: int, timeout: int) -> str:
-    """준비를 기다렸다가 게시한다. 게시 응답을 못 받았어도 실제로 올라갔으면 성공으로 본다."""
-    if client.wait_ready(container, interval=interval, timeout=timeout) == "PUBLISHED":
-        return client.latest_media_id()
-    try:
-        return client.publish(container)
-    except InstagramError:
-        if client.status(container) != "PUBLISHED":
-            raise
-        return client.latest_media_id()
+        media_id, recovered = _publish_container(client, container, caption, "FEED", interval=5, timeout=300)
+    return Published(media_id, client.permalink(media_id), recovered)
 
 
 def publish_reel(client: InstagramClient, video_url: str, caption: str, progress: dict, save=lambda: None,
@@ -168,20 +229,14 @@ def publish_reel(client: InstagramClient, video_url: str, caption: str, progress
     """릴스를 게시한다. 캐러셀과 같이 컨테이너 ID를 progress에 먼저 저장해 두 번 올라가지 않게 한다.
     영상 처리는 보통 30초~몇 분 걸려서 10초 간격으로 최대 wait_timeout초 기다린다."""
     container = progress.get("container_id")
-    state = None
-    if container:
-        try:
-            state = client.status(container)
-        except InstagramError:
-            state = "EXPIRED"  # 지난 컨테이너를 못 찾음(지워짐·24시간 지남) → 새로 만든다
-    if state == "PUBLISHED":
-        media_id = client.latest_media_id()
-    else:
-        if not container or state in ("ERROR", "EXPIRED"):
+    state, media_id = _posted_before(client, container, caption, "REELS") if container else (None, None)
+    recovered = media_id is not None
+    if media_id is None:
+        if state in (None, "ERROR", "EXPIRED"):  # 컨테이너가 없거나 못 쓰게 됨 → 새로 만든다. 처리 중인 것은 그대로 기다린다
             if client.quota_left() < 1:
                 raise InstagramError("오늘 게시 한도를 다 썼어요(24시간 기준). 나중에 다시 시도해야 해요.")
             container = client.create_reel(video_url, caption, cover_url, share_to_feed)
             progress["container_id"] = container
             save()
-        media_id = _publish_container(client, container, interval=10, timeout=wait_timeout)
-    return Published(media_id, client.permalink(media_id))
+        media_id, recovered = _publish_container(client, container, caption, "REELS", interval=10, timeout=wait_timeout)
+    return Published(media_id, client.permalink(media_id), recovered)
