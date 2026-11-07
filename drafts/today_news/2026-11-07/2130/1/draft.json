@@ -1,0 +1,63 @@
+{
+  "id": "today_news/20261107-2130-1",
+  "account": "today_news",
+  "slot": "2026-11-07T21:30:00+09:00",
+  "slot_label": "11월 7일(토) 21:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "부모 집 월세 안 내도 증여세?",
+    "cover_sub": "5년간 무상 거주 이익 기준과 예외를 정리했어요",
+    "points": [
+      {
+        "title": "무슨 일인지",
+        "lines": [
+          "부모 집에 월세 없이 살아도 증여세가 무조건 나오진 않아요.",
+          "5년간 무상 사용 이익이 1억원 기준을 넘는지가 핵심이에요."
+        ]
+      },
+      {
+        "title": "나는 해당될까",
+        "lines": [
+          "실제로 부모와 같이 살면 예외로 볼 수 있어요.",
+          "5년 뒤에는 이익을 다시 계산해 봐야 해요.",
+          "시세보다 싸게 빌려도 세금 문제가 생길 수 있어요."
+        ]
+      }
+    ],
+    "why_it_matters": "부모 집에 살고 있다면 무상 사용 이익 기준과 동거 여부를 미리 확인해 보세요.",
+    "caption_intro": "증여세, 부모 집에 월세 없이 살아도 내야 하나요?",
+    "hashtags": [
+      "#증여세",
+      "#무상사용",
+      "#부모집"
+    ],
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/Economy/article/all/20261106/134965042/2",
+    "source_title": "“부모 집에 공짜로 살았는데”…월세 안 냈다고 증여세 내야 하나 [상속리포트]"
+  },
+  "caption": "부모 집 월세 안 내도 증여세?\n증여세, 부모 집에 월세 없이 살아도 내야 하나요?\n\n✔ 무슨 일인지\n✔ 나는 해당될까\n💡 부모 집에 살고 있다면 무상 사용 이익 기준과 동거 여부를 미리 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#증여세 #무상사용 #부모집 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0024338,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg"
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-07T11:01:35.946038+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 189
+}
