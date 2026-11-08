@@ -1,0 +1,80 @@
+{
+  "id": "today_news/20261105-0830-2",
+  "account": "today_news",
+  "slot": "2026-11-05T08:30:00+09:00",
+  "slot_label": "11월 5일(목) 08:30",
+  "number": 2,
+  "format": "carousel",
+  "draft": {
+    "category": "날씨·교통",
+    "cover_title": "10월 날씨 롤러코스터, 기온 14도 차",
+    "cover_sub": "전국 기온 차가 1973년 이후 네 번째로 컸어요",
+    "points": [
+      {
+        "title": "무슨 일이었나",
+        "lines": [
+          "10월 전국 평균 기온이 날마다 크게 오르내렸어요.",
+          "늦더위 30도와 영하권 추위가 차례로 찾아왔어요.",
+          "가장 더운 날과 추운 날의 차이가 14도였어요."
+        ]
+      },
+      {
+        "title": "얼마나 이례적인가",
+        "lines": [
+          "10월 평균 기온은 15.8도로 평년보다 1.5도 높았어요.",
+          "역대 다섯 번째로 따뜻한 10월이었다고 해요.",
+          "북대서양 대기 파동 탓에 찬·더운 공기가 번갈아 왔어요."
+        ]
+      }
+    ],
+    "why_it_matters": "기온 변화가 커서 아침저녁 옷차림이 헷갈리기 쉬워요. 겉옷을 가볍게 하나 더 챙기는 걸 추천해요.",
+    "caption_intro": "10월 날씨가 왜 이렇게 널뛰었을까요, 기온 14도 차이의 이유는?",
+    "hashtags": [
+      "#10월날씨",
+      "#일교차",
+      "#기후특성"
+    ],
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/Society/article/all/20261104/134968249/2",
+    "source_title": "하루 평균 기온 14도차, 널뛰었던 10월 날씨"
+  },
+  "caption": "10월 날씨 롤러코스터, 기온 14도 차\n10월 날씨가 왜 이렇게 널뛰었을까요, 기온 14도 차이의 이유는?\n\n✔ 무슨 일이었나\n✔ 얼마나 이례적인가\n💡 기온 변화가 커서 아침저녁 옷차림이 헷갈리기 쉬워요. 겉옷을 가볍게 하나 더 챙기는 걸 추천해요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#10월날씨 #일교차 #기후특성 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0039694,
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-04T22:27:15.547884+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-04T23:32:02.148656+00:00",
+      "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-04T23:32:02.148656+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 70,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/0830/2/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/0830/2/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/0830/2/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/0830/2/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17886891759512661"
+  },
+  "media_id": "17907791856666886",
+  "permalink": "https://www.instagram.com/p/DfVpVxGDbwv/"
+}

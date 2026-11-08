@@ -1,0 +1,78 @@
+{
+  "id": "today_news/20261105-1200-2",
+  "account": "today_news",
+  "slot": "2026-11-05T12:00:00+09:00",
+  "slot_label": "11월 5일(목) 12:00",
+  "number": 2,
+  "format": "carousel",
+  "draft": {
+    "category": "생활",
+    "cover_title": "서울 빌라 전세가 3천만 원 올랐다",
+    "cover_sub": "아파트 못 간 세입자가 빌라 전세로 몰린다",
+    "points": [
+      {
+        "title": "무슨 일이 생겼나",
+        "lines": [
+          "서울 빌라 전세 시장이 뜨거워지고 있어요.",
+          "갱신권을 써도 전셋값이 3천만 원 올랐다고 해요."
+        ]
+      },
+      {
+        "title": "왜 빌라로 몰릴까",
+        "lines": [
+          "서울 아파트 전셋값이 크게 뛰고 매물도 부족해요.",
+          "아파트 문턱을 못 넘은 세입자들이 빌라로 옮겨 가고 있어요."
+        ]
+      }
+    ],
+    "why_it_matters": "전세를 새로 구하거나 재계약을 앞두고 있다면 주변 빌라 시세와 계약 조건을 미리 꼼꼼히 확인해 보세요.",
+    "caption_intro": "서울 빌라 전세값, 왜 이렇게 오르나요? 아파트 전셋값 급등 여파를 정리했어요.",
+    "hashtags": [
+      "#빌라전세",
+      "#전세시세",
+      "#전세갱신권"
+    ],
+    "source_name": "매일경제",
+    "source_url": "https://www.mk.co.kr/news/realestate/12198085",
+    "source_title": "“갱신권 썼는데도 3천만 원 올랐다”…서울 빌라 전세 시장에 무슨 일이"
+  },
+  "caption": "서울 빌라 전세가 3천만 원 올랐다\n서울 빌라 전세값, 왜 이렇게 오르나요? 아파트 전셋값 급등 여파를 정리했어요.\n\n✔ 무슨 일이 생겼나\n✔ 왜 빌라로 몰릴까\n💡 전세를 새로 구하거나 재계약을 앞두고 있다면 주변 빌라 시세와 계약 조건을 미리 꼼꼼히 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 매일경제\nAI의 도움을 받아 요약했어요.\n\n#빌라전세 #전세시세 #전세갱신권 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0036655,
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-05T02:01:22.205446+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-05T03:06:04.892122+00:00",
+      "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-05T03:06:04.892122+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 85,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/1200/2/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/1200/2/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/1200/2/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/1200/2/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17886922524512661"
+  },
+  "media_id": "18148815505602502",
+  "permalink": "https://www.instagram.com/p/DfWB0YNlWqA/"
+}

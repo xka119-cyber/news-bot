@@ -1,0 +1,73 @@
+{
+  "id": "today_news/20261104-2300",
+  "account": "today_news",
+  "slot": "2026-11-04T23:00:00+09:00",
+  "slot_label": "11월 4일(수) 23:00",
+  "format": "carousel",
+  "draft": {
+    "category": "생활",
+    "cover_title": "분양가 25%만 내고 입주?",
+    "cover_sub": "LH 공공분양, 남은 지분은 20년 동안 나눠 내요",
+    "points": [
+      {
+        "title": "무엇이 바뀌나",
+        "lines": [
+          "집값의 25%만 먼저 내면 입주할 수 있는 공공분양이에요.",
+          "12월 경기 고양창릉에서 LH가 처음 공급해요.",
+          "LH와 GH가 새로 시도하는 공공분양 방식이에요."
+        ]
+      },
+      {
+        "title": "나머지는 어떻게 내나",
+        "lines": [
+          "남은 지분은 20년 동안 나눠서 사들이는 구조예요.",
+          "처음 목돈 부담이 상대적으로 적은 방식이에요."
+        ]
+      }
+    ],
+    "why_it_matters": "내 집 마련을 생각 중이라면 공급 조건과 자격, 분양가를 공고에서 꼭 확인해 보세요.",
+    "caption_intro": "분양가 25%만 내고 입주하는 공공분양, 나도 신청할 수 있을까요?",
+    "source_name": "매일경제",
+    "source_url": "https://www.mk.co.kr/news/realestate/12196659",
+    "source_title": "집값 25%만 내고 입주 … LH·GH 공공분양 새 실험"
+  },
+  "caption": "분양가 25%만 내고 입주하는 공공분양, 나도 신청할 수 있을까요?\n\n✔ 무엇이 바뀌나\n✔ 나머지는 어떻게 내나\n💡 내 집 마련을 생각 중이라면 공급 조건과 자격, 분양가를 공고에서 꼭 확인해 보세요.\n\n출처: 매일경제\nAI의 도움을 받아 요약했어요.\n\n#오늘의뉴스 #뉴스요약 #출근길뉴스 #경제뉴스 #3분뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0041224,
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-04T13:27:32.969545+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-04T13:31:00.872379+00:00",
+      "note": "텔레그램 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-04T13:31:00.872379+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 13,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-04/2300/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-04/2300/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-04/2300/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-04/2300/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17886812697512661"
+  },
+  "media_id": "18023854244928878",
+  "permalink": "https://www.instagram.com/p/DfUkfu6gbO8/"
+}

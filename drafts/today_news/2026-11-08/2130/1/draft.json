@@ -1,0 +1,93 @@
+{
+  "id": "today_news/20261108-2130-1",
+  "account": "today_news",
+  "slot": "2026-11-08T21:30:00+09:00",
+  "slot_label": "11월 8일(일) 21:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "퇴직연금, 운용법따라 수익 5.4배 차이",
+    "cover_sub": "542조 원 규모, 퇴직연금 수익률 경쟁이 본격화돼요",
+    "points": [
+      {
+        "title": "무엇이 바뀌나",
+        "lines": [
+          "2028년 상반기부터 기금형 퇴직연금이 시행될 예정이에요.",
+          "여러 기업의 퇴직연금을 전문기관이 한데 묶어 굴리는 방식이에요.",
+          "542조 원 규모의 수익률 경쟁이 본격화될 전망이에요."
+        ]
+      },
+      {
+        "title": "수익률 차이는 얼마나?",
+        "lines": [
+          "투자한 상품에 따라 수익률이 최대 5.4배 차이가 났어요.",
+          "예·적금처럼 원리금을 보장하는 상품도 비교 대상에 들어갔어요.",
+          "앞으로 연금 포모(소외 공포)에 대비하라는 지적도 나와요."
+        ]
+      }
+    ],
+    "why_it_matters": "내 퇴직연금이 어떤 방식으로 운용되고 있는지 한번 확인해 볼 좋은 계기예요.",
+    "caption_intro": "퇴직연금 수익률 차이, 왜 이렇게 크게 날까요?",
+    "hashtags": [
+      "#퇴직연금",
+      "#기금형퇴직연금"
+    ],
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/Economy/article/all/20261108/134985631/1",
+    "source_title": "내 퇴직연금만 제자리? 운용방식 따라 수익률 최대 5.4배差"
+  },
+  "caption": "퇴직연금, 운용법따라 수익 5.4배 차이\n퇴직연금 수익률 차이, 왜 이렇게 크게 날까요?\n\n✔ 무엇이 바뀌나\n✔ 수익률 차이는 얼마나?\n💡 내 퇴직연금이 어떤 방식으로 운용되고 있는지 한번 확인해 볼 좋은 계기예요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#퇴직연금 #기금형퇴직연금 #3분뉴스 #오늘의뉴스 #경제뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0019059,
+  "reel": {
+    "status": "published",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "video_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/2130/1/reel.mp4",
+    "cover_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/2130/1/reel_cover.jpg",
+    "publish": {
+      "container_id": "17887632495512661"
+    },
+    "media_id": "18090156323281621",
+    "permalink": "https://www.instagram.com/reel/Dfew7Q4lA3g/",
+    "note": "",
+    "recovered": false
+  },
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-08T11:01:29.273331+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-08T12:31:34.277632+00:00",
+      "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-08T12:31:34.277632+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 234,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/2130/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/2130/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/2130/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/2130/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17887632417512661"
+  },
+  "media_id": "18104436545381586",
+  "permalink": "https://www.instagram.com/p/Dfew2nCjT69/"
+}

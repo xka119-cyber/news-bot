@@ -1,0 +1,95 @@
+{
+  "id": "today_news/20261109-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-09T07:30:00+09:00",
+  "slot_label": "11월 9일(월) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "상용직 늘었는데, 웃은 건 60대 이상",
+    "cover_sub": "3분기 늘어난 상용직 대부분을 60대 이상이 차지했어요",
+    "points": [
+      {
+        "title": "무슨 일이 있나",
+        "lines": [
+          "올해 3분기 상용근로자 수가 전년보다 늘었습니다.",
+          "늘어난 인원 중 60대 이상이 대부분을 차지했습니다.",
+          "반면 20대와 30대는 안정적인 일자리가 오히려 줄었습니다."
+        ]
+      },
+      {
+        "title": "숫자로 보면",
+        "lines": [
+          "3분기 평균 상용근로자는 1,684만 명대입니다.",
+          "전년보다 16만7,628명 늘었고, 60대 이상이 대부분이에요.",
+          "60대 이상 증가분이 전체 증가분의 약 4분의 3입니다."
+        ]
+      }
+    ],
+    "why_it_matters": "이직·취업을 준비 중이라면 연령별 고용 흐름을 살펴보세요. 최신 통계는 국가데이터처에서 확인할 수 있어요.",
+    "caption_intro": "상용직 취업자는 늘었는데 20·30대 일자리는 괜찮을까요?",
+    "hashtags": [
+      "#상용직",
+      "#경제활동인구조사",
+      "#고령층고용"
+    ],
+    "source_name": "전자신문",
+    "source_url": "https://www.etnews.com/20261108000077",
+    "source_title": "\"은퇴 이른 환갑, 회사 더 오래 다닌다\"…3분기 늘어난 상용직 '4명 중 3명' 60대 이상"
+  },
+  "caption": "상용직 늘었는데, 웃은 건 60대 이상\n상용직 취업자는 늘었는데 20·30대 일자리는 괜찮을까요?\n\n✔ 무슨 일이 있나\n✔ 숫자로 보면\n💡 이직·취업을 준비 중이라면 연령별 고용 흐름을 살펴보세요. 최신 통계는 국가데이터처에서 확인할 수 있어요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 전자신문\nAI의 도움을 받아 요약했어요.\n\n#상용직 #경제활동인구조사 #고령층고용 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0042903,
+  "reel": {
+    "status": "published",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "video_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-09/0730/1/reel.mp4",
+    "cover_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-09/0730/1/reel_cover.jpg",
+    "publish": {
+      "container_id": "17887731411512661"
+    },
+    "media_id": "18384747895238361",
+    "permalink": "https://www.instagram.com/reel/Dff1j6fCruz/",
+    "note": "",
+    "recovered": false
+  },
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-08T21:01:39.195414+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-08T22:31:26.152581+00:00",
+      "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-08T22:31:26.152581+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 245,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-09/0730/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-09/0730/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-09/0730/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-09/0730/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17887731342512661",
+    "recovered": true
+  },
+  "media_id": "17985289772897453",
+  "permalink": "https://www.instagram.com/p/Dff1fu5kUib/"
+}

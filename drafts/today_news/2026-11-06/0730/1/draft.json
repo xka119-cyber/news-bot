@@ -1,0 +1,80 @@
+{
+  "id": "today_news/20261106-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-06T07:30:00+09:00",
+  "slot_label": "11월 6일(금) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "날씨·교통",
+    "cover_title": "터미널 37곳이 8년 새 폐업",
+    "cover_sub": "이용객이 줄어 문 닫는 곳이 늘고 있어요",
+    "points": [
+      {
+        "title": "무슨 일인지",
+        "lines": [
+          "지난 8년 새 터미널 37곳이 문을 닫았어요.",
+          "대전 서남부터미널도 올해 7월 폐업 허가를 신청했어요.",
+          "한때 하루 8000명이던 이용객이 계속 줄었어요."
+        ]
+      },
+      {
+        "title": "얼마나 불편해지나",
+        "lines": [
+          "서남부터미널에서 병원까지는 차로 3km면 갔어요.",
+          "터미널이 사라지면 12km 떨어진 유성복합터미널을 거쳐야 해요.",
+          "2주마다 병원에 가는 이용객에게는 부담이 커져요."
+        ]
+      }
+    ],
+    "why_it_matters": "지방에 계신 부모님이나 가족이 터미널을 자주 쓴다면, 가까운 대체 노선과 교통편을 미리 알아두면 좋아요.",
+    "caption_intro": "터미널 폐업이 늘고 있다는데, 우리 동네 교통은 괜찮을까요?",
+    "hashtags": [
+      "#터미널폐업",
+      "#서남부터미널",
+      "#지방교통"
+    ],
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/Society/article/all/20261106/134975438/2",
+    "source_title": "터미널 8년새 37곳 폐업 “버스타려 택시비 더 들 판”"
+  },
+  "caption": "터미널 37곳이 8년 새 폐업\n터미널 폐업이 늘고 있다는데, 우리 동네 교통은 괜찮을까요?\n\n✔ 무슨 일인지\n✔ 얼마나 불편해지나\n💡 지방에 계신 부모님이나 가족이 터미널을 자주 쓴다면, 가까운 대체 노선과 교통편을 미리 알아두면 좋아요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#터미널폐업 #서남부터미널 #지방교통 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.002336,
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-05T21:43:43.774586+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-05T22:35:52.557231+00:00",
+      "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-05T22:35:52.557231+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 125,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-06/0730/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-06/0730/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-06/0730/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-06/0730/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17887093707512661"
+  },
+  "media_id": "17958124500272458",
+  "permalink": "https://www.instagram.com/p/DfYHntRDBuK/"
+}

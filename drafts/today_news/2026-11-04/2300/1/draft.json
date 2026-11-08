@@ -1,0 +1,79 @@
+{
+  "id": "today_news/20261104-2300-1",
+  "account": "today_news",
+  "slot": "2026-11-04T23:00:00+09:00",
+  "slot_label": "11월 4일(수) 23:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "날씨·교통",
+    "cover_title": "내일 전국에 비, 남해안·제주는 돌풍",
+    "cover_sub": "남해안·제주는 천둥번개와 돌풍도 조심하세요",
+    "points": [
+      {
+        "title": "내일 날씨는?",
+        "lines": [
+          "내일은 전국 하늘에서 비 소식이 있어요.",
+          "오늘은 구름이 많은 늦가을 날씨였어요.",
+          "동해상 고기압 가장자리에 든 영향이에요."
+        ]
+      },
+      {
+        "title": "남해안·제주는 특히 주의",
+        "lines": [
+          "남해안과 제주에는 돌풍이 예보돼 있어요.",
+          "천둥번개도 함께 주의해야 한다고 해요."
+        ]
+      }
+    ],
+    "why_it_matters": "출근길엔 우산을 챙기고, 남해안·제주로 이동한다면 돌풍과 천둥번개 소식을 한 번 더 확인해 보세요.",
+    "caption_intro": "내일 전국에 비가 오나요? 우산 챙겨야 할까요?",
+    "source_name": "SBS",
+    "source_url": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008831026&plink=RSSLINK&cooper=RSSREADER",
+    "source_title": "[날씨/XR] 내일 전국 비…남해안·제주 돌풍·천둥번개 주의"
+  },
+  "caption": "내일 전국에 비가 오나요? 우산 챙겨야 할까요?\n\n✔ 내일 날씨는?\n✔ 남해안·제주는 특히 주의\n💡 출근길엔 우산을 챙기고, 남해안·제주로 이동한다면 돌풍과 천둥번개 소식을 한 번 더 확인해 보세요.\n\n출처: SBS\nAI의 도움을 받아 요약했어요.\n\n#오늘의뉴스 #뉴스요약 #출근길뉴스 #경제뉴스 #3분뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0020219,
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-04T13:41:09.142083+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-04T13:50:36.186127+00:00",
+      "note": "텔레그램 버튼"
+    },
+    {
+      "status": "failed",
+      "at": "2026-11-04T14:00:30.659577+00:00",
+      "note": "인스타 content_publishing_limit 실패 (HTTP 400, 코드 200) API access blocked."
+    },
+    {
+      "status": "published",
+      "at": "2026-11-04T14:09:39.099616+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 20,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-04/2300/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-04/2300/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-04/2300/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-04/2300/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17886818532512661"
+  },
+  "media_id": "18104435126377423",
+  "permalink": "https://www.instagram.com/p/DfUo5HKASh4/"
+}

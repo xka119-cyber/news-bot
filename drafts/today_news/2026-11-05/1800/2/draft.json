@@ -1,0 +1,80 @@
+{
+  "id": "today_news/20261105-1800-2",
+  "account": "today_news",
+  "slot": "2026-11-05T18:00:00+09:00",
+  "slot_label": "11월 5일(목) 18:00",
+  "number": 2,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "가상자산 과세, 2029년으로 미뤄져",
+    "cover_sub": "소득과세 2년 유예…손실은 3년까지 이월공제",
+    "points": [
+      {
+        "title": "무슨 일인가요?",
+        "lines": [
+          "가상자산 소득과세가 2년 더 늦춰집니다.",
+          "원래 내년부터 시작할 예정이었어요."
+        ]
+      },
+      {
+        "title": "어떻게 달라지나요?",
+        "lines": [
+          "과세는 2029년으로 미루고 손실은 3년간 이월공제해요.",
+          "해외 거래도 실효성 있게 과세하겠다는 방침입니다."
+        ]
+      }
+    ],
+    "why_it_matters": "코인으로 손실을 봤다면 이월공제 조건을 미리 확인해 보세요. 시행 시기가 바뀌었으니 최신 안내도 챙기세요.",
+    "caption_intro": "가상자산 소득과세는 언제부터 적용되나요? 2029년으로 늦춰졌어요.",
+    "hashtags": [
+      "#가상자산과세",
+      "#가상자산",
+      "#손실이월공제"
+    ],
+    "source_name": "SBS",
+    "source_url": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008832602&plink=RSSLINK&cooper=RSSREADER",
+    "source_title": "'가상자산 과세' 다시 2년 늦춘다…\"손실 3년 이월공제\""
+  },
+  "caption": "가상자산 과세, 2029년으로 미뤄져\n가상자산 소득과세는 언제부터 적용되나요? 2029년으로 늦춰졌어요.\n\n✔ 무슨 일인가요?\n✔ 어떻게 달라지나요?\n💡 코인으로 손실을 봤다면 이월공제 조건을 미리 확인해 보세요. 시행 시기가 바뀌었으니 최신 안내도 챙기세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: SBS\nAI의 도움을 받아 요약했어요.\n\n#가상자산과세 #가상자산 #손실이월공제 #3분뉴스 #오늘의뉴스",
+  "warnings": [
+    "원문에 없는 숫자: 2029"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0019318,
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-05T08:01:27.809014+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-05T09:06:54.630572+00:00",
+      "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-05T09:06:54.630572+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 100,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/1800/2/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/1800/2/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/1800/2/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/1800/2/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17886976581512661"
+  },
+  "media_id": "18340210993275558",
+  "permalink": "https://www.instagram.com/p/DfWrHYsDl00/"
+}

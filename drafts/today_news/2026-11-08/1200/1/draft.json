@@ -1,0 +1,93 @@
+{
+  "id": "today_news/20261108-1200-1",
+  "account": "today_news",
+  "slot": "2026-11-08T12:00:00+09:00",
+  "slot_label": "11월 8일(일) 12:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "IT",
+    "cover_title": "상반기 가전·IT 시장 9.5% 성장",
+    "cover_sub": "헤드폰·웨어러블은 급증, 건조기는 역성장",
+    "points": [
+      {
+        "title": "무슨 일이 있었나",
+        "lines": [
+          "올해 상반기 국내 가전·IT 시장이 9.5% 성장했어요.",
+          "시장 규모는 11조2273억원으로 집계됐어요.",
+          "품목별로 실적이 엇갈린 것이 특징이에요."
+        ]
+      },
+      {
+        "title": "어떤 제품이 달랐나",
+        "lines": [
+          "헤드폰과 웨어러블 기기 매출이 크게 늘었어요.",
+          "냉장고·세탁기는 성장했지만 건조기와 공기청정기는 줄었어요."
+        ]
+      }
+    ],
+    "why_it_matters": "가전이나 이어폰, 스마트워치를 새로 살 계획이라면 품목별 흐름을 한번 살펴보세요.",
+    "caption_intro": "상반기 가전·IT 시장은 얼마나 성장했을까, 어떤 제품이 잘 팔렸을까?",
+    "hashtags": [
+      "#가전시장",
+      "#웨어러블",
+      "#건조기"
+    ],
+    "source_name": "전자신문",
+    "source_url": "https://www.etnews.com/20261106000243",
+    "source_title": "국내 가전·IT 시장 9.5% 성장…헤드폰·웨어러블 급증, 건조기 역성장"
+  },
+  "caption": "상반기 가전·IT 시장 9.5% 성장\n상반기 가전·IT 시장은 얼마나 성장했을까, 어떤 제품이 잘 팔렸을까?\n\n✔ 무슨 일이 있었나\n✔ 어떤 제품이 달랐나\n💡 가전이나 이어폰, 스마트워치를 새로 살 계획이라면 품목별 흐름을 한번 살펴보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 전자신문\nAI의 도움을 받아 요약했어요.\n\n#가전시장 #웨어러블 #건조기 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.003990499999999999,
+  "reel": {
+    "status": "published",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "video_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/1200/1/reel.mp4",
+    "cover_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/1200/1/reel_cover.jpg",
+    "publish": {
+      "container_id": "17887534725512661"
+    },
+    "media_id": "18085992647357328",
+    "permalink": "https://www.instagram.com/reel/DfdvshVj-li/",
+    "note": "",
+    "recovered": false
+  },
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-08T01:31:35.130697+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-08T03:01:28.798708+00:00",
+      "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-08T03:01:28.798708+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 212,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/1200/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/1200/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/1200/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/1200/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17887534545512661"
+  },
+  "media_id": "18118719709835248",
+  "permalink": "https://www.instagram.com/p/DfdvnZ8kUkj/"
+}

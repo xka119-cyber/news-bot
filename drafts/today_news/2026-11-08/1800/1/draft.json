@@ -1,0 +1,94 @@
+{
+  "id": "today_news/20261108-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-08T18:00:00+09:00",
+  "slot_label": "11월 8일(일) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "생활",
+    "cover_title": "서울 외곽도 월세 300만원 넘어",
+    "cover_sub": "올해 6개 자치구 계약, 작년보다 2배 이상",
+    "points": [
+      {
+        "title": "무슨 일인지",
+        "lines": [
+          "노도강·금관구에서도 월세 300만 원 계약",
+          "대형 평수뿐 아니라 전용 84㎡에서도 나왔어요",
+          "서울 외곽 세입자의 주거비 부담이 커지는 중이에요"
+        ]
+      },
+      {
+        "title": "얼마나 늘었나",
+        "lines": [
+          "올해 1월 1일부터 8일까지 신고분 기준 40건이에요",
+          "작년 같은 기간 15건보다 2배 이상 늘었어요",
+          "구로구가 15건으로 가장 많았어요"
+        ]
+      }
+    ],
+    "why_it_matters": "월세를 구하는 중이라면 지역별 실거래 월세 흐름을 미리 확인해 보세요.",
+    "caption_intro": "월세 300만 원 아파트가 서울 외곽에도 나오나요? 고액 월세 계약이 늘고 있어요",
+    "hashtags": [
+      "#고액월세",
+      "#서울월세",
+      "#노도강"
+    ],
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/Economy/article/all/20261108/134985783/1",
+    "source_title": "노도강·금관구도 월세 300만원…‘국민평형’서도 고액 월세 나왔다"
+  },
+  "caption": "서울 외곽도 월세 300만원 넘어\n월세 300만 원 아파트가 서울 외곽에도 나오나요? 고액 월세 계약이 늘고 있어요\n\n✔ 무슨 일인지\n✔ 얼마나 늘었나\n💡 월세를 구하는 중이라면 지역별 실거래 월세 흐름을 미리 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#고액월세 #서울월세 #노도강 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.002836,
+  "reel": {
+    "status": "published",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "video_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/1800/1/reel.mp4",
+    "cover_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/1800/1/reel_cover.jpg",
+    "publish": {
+      "container_id": "17887597707512661"
+    },
+    "media_id": "17873325333648908",
+    "permalink": "https://www.instagram.com/reel/DfeY3opCPJf/",
+    "note": "",
+    "recovered": false
+  },
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-08T07:31:34.766031+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-08T09:01:27.994957+00:00",
+      "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-08T09:01:27.994957+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 223,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/1800/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/1800/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/1800/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/1800/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17887597611512661"
+  },
+  "media_id": "18092203982272232",
+  "permalink": "https://www.instagram.com/p/DfeYzbQDK84/"
+}

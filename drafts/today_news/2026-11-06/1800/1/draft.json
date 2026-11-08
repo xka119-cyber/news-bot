@@ -1,0 +1,79 @@
+{
+  "id": "today_news/20261106-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-06T18:00:00+09:00",
+  "slot_label": "11월 6일(금) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "은마 재건축, 1인당 4억 6334만 원",
+    "cover_sub": "재초환 부담금 예정액, 단지 전체 약 2조 원",
+    "points": [
+      {
+        "title": "무엇이 나왔나",
+        "lines": [
+          "강남구청이 은마아파트 재건축조합에 예정액을 통지했어요.",
+          "조합원 1인당 부담금은 4억 6334만 원으로 예상돼요."
+        ]
+      },
+      {
+        "title": "왜 이렇게 많나",
+        "lines": [
+          "재초환은 조합원당 이익이 8000만 원 넘으면 적용돼요.",
+          "초과이익의 최대 절반을 부담금으로 내도록 한 제도예요.",
+          "단지 전체로는 약 2조 44억 원 규모라고 해요."
+        ]
+      }
+    ],
+    "why_it_matters": "재건축 단지에 관심이 있다면 재초환 부담금 기준을 미리 확인해 보세요.",
+    "caption_intro": "재초환 부담금이 1인당 4억 원을 넘는다는데 무슨 뜻일까요?",
+    "hashtags": [
+      "#재초환",
+      "#재건축부담금",
+      "#은마아파트"
+    ],
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/Economy/article/all/20261106/134979710/1",
+    "source_title": "은마 재건축 재초환 부담금 1인당 4억6334만원…총 2조원"
+  },
+  "caption": "은마 재건축, 1인당 4억 6334만 원\n재초환 부담금이 1인당 4억 원을 넘는다는데 무슨 뜻일까요?\n\n✔ 무엇이 나왔나\n✔ 왜 이렇게 많나\n💡 재건축 단지에 관심이 있다면 재초환 부담금 기준을 미리 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#재초환 #재건축부담금 #은마아파트 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0046511,
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-06T07:56:21.541487+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-06T09:06:22.244855+00:00",
+      "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-06T09:06:22.244855+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 143,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-06/1800/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-06/1800/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-06/1800/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-06/1800/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17887172886512661"
+  },
+  "media_id": "17912768802310497",
+  "permalink": "https://www.instagram.com/p/DfZPx65HUaA/"
+}

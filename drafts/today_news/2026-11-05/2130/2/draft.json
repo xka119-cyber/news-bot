@@ -1,0 +1,78 @@
+{
+  "id": "today_news/20261105-2130-2",
+  "account": "today_news",
+  "slot": "2026-11-05T21:30:00+09:00",
+  "slot_label": "11월 5일(목) 21:30",
+  "number": 2,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "코인 소득세 2년 더 유예 추진",
+    "cover_sub": "내년 걷으려던 가상자산 세금, 네 번째 연기 추진",
+    "points": [
+      {
+        "title": "무엇이 바뀌나",
+        "lines": [
+          "정부가 내년부터 걷으려던 가상자산 소득세를 미루려 합니다.",
+          "2년을 더 미루는 방안이고, 이번에도 미뤄지면 네 번째입니다."
+        ]
+      },
+      {
+        "title": "어떤 배경인가",
+        "lines": [
+          "투자 손실을 이후 3년간 공제하는 방안도 함께 추진됩니다.",
+          "그래서 정부의 과세 원칙을 믿을 수 있느냐는 지적이 나옵니다."
+        ]
+      }
+    ],
+    "why_it_matters": "코인 투자를 하고 계시다면 세금 기준이 언제 바뀌는지 공식 발표를 직접 확인해 보세요.",
+    "caption_intro": "가상자산 소득세 또 미뤄지나요? 내년 과세 일정 정리해 봤어요.",
+    "hashtags": [
+      "#가상자산소득세",
+      "#코인과세",
+      "#가상자산"
+    ],
+    "source_name": "SBS",
+    "source_url": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008832512&plink=RSSLINK&cooper=RSSREADER",
+    "source_title": "코인 과세 또 유예…\"투자 손실, 이후 3년간 공제 추진\""
+  },
+  "caption": "코인 소득세 2년 더 유예 추진\n가상자산 소득세 또 미뤄지나요? 내년 과세 일정 정리해 봤어요.\n\n✔ 무엇이 바뀌나\n✔ 어떤 배경인가\n💡 코인 투자를 하고 계시다면 세금 기준이 언제 바뀌는지 공식 발표를 직접 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: SBS\nAI의 도움을 받아 요약했어요.\n\n#가상자산소득세 #코인과세 #가상자산 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0022024,
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-05T11:31:12.863949+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-05T12:35:12.438632+00:00",
+      "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-05T12:35:12.438632+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 115,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/2130/2/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/2130/2/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/2130/2/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/2130/2/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17887008729512661"
+  },
+  "media_id": "17955274674280949",
+  "permalink": "https://www.instagram.com/p/DfXC8PSkX0g/"
+}

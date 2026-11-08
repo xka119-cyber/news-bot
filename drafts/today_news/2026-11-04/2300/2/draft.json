@@ -1,0 +1,78 @@
+{
+  "id": "today_news/20261104-2300-2",
+  "account": "today_news",
+  "slot": "2026-11-04T23:00:00+09:00",
+  "slot_label": "11월 4일(수) 23:00",
+  "number": 2,
+  "format": "carousel",
+  "draft": {
+    "category": "생활",
+    "cover_title": "전월세 보증금, HUG에 맡기는 신탁",
+    "cover_sub": "집주인은 매달 수익을 받는 새 임대차 방식",
+    "points": [
+      {
+        "title": "무엇이 바뀌나",
+        "lines": [
+          "세입자는 보증금에 해당하는 돈을 HUG에 맡기게 돼요.",
+          "집주인은 HUG가 굴린 자금으로 매달 수익을 가져가요."
+        ]
+      },
+      {
+        "title": "첫 약정 수익률은?",
+        "lines": [
+          "첫 약정의 수익률은 연 4.35%로 나타났어요.",
+          "국토교통부와 HUG가 임대인을 모집하고 있어요."
+        ]
+      }
+    ],
+    "why_it_matters": "전월세를 살거나 세를 놓는 분이라면 새 임대차 방식의 조건과 구조를 먼저 확인해 보세요.",
+    "caption_intro": "전월세 보증금을 HUG에 맡기는 신탁, 어떤 건가요?",
+    "source_name": "매일경제",
+    "source_url": "https://www.mk.co.kr/news/realestate/12196660",
+    "source_title": "전월세 안심신탁 임대인모집… 첫 약정 수익률은 연 4.35%"
+  },
+  "caption": "전월세 보증금을 HUG에 맡기는 신탁, 어떤 건가요?\n\n✔ 무엇이 바뀌나\n✔ 첫 약정 수익률은?\n💡 전월세를 살거나 세를 놓는 분이라면 새 임대차 방식의 조건과 구조를 먼저 확인해 보세요.\n\n출처: 매일경제\nAI의 도움을 받아 요약했어요.\n\n#오늘의뉴스 #뉴스요약 #출근길뉴스 #경제뉴스 #3분뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0035386,
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-04T13:41:09.142083+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-04T13:53:28.996711+00:00",
+      "note": "텔레그램 버튼"
+    },
+    {
+      "status": "failed",
+      "at": "2026-11-04T14:00:30.659577+00:00",
+      "note": "인스타 content_publishing_limit 실패 (HTTP 400, 코드 200) API access blocked."
+    },
+    {
+      "status": "published",
+      "at": "2026-11-04T14:10:37.121878+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 25,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-04/2300/2/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-04/2300/2/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-04/2300/2/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-04/2300/2/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17886818766512661"
+  },
+  "media_id": "18108389929977412",
+  "permalink": "https://www.instagram.com/p/DfUpAXNAe-L/"
+}

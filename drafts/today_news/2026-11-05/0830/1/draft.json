@@ -1,0 +1,78 @@
+{
+  "id": "today_news/20261105-0830-1",
+  "account": "today_news",
+  "slot": "2026-11-05T08:30:00+09:00",
+  "slot_label": "11월 5일(목) 08:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "날씨·교통",
+    "cover_title": "고속철 통합 60일, 이용객 12.6%↑",
+    "cover_sub": "하루 32만 명 이용, 수서발 이용객은 30% 늘었어요",
+    "points": [
+      {
+        "title": "통합 뒤 달라진 것",
+        "lines": [
+          "KTX와 SRT가 하나로 합쳐진 지 60일이 지났어요.",
+          "그 사이 하루 평균 32만 명이 고속철도를 이용하고 있어요."
+        ]
+      },
+      {
+        "title": "숫자로 본 변화",
+        "lines": [
+          "지난해보다 하루 평균 이용객이 12.6% 늘었어요.",
+          "특히 수서발 고속철도 이용객은 30% 늘어난 것으로 나타났어요."
+        ]
+      }
+    ],
+    "why_it_matters": "기차표를 예매하거나 출퇴근 동선을 짤 때 열차 선택지가 달라졌는지 한번 확인해 보세요.",
+    "caption_intro": "KTX와 SRT 통합 후 기차 이용은 어떻게 달라졌을까요?",
+    "hashtags": [
+      "#고속철도",
+      "#수서발고속철도",
+      "#기차표"
+    ],
+    "source_name": "연합뉴스",
+    "source_url": "https://www.yna.co.kr/view/AKR20261104145800003",
+    "source_title": "고속철도 통합 60일, 하루 32만명 이용…수서발 이용객 30%↑"
+  },
+  "caption": "고속철 통합 60일, 이용객 12.6%↑\nKTX와 SRT 통합 후 기차 이용은 어떻게 달라졌을까요?\n\n✔ 통합 뒤 달라진 것\n✔ 숫자로 본 변화\n💡 기차표를 예매하거나 출퇴근 동선을 짤 때 열차 선택지가 달라졌는지 한번 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 연합뉴스\nAI의 도움을 받아 요약했어요.\n\n#고속철도 #수서발고속철도 #기차표 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0019095,
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-04T22:27:15.547884+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-04T23:32:02.148656+00:00",
+      "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-04T23:32:02.148656+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 65,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/0830/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/0830/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/0830/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/0830/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17886891597512661"
+  },
+  "media_id": "18211533514372006",
+  "permalink": "https://www.instagram.com/p/DfVpRNDjOba/"
+}

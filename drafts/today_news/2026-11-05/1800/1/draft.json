@@ -1,0 +1,80 @@
+{
+  "id": "today_news/20261105-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-05T18:00:00+09:00",
+  "slot_label": "11월 5일(목) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "생활",
+    "cover_title": "층간소음 기준, 49dB로 강화",
+    "cover_sub": "다세대·오피스텔 바닥 소음 기준, 6일부터 행정예고",
+    "points": [
+      {
+        "title": "무엇이 바뀌나",
+        "lines": [
+          "다세대주택과 오피스텔의 층간소음 차단 기준이 강화됩니다.",
+          "국토교통부가 6일부터 26일까지 고시 개정안을 행정예고합니다."
+        ]
+      },
+      {
+        "title": "얼마나 강화되나",
+        "lines": [
+          "무거운 충격음 기준도 49dB 이하로 조여집니다.",
+          "가벼운 충격음은 기존보다 9dB 낮은 49dB 이하로 묶입니다."
+        ]
+      }
+    ],
+    "why_it_matters": "예고안대로 확정되면 새로 지을 다세대·오피스텔은 더 엄격해져요. 집 볼 때 바닥 구조도 물어보세요.",
+    "caption_intro": "층간소음 기준이 강화된다는데 다세대·오피스텔 살면 뭐가 달라지나요?",
+    "hashtags": [
+      "#층간소음",
+      "#바닥충격음",
+      "#오피스텔"
+    ],
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/Economy/article/all/20261105/134972873/1",
+    "source_title": "다세대·오피스텔 층간소음 차단 기준, 49dB 이하로 강화"
+  },
+  "caption": "층간소음 기준, 49dB로 강화\n층간소음 기준이 강화된다는데 다세대·오피스텔 살면 뭐가 달라지나요?\n\n✔ 무엇이 바뀌나\n✔ 얼마나 강화되나\n💡 예고안대로 확정되면 새로 지을 다세대·오피스텔은 더 엄격해져요. 집 볼 때 바닥 구조도 물어보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#층간소음 #바닥충격음 #오피스텔 #3분뉴스 #오늘의뉴스",
+  "warnings": [
+    "원문에 없는 숫자: 9"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0038533,
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-05T08:01:27.809014+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-05T09:06:54.630572+00:00",
+      "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-05T09:06:54.630572+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 95,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/1800/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/1800/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/1800/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/1800/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17886976392512661"
+  },
+  "media_id": "18137144518709117",
+  "permalink": "https://www.instagram.com/p/DfWrDQ8Cb7B/"
+}

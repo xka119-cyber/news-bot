@@ -1,0 +1,79 @@
+{
+  "id": "today_news/20261105-1200-1",
+  "account": "today_news",
+  "slot": "2026-11-05T12:00:00+09:00",
+  "slot_label": "11월 5일(목) 12:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "카카오뱅크 스텔스통장 9일 출시",
+    "cover_sub": "정한 장소와 시간에만 계좌가 보이는 통장",
+    "points": [
+      {
+        "title": "무슨 일인가요?",
+        "lines": [
+          "카카오뱅크가 입출금통장 '스텔스통장'을 9일 출시합니다.",
+          "계좌가 보이는 시간과 장소를 내가 직접 정할 수 있어요."
+        ]
+      },
+      {
+        "title": "어떻게 설정하나요?",
+        "lines": [
+          "장소는 GPS 기준으로 최대 3곳까지 지정할 수 있어요.",
+          "지정한 곳 반경 100m 안, 30분 단위 시간에만 조회돼요.",
+          "오픈뱅킹 같은 외부 앱으로는 계좌를 볼 수 없어요."
+        ]
+      }
+    ],
+    "why_it_matters": "체크카드 발급과 ATM 출금은 안 되니, 생활비 통장으로 쓰기 전에 기능 제한을 먼저 확인해 보세요.",
+    "caption_intro": "카카오뱅크 스텔스통장은 어떤 통장인가요? 특정 장소에서만 계좌가 보이는 기능을 정리했어요.",
+    "hashtags": [
+      "#스텔스통장",
+      "#카카오뱅크",
+      "#입출금통장"
+    ],
+    "source_name": "ZDNet Korea",
+    "source_url": "https://zdnet.co.kr/view/?no=20261105084745",
+    "source_title": "카카오뱅크, 원하는 시간, 장소에서만 보이는 ‘스텔스통장’ 9일 출시"
+  },
+  "caption": "카카오뱅크 스텔스통장 9일 출시\n카카오뱅크 스텔스통장은 어떤 통장인가요? 특정 장소에서만 계좌가 보이는 기능을 정리했어요.\n\n✔ 무슨 일인가요?\n✔ 어떻게 설정하나요?\n💡 체크카드 발급과 ATM 출금은 안 되니, 생활비 통장으로 쓰기 전에 기능 제한을 먼저 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: ZDNet Korea\nAI의 도움을 받아 요약했어요.\n\n#스텔스통장 #카카오뱅크 #입출금통장 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.002042,
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-05T02:01:22.205446+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-05T03:06:04.892122+00:00",
+      "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-05T03:06:04.892122+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 80,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/1200/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/1200/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/1200/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-05/1200/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17886922050512661"
+  },
+  "media_id": "17918565750546365",
+  "permalink": "https://www.instagram.com/p/DfWBv0SlWtf/"
+}
