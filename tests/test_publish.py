@@ -484,7 +484,10 @@ def test_flow_false_error_marks_published_and_goes_on_to_reel(account, tmp_path)
     assert record["status"] == "published" and record["media_id"] == "real-parent"
     assert record["reel"]["status"] == "published" and record["reel"]["media_id"] == "real-reel1"
     texts = [params["text"] for method, params in tg.sent if method == "sendMessage"]
-    assert "📸 올라가 있었어요" in texts[0] and "🎬 릴스도 올라가 있었어요" in texts[1]
+    # 11-08: 카드뉴스는 매번 오류 응답 뒤 정상 게시 → 알림은 평소 문구, 되찾은 사실은 기록에만
+    assert texts[0].startswith("📸 올라갔어요!") and texts[1].startswith("🎬 릴스도 올라갔어요")
+    assert not any("오류" in t for t in texts)
+    assert record["publish"]["recovered"] is True
     assert run(account, tmp_path, FakeIG(), FakeTG(), []) == []  # 두 번째 실행은 아무것도 안 함
 
 

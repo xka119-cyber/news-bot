@@ -7,6 +7,7 @@
 
 import http.client
 import json
+import logging
 import time
 import urllib.error
 import urllib.parse
@@ -14,6 +15,8 @@ import urllib.request
 from dataclasses import dataclass
 
 from newsbot.util.masking import mask_text
+
+log = logging.getLogger(__name__)
 
 
 class InstagramError(RuntimeError):
@@ -181,11 +184,13 @@ def _publish_container(client: InstagramClient, container: str, caption: str, pr
         return find_posted(client, caption, product, fallback_newest=True), True
     try:
         return client.publish(container), False
-    except InstagramError:
+    except InstagramError as error:
         client.sleep(3)  # 인스타가 글을 올려 놓고 오류라고 답하는 경우(2026-11-07 21:30): 잠깐 뒤 최근 글에서 찾는다
         posted = _posted_quietly(client, container, caption, product)
         if not posted:
             raise
+        # 11-08: 카드뉴스는 매번 이렇게 끝난다(컨테이너 ERROR, 글은 정상 게시). 사용자 알림은 평소대로 두고 기록만 남긴다
+        log.warning("%s 게시 응답은 오류였지만 실제로는 올라가 있음: %s", product, error)
         return posted, True
 
 

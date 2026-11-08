@@ -128,21 +128,20 @@ def publish_one(record: dict, account: AccountConfig, root: Path, ig: InstagramC
             return Outcome(draft_id, "failed", str(error))
 
         record["media_id"], record["permalink"] = result.media_id, result.permalink
+        progress["recovered"] = result.recovered  # 오류 응답 뒤 되찾은 게시인지는 기록에만 남긴다
         drafts.set_status(root, record, "published", now)
         draft = record["draft"]
         record_used(history_path, [Article(draft["source_name"], draft["source_title"], "", draft["source_url"], now)], now)
         reel_next = "\n🎬 릴스는 이어서 올리는 중이에요" if wants_reel(record, account) else ""
-        heading = "📸 올라가 있었어요 (인스타가 오류라고 답했지만 실제로는 게시됨)" if result.recovered else "📸 올라갔어요!"
+        # 11-08: 카드뉴스는 인스타가 매번 '오류'라고 답하고도 정상 게시돼서, 되찾은 경우에도 평소 문구를 쓴다(사용자가 이상하다고 함)
         # 카드 결과는 바로 알린다(릴스 영상 처리 대기가 길어도 먼저 알 수 있게)
-        _notify(tg, chat_id, record, f"{heading} {draft['cover_title']}\n{result.permalink}{reel_next}")
+        _notify(tg, chat_id, record, f"📸 올라갔어요! {draft['cover_title']}\n{result.permalink}{reel_next}")
 
     outcome = Outcome(draft_id, "published", record.get("permalink", ""))
     if wants_reel(record, account):
         outcome.reel_status, outcome.reel_note = publish_reel_part(record, account, root, ig, upload)
         if outcome.reel_status == "published":
-            heading = ("🎬 릴스도 올라가 있었어요 (인스타가 오류라고 답했지만 실제로는 게시됨)"
-                       if record["reel"].get("recovered") else "🎬 릴스도 올라갔어요")
-            _notify(tg, chat_id, record, f"{heading}\n{outcome.reel_note}")
+            _notify(tg, chat_id, record, f"🎬 릴스도 올라갔어요\n{outcome.reel_note}")
         else:
             _notify(tg, chat_id, record, f"⚠️ 릴스는 실패했어요(카드뉴스는 올라감)\n이유: {outcome.reel_note}\n"
                                          "Claude에게 '릴스 다시 올려줘'라고 하면 릴스만 다시 올려요.")

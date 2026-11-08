@@ -123,6 +123,10 @@ def handle_text(client: TelegramClient, message: dict, chat_id: int, drafts_root
     for record in waiting:
         drafts.set_status(drafts_root, record, status, now, note="키보드 버튼")
         decisions.append(Decision(record["id"], status, "키보드 버튼"))
+    if status == "approved" and datetime.fromisoformat(waiting[0]["slot"]) <= now:
+        # 봇은 버튼을 게시 시각에야 읽는다 → 이때 '21:30에 올라가요'라고 답하면 이미 지난 시각이라 헷갈린다(11-08).
+        # 곧바로 이어지는 '📸 올라갔어요' 알림이 승인 확인을 겸한다(키보드도 그 알림이 내린다)
+        return decisions
     label = waiting[0]["slot_label"]
     names = f"{number}번" if number else (f"{len(waiting)}개 모두" if len(waiting) > 1 else "게시물")
     text = f"✅ {names} 승인됨 — {label}에 올라가요" if status == "approved" else f"⏭ {names} 건너뛰었어요"

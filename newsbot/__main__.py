@@ -202,6 +202,7 @@ def run_publish(account_key: str, only_id: str | None) -> int:
     from datetime import datetime, timezone
 
     from newsbot.approve.responses import process_updates
+    from newsbot.approve.telegram import REMOVE_KEYBOARD, TelegramError
     from newsbot.publish import flow
     from newsbot.publish.instagram import InstagramClient, InstagramError
     from newsbot.storage.media_branch import upload
@@ -220,6 +221,12 @@ def run_publish(account_key: str, only_id: str | None) -> int:
         )
     except InstagramError as error:
         print(f"❌ {error}")
+        # 게시 시각에 읽은 승인에는 따로 답장하지 않으므로(11-08), 여기서 멈추면 알리고 아래 키보드도 내린다(QA 11-08)
+        try:
+            tg.call("sendMessage", chat_id=chat_id, text=f"❌ 게시를 시작하지 못했어요\n이유: {error}",
+                    reply_markup=REMOVE_KEYBOARD)
+        except TelegramError:
+            pass
         return 1
     outcomes = flow.run(account, DRAFTS_ROOT, ig, tg, chat_id, upload, HISTORY, now, only_id)
     if not outcomes:

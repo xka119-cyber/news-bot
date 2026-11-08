@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import pytest
 
@@ -181,6 +181,17 @@ def test_keyboard_all_approve_then_keyboard_removed(tmp_path):
     assert {d.draft_id for d in decisions} == {first, second}
     reply = next(p for m, p in client.calls if m == "sendMessage")
     assert "2개 모두 승인됨" in reply["text"] and reply["reply_markup"] == {"remove_keyboard": True}
+
+
+def test_keyboard_approval_read_at_slot_time_sends_no_late_reply(tmp_path):
+    # 11-08: 봇은 게시 시각에 버튼을 읽으므로 '21:30에 올라가요'(이미 지난 시각) 답장은 보내지 않는다
+    first = make_numbered(tmp_path, 1)
+    slot = datetime.fromisoformat(drafts.load(tmp_path, first)["slot"])
+    client = FakeClient([text_msg(1, "✅ 모두 승인 (07:30)")])
+    decisions = process_updates(client, CHAT, tmp_path, tmp_path / "tg.json", slot + timedelta(minutes=1))
+    assert [(d.draft_id, d.status) for d in decisions] == [(first, "approved")]
+    assert drafts.load(tmp_path, first)["status"] == "approved"
+    assert not [p for m, p in client.calls if m == "sendMessage"]
 
 
 def test_keyboard_skip_all_and_ignore_others(tmp_path):
