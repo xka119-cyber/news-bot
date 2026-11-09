@@ -50,12 +50,17 @@
     "video": "reel.mp4",
     "cover": "reel_cover.jpg"
   },
-  "status": "generated",
+  "status": "approved",
   "history": [
     {
       "status": "generated",
       "at": "2026-11-09T07:31:34.760619+00:00",
       "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-09T09:01:32.077619+00:00",
+      "note": "키보드 버튼"
     }
   ],
   "telegram_message_id": 265
