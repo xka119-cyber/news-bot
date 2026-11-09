@@ -44,7 +44,7 @@ class FormatPlan(_Strict):
 
 
 class Reels(_Strict):
-    """같은 뉴스를 카드뉴스와 함께 릴스(세로 영상)로도 올린다 (M7, 2026-11-07 사용자 결정: 둘 다, A/B 안 함, 무음).
+    """같은 뉴스를 카드뉴스와 함께 릴스(세로 영상)로도 올린다 (M7, 2026-11-07 사용자 결정: 둘 다, A/B 안 함).
 
     2026-11-09 v2: 카드를 얹은 15초 영상은 90~99%가 3초 안에 넘겨서, 화면 가득 큰 글씨 장면
     (첫 화면 hook → 핵심 3줄 → 마무리·팔로우)으로 바꿨다. 약 12초."""
@@ -53,6 +53,7 @@ class Reels(_Strict):
     hook_seconds: float = Field(default=2.2, ge=1, le=6)   # 첫 화면 (3초 전에 다음 장면이 나와야 넘기지 않는다)
     beat_seconds: float = Field(default=2.4, ge=1.5, le=6)  # 핵심 한 줄씩
     end_seconds: float = Field(default=2.6, ge=1.5, le=6)   # 마무리 + 팔로우 권유
+    music: bool = False  # 코드로 만든 잔잔한 배경음(저작권 걱정 없음). false = 무음 (2026-11-09 사용자 선택: 켬)
     fps: int = Field(default=30, ge=24, le=60)
     # false = 릴스 탭에만(프로필 격자에 같은 뉴스가 카드·릴스로 두 번 보이지 않게)
     share_to_feed: bool = False

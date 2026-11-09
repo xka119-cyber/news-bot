@@ -6,7 +6,7 @@ v1(2026-11-07)은 카드 이미지를 남색 바탕에 얹은 15초 영상이었
 
 장면: hook(첫 화면 2줄) → beat 3개(핵심 한 줄씩) → end(마무리 + 팔로우 권유).
 장면마다 HTML 1장(Chromium 스크린샷)을 만들고, Pillow로 천천히 다가가는 움직임·위로 밀려 들어오는 전환·진행 막대를 그린다.
-배경음악은 아직 없다(2026-11-07 사용자 결정).
+배경음: 코드로 만든 잔잔한 곡(design/music.py, 2026-11-09 사용자 선택). reels.music: false면 무음.
 """
 
 import re
@@ -175,16 +175,18 @@ def iter_frames(images: list[Image.Image], kinds: list[str], durations: list[flo
         yield frame
 
 
-def encode(frames, size: tuple[int, int], fps: int, out: Path) -> None:
-    """RGB 프레임들을 H.264(yuv420p) + 무음 AAC 스테레오 MP4로 만든다(인스타 릴스 권장 형식)."""
+def encode(frames, size: tuple[int, int], fps: int, out: Path, audio: Path | None = None) -> None:
+    """RGB 프레임들을 H.264(yuv420p) + AAC 스테레오 MP4로 만든다(인스타 릴스 권장 형식).
+    audio(WAV)가 없으면 무음 트랙을 넣는다."""
     width, height = size
+    sound = ["-i", str(audio)] if audio else ["-f", "lavfi", "-i", f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}"]
     command = [
         ffmpeg_exe(), "-y", "-loglevel", "error",
         "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{width}x{height}", "-r", str(fps), "-i", "-",
-        "-f", "lavfi", "-i", f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}",
+        *sound,
         "-shortest", "-map", "0:v", "-map", "1:a",
         "-c:v", "libx264", "-preset", "medium", "-crf", "21", "-profile:v", "high", "-pix_fmt", "yuv420p",
-        "-g", str(fps * 2), "-c:a", "aac", "-b:a", "128k", "-ar", str(AUDIO_RATE),
+        "-g", str(fps * 2), "-c:a", "aac", "-b:a", "128k", "-ar", str(AUDIO_RATE), "-ac", "2",
         "-movflags", "+faststart", str(out),
     ]
     process = subprocess.Popen(command, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -212,7 +214,18 @@ def render_reel(draft: dict, account: AccountConfig, card_paths: list[Path], out
     cover = out_dir / "reel_cover.jpg"
     images[0].save(cover, "JPEG", quality=90)
     video = out_dir / "reel.mp4"
-    encode(iter_frames(images, kinds, durations, fps, account.design.colors), size, fps, video)
+    music = None
+    if account.reels.music:
+        from newsbot.design.music import make_music, write_wav
+
+        seed = draft.get("source_url") or draft["cover_title"]
+        # 영상보다 0.5초 길게: -shortest가 영상 끝에서 자르므로 소리가 먼저 끊기지 않게
+        music = write_wav(make_music(sum(durations) + 0.5, seed), out_dir / "reel_music.wav")
+    try:
+        encode(iter_frames(images, kinds, durations, fps, account.design.colors), size, fps, video, audio=music)
+    finally:
+        if music:
+            music.unlink(missing_ok=True)
     if video.stat().st_size > MAX_BYTES:
         warnings.append("릴스: 영상 파일이 100MB를 넘습니다")
     return ReelResult(video, cover, round(sum(durations), 2), warnings)

@@ -62,4 +62,9 @@ def test_render_reel_makes_instagram_ready_mp4(tmp_path):
     assert "Duration: 00:00:12.00" in info
     assert "h264" in info and "yuv420p" in info and "1080x1920" in info and "30 fps" in info
     assert "aac" in info and "48000 Hz" in info
-    assert not list(tmp_path.glob("reel_scene_*"))
+    assert not list(tmp_path.glob("reel_scene_*")) and not (tmp_path / "reel_music.wav").exists()
+    assert account.reels.music
+    loud = subprocess.run([reels.ffmpeg_exe(), "-i", str(result.video), "-af", "volumedetect", "-f", "null", "-"],
+                          capture_output=True, text=True, encoding="utf-8", errors="replace").stderr
+    mean = float(loud.split("mean_volume:")[1].split("dB")[0])
+    assert -24 < mean < -14, f"배경음이 들어 있어야 함 (평균 {mean} dB)"

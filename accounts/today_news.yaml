@@ -22,6 +22,7 @@ reels:
   hook_seconds: 2.2               # 첫 화면(질문·숫자). 3초 전에 다음 장면이 나오게
   beat_seconds: 2.4               # 핵심 3줄, 한 화면에 한 줄
   end_seconds: 2.6                # 마무리 한 줄 + 팔로우 권유
+  music: true                     # 코드로 만든 잔잔한 배경음(저작권 무료). 2026-11-09 사용자 선택. false = 무음
   share_to_feed: false            # 릴스 탭에만. 프로필 격자에 같은 뉴스가 두 번 보이지 않게
 
 collect:
