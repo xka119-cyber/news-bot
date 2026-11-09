@@ -35,7 +35,7 @@ def test_missing_account_file():
         lambda c: c["design"]["colors"].update(bg="white"),
         lambda c: c["secrets"].update(ig_access_token="real-token-value"),
         lambda c: c.update(format_plan={"week1": {"07:30": "reel"}, "week2": {"07:30": "reel"}}),
-        lambda c: c["reels"].update(card_seconds=0.5),
+        lambda c: c["reels"].update(beat_seconds=0.5),
         lambda c: c.update(unknown_setting=True),
         lambda c: c.update(timezone="Asia/Nowhere"),
     ],

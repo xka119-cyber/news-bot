@@ -26,7 +26,12 @@ CANDIDATES = [
 ]
 
 
-def make(cid=1, cover_title="전기요금 1월부터 오른다", points=None, why="관리비가 조금 늘 수 있어요", category="생활"):
+GOOD_REEL = {"hook": ["우리 집 전기요금", "1월부터 오른다"], "beats": ["가정용 요금 인상", "kWh당 5원 더 내요", "1월부터 적용"],
+             "takeaway": "겨울 대기전력부터 줄이기"}
+
+
+def make(cid=1, cover_title="전기요금 1월부터 오른다", points=None, why="관리비가 조금 늘 수 있어요", category="생활",
+         reel=GOOD_REEL):
     points = points or [
         {"title": "무엇이 바뀌나", "lines": ["가정용 요금이 올라요", "1월부터 적용돼요"]},
         {"title": "얼마나 오르나", "lines": ["kWh당 5원 더 내요", "겨울에 체감이 커요"]},
@@ -34,6 +39,7 @@ def make(cid=1, cover_title="전기요금 1월부터 오른다", points=None, wh
     return LLMDraft.model_validate({
         "candidate_id": cid, "category": category, "cover_title": cover_title, "cover_sub": "우리 집은 얼마?",
         "points": points, "why_it_matters": why, "caption_intro": "전기요금 얼마나 오를까요?",
+        **({"reel": reel} if reel else {}),
     })
 
 
@@ -178,3 +184,42 @@ def test_alt_texts(account):
     assert len(alts) == 4 and all(len(a) <= 1000 for a in alts)
     assert "전기요금 내년 1월부터 오른다" in alts[0] and alts[1].startswith("무엇이 바뀌나:")
     assert "출처: 연합뉴스" in alts[3]
+
+
+def test_reel_script_checked_and_kept():
+    """릴스 대본(2026-11-09 v2): 줄 수·길이를 검사하고 결과 초안에 그대로 담는다."""
+    assert check_draft(GOOD, CANDIDATES[0], [])["retry"] == []
+    missing = check_draft(make(reel=None), CANDIDATES[0], [])["retry"]
+    assert missing == ["릴스 대본(reel)이 없음"]
+    bad = make(reel={"hook": ["아주아주아주아주 긴 첫 화면 줄"], "beats": ["하나"], "takeaway": "끝"})
+    problems = check_draft(bad, CANDIDATES[0], [])["retry"]
+    assert "릴스 첫 화면이 1줄 (2줄이어야 함)" in problems and "릴스 핵심이 1줄 (3줄이어야 함)" in problems
+    assert any(p.startswith("릴스 첫 화면 1줄") for p in problems)
+    # 대본 속 숫자도 원문에 있는지 본다
+    wrong = make(reel={**GOOD_REEL, "beats": ["가정용 요금 인상", "kWh당 7원 더 내요", "1월부터 적용"]})
+    assert "7" in check_draft(wrong, CANDIDATES[0], [])["warn"][0]
+
+
+def test_write_keeps_reel_and_missing_reel_only_warns(tmp_path):
+    client = FakeClient([GOOD])
+    result = write_post(load_account("today_news"), CANDIDATES, tmp_path / "c.json", client=client, now=NOW)
+    assert result.draft["reel"] == GOOD_REEL
+    no_reel = make(reel=None)
+    client = FakeClient([no_reel, no_reel])
+    result = write_post(load_account("today_news"), CANDIDATES, tmp_path / "c.json", client=client, now=NOW)
+    assert "reel" not in result.draft and "릴스 대본(reel)이 없음" in result.warnings
+
+
+def test_prompt_asks_for_reel_hook():
+    prompt = build_prompt(load_account("today_news"), CANDIDATES)
+    assert "reel:" in prompt and "hook" in prompt and "1초 안에" in prompt
+
+
+def test_broken_reel_shape_is_dropped_not_fatal():
+    """hook을 문자열로 주거나 takeaway를 빼먹어도 카드뉴스는 살리고 대본만 버린다(리뷰 높음 1, 2026-11-09)."""
+    base = make(reel=None).model_dump()
+    for broken in ({"hook": "한 줄", "beats": ["a", "b", "c"], "takeaway": "x"}, {"hook": ["a", "b"], "beats": ["a", "b", "c"]}):
+        draft = LLMDraft.model_validate_json(__import__("json").dumps({**base, "reel": broken}))
+        assert draft.reel is None
+    schema = LLMDraft.model_json_schema()
+    assert "LLMReel" in str(schema)  # Claude에게는 대본 모양이 그대로 보인다

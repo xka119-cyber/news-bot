@@ -88,6 +88,7 @@ def publish_reel_part(record: dict, account: AccountConfig, root: Path, ig: Inst
                 from newsbot.design.reels import render_reel
 
                 made = render_reel(record["draft"], account, ensure_cards(record, account, root), folder)
+                reel["style"] = made.style  # 성과 비교용: 게시 때 새로 만든 영상은 지금 판(2026-11-09)
                 video, cover = made.video, made.cover
             reel["video_url"], reel["cover_url"] = upload([video, cover], media_dest(draft_id),
                                                           account.publish.media_repo, f"media: {draft_id} 릴스")

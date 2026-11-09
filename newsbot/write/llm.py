@@ -10,7 +10,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from pydantic import BaseModel, ValidationError
+from typing import Any
+
+from pydantic import BaseModel, ValidationError, field_validator
 
 from newsbot.collect.rss import Article
 from newsbot.config import AccountConfig
@@ -26,6 +28,14 @@ class LLMPoint(BaseModel):
     lines: list[str]
 
 
+class LLMReel(BaseModel):
+    """릴스 대본 (2026-11-09 v2). 첫 화면 hook가 3초 안에 넘기는 비율을 정한다(v1은 90~99%가 넘김)."""
+
+    hook: list[str]   # 첫 화면 큰 글씨 2줄
+    beats: list[str]  # 핵심 3줄 (한 화면에 한 줄)
+    takeaway: str     # 마지막 화면 한 줄
+
+
 class LLMDraft(BaseModel):
     candidate_id: int
     category: str
@@ -35,6 +45,19 @@ class LLMDraft(BaseModel):
     why_it_matters: str
     caption_intro: str
     hashtags: list[str] = []  # 기사 주제어 해시태그 2~3개 (검색 노출용, 2026-11-05 추가)
+    # 릴스 대본 (2026-11-09). 없으면 릴스가 카드 문구로 대신 만든다.
+    # Claude에게 보내는 스키마에는 LLMReel 모양이 그대로 보이고, 받은 대본의 모양이 틀리면 대본만 버린다:
+    # 대본 하나 때문에 카드뉴스까지 '출력 형식 오류'로 실패하지 않게.
+    reel: LLMReel | None = None
+
+    @field_validator("reel", mode="wrap")
+    @classmethod
+    def _drop_broken_reel(cls, value: Any, handler):
+        try:
+            return handler(value)
+        except ValidationError:
+            log.info("릴스 대본 모양이 틀려 버림: %r", value)
+            return None
 
 
 class WriteError(RuntimeError):
@@ -159,6 +182,7 @@ def to_output(draft: LLMDraft, candidates: list[Article]) -> dict:
         "why_it_matters": draft.why_it_matters,
         "caption_intro": draft.caption_intro,
         "hashtags": clean_hashtags(draft.hashtags),
+        **({"reel": draft.reel.model_dump()} if draft.reel else {}),
         "source_name": source.source,
         "source_url": source.link,
         "source_title": source.title,

@@ -1,23 +1,53 @@
 {% extends "_base.html.j2" %}
-{# 릴스 바탕(1080x1920, 2026-11-07). 인스타가 위 ~200px·아래 ~320px에 버튼·캡션을 덮으므로 중요한 글은 그 사이에 둔다.
-   : 위 = 제목(소리 없이 봐도 무슨 뉴스인지), 가운데 = 카드 자리(파이썬이 얹음), 아래 = 브랜드·팔로우 권유.
-   진행 막대는 프레임마다 파이썬이 그린다(.bar 자리). #}
+{# 릴스 장면 한 장(1080x1920, v2 2026-11-09). 화면 전체가 큰 글씨 한 덩어리.
+   인스타가 위 ~220px, 아래 ~460px(캡션·계정명), 오른쪽 ~150px(좋아요·댓글 버튼)을 덮으므로 글은 그 안쪽(.safe)에만 둔다.
+   kind: hook(첫 화면, 노란 바탕) / beat(핵심 한 줄, 남색 바탕) / end(마무리 + 팔로우, 노란 바탕).
+   진행 막대는 프레임마다 파이썬이 그린다. #}
 {% block style %}
-body { background: var(--primary); color: #fff; }
-.top { position: absolute; left: 60px; right: 60px; top: {{ top_y }}px; height: {{ top_h }}px; display: flex; flex-direction: column; justify-content: center; }
-.tag { align-self: flex-start; background: var(--accent); color: var(--primary); font-family: "Pen"; font-size: 46px; padding: 0 24px 4px; border-radius: 18px; }
-.title { margin-top: 14px; font-family: "Jua"; font-size: calc(var(--s) * 64px); line-height: 1.22; }
-.bottom { position: absolute; left: 60px; right: 60px; top: {{ bottom_y + 44 }}px; text-align: center; }
-.brand { font-family: "Jua"; font-size: 44px; color: var(--accent); }
-.follow { margin-top: 8px; font-family: "Pen"; font-size: 48px; color: #fff; }
+body { background: {% if scene.kind == "beat" %}var(--primary){% else %}var(--accent){% endif %}; }
+.safe { position: absolute; left: {{ safe.left }}px; right: {{ safe.right }}px; top: {{ safe.top }}px; bottom: {{ safe.bottom }}px;
+        display: flex; flex-direction: column; justify-content: center; }
+.chip { align-self: flex-start; font-family: "Jua"; font-size: 44px; padding: 6px 26px 8px; border-radius: 40px; }
+.hook .chip, .end .chip { background: var(--primary); color: var(--accent); }
+.beat .chip { background: var(--accent); color: var(--primary); }
+.big-emoji { font-family: var(--emoji); font-size: calc(var(--s) * 150px); line-height: 1; margin: 56px 0 26px; }
+.hook-line { font-family: "Jua"; color: var(--primary); font-size: calc(var(--s) * 118px); line-height: 1.18; }
+.hook-line.second { display: inline; background: var(--primary); color: #fff; padding: 0 18px; border-radius: 18px;
+                    box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.hook-line em, .end-line em { font-style: normal; }
+.second-wrap { margin-top: 18px; }
+.context { margin-top: 34px; font-family: "Jua"; font-size: 44px; color: #A9B4CC; line-height: 1.3; }
+.step { margin-top: 40px; display: flex; gap: 14px; }
+.step i { width: 64px; height: 12px; border-radius: 6px; background: #3A4766; }
+.step i.on { background: var(--accent); }
+.beat-line { margin-top: 44px; font-family: "Pretendard"; font-weight: 800; color: #fff; font-size: calc(var(--s) * 104px); line-height: 1.24; }
+.beat-line em { font-style: normal; color: var(--accent); }
+.label { margin-top: 60px; font-family: "Pen"; font-size: 70px; color: var(--primary); }
+.end-line { margin-top: 10px; font-family: "Jua"; color: var(--primary); font-size: calc(var(--s) * 104px); line-height: 1.2; }
+.follow { margin-top: 70px; align-self: flex-start; display: flex; align-items: center; gap: 22px; background: var(--primary); color: #fff;
+          border-radius: 28px; padding: 26px 36px; }
+.follow b { font-family: "Jua"; font-weight: 400; font-size: 58px; color: var(--accent); }
+.follow span { font-family: "Pretendard"; font-weight: 700; font-size: 40px; line-height: 1.3; }
+.src { margin-top: 30px; font-family: "Pretendard"; font-weight: 600; font-size: 30px; color: rgba(31, 42, 68, .7); }
 {% endblock %}
 {% block body %}
-<div class="top fit-box">
-  <div class="tag"><span class="emoji">{{ emoji }}</span> {{ category }} · 3분 뉴스</div>
-  <div class="title">{{ title }}</div>
-</div>
-<div class="bottom">
-  <div class="brand">{{ brand }}</div>
-  <div class="follow">팔로우하면 하루 4번, 3분 요약 받아요</div>
+<div class="safe fit-box {{ scene.kind }}">
+{% if scene.kind == "hook" %}
+  <div class="chip">오늘의 3분 뉴스 · {{ category }}</div>
+  <div class="big-emoji">{{ emoji }}</div>
+  <div class="hook-line">{{ scene.lines[0] }}</div>
+  {% if scene.lines|length > 1 %}<div class="second-wrap"><span class="hook-line second">{{ scene.lines[1] }}</span></div>{% endif %}
+{% elif scene.kind == "beat" %}
+  <div class="chip">{{ emoji }} {{ category }}</div>
+  <div class="context">{{ scene.context }}</div>
+  <div class="step">{% for n in range(scene.total) %}<i class="{{ 'on' if n < scene.index else '' }}"></i>{% endfor %}</div>
+  <div class="beat-line">{{ scene.line }}</div>
+{% else %}
+  <div class="chip">{{ emoji }} 오늘의 3분 뉴스</div>
+  <div class="label">그래서 나는?</div>
+  <div class="end-line">{{ scene.line }}</div>
+  <div class="follow"><b>＋ 팔로우</b><span>하루 4번<br>3분 뉴스 받기</span></div>
+  <div class="src">출처 · {{ source }}</div>
+{% endif %}
 </div>
 {% endblock %}

@@ -4,7 +4,8 @@ import re
 
 from newsbot.collect.rss import Article
 
-LIMITS = {"cover_title": 22, "cover_sub": 30, "point_title": 14, "point_line": 35, "why_it_matters": 60, "caption_intro": 60}
+LIMITS = {"cover_title": 22, "cover_sub": 30, "point_title": 14, "point_line": 35, "why_it_matters": 60, "caption_intro": 60,
+          "reel_hook": 12, "reel_beat": 20, "reel_takeaway": 24}
 COPY_RUN = 20  # 공백 빼고 이만큼 똑같이 이어지면 베낀 것으로 본다
 
 _NUMBER_RE = re.compile(r"\d+(?:[.,]\d+)*")
@@ -53,6 +54,20 @@ def length_problems(draft) -> list[str]:
             found.append(f"{n}번 카드가 {len(point.lines)}줄 (2~3줄이어야 함)")
         for k, line in enumerate(point.lines, start=1):
             found.append(_over(f"{n}번 카드 {k}줄", line, LIMITS["point_line"]))
+    # 릴스 대본 문제는 다시 쓰게 하고, 두 번째에도 남으면 경고만 한다(릴스는 카드 문구로 대신 만든다)
+    reel = getattr(draft, "reel", None)
+    if reel is None:
+        found.append("릴스 대본(reel)이 없음")
+    else:
+        if len(reel.hook) != 2:
+            found.append(f"릴스 첫 화면이 {len(reel.hook)}줄 (2줄이어야 함)")
+        if len(reel.beats) != 3:
+            found.append(f"릴스 핵심이 {len(reel.beats)}줄 (3줄이어야 함)")
+        for k, line in enumerate(reel.hook, start=1):
+            found.append(_over(f"릴스 첫 화면 {k}줄", line, LIMITS["reel_hook"]))
+        for k, line in enumerate(reel.beats, start=1):
+            found.append(_over(f"릴스 핵심 {k}줄", line, LIMITS["reel_beat"]))
+        found.append(_over("릴스 마무리", reel.takeaway, LIMITS["reel_takeaway"]))
     return [p for p in found if p]
 
 
@@ -60,6 +75,9 @@ def draft_text(draft) -> str:
     parts = [draft.cover_title, draft.cover_sub, draft.why_it_matters]
     for point in draft.points:
         parts += [point.title, *point.lines]
+    reel = getattr(draft, "reel", None)
+    if reel is not None:
+        parts += [*reel.hook, *reel.beats, reel.takeaway]
     return " ".join(parts)
 
 
