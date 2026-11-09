@@ -1,0 +1,62 @@
+{
+  "id": "today_news/20261109-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-09T18:00:00+09:00",
+  "slot_label": "11월 9일(월) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "테슬라 보조금 줄고 BYD는 유지",
+    "cover_sub": "11월 전기차 자체 보조금, 브랜드마다 달라요",
+    "points": [
+      {
+        "title": "무슨 일인가요",
+        "lines": [
+          "테슬라는 11월 자체 보조금을 모델 Y 한 종에만 줘요.",
+          "BYD는 모든 전기차 4종에 11월까지 자체 보조금을 줘요."
+        ]
+      },
+      {
+        "title": "얼마나 지원되나요",
+        "lines": [
+          "테슬라는 5개 차종 지원을 모델 Y 한 종으로 좁혔어요.",
+          "모델 Y에는 215만원을 주고, 지원 대상도 줄었어요."
+        ]
+      }
+    ],
+    "why_it_matters": "전기차 구매를 고민한다면 차종과 시기별 자체 보조금을 꼭 확인해 보세요.",
+    "caption_intro": "전기차 보조금, 11월 테슬라와 BYD 중 어디가 더 나을까요?",
+    "hashtags": [
+      "#전기차보조금",
+      "#테슬라모델Y",
+      "#BYD"
+    ],
+    "source_name": "전자신문",
+    "source_url": "https://www.etnews.com/20261106000223",
+    "source_title": "11월에도 자체 보조금… 테슬라 “모델 Y만 215만원”…BYD “4종 모두 제공”"
+  },
+  "caption": "테슬라 보조금 줄고 BYD는 유지\n전기차 보조금, 11월 테슬라와 BYD 중 어디가 더 나을까요?\n\n✔ 무슨 일인가요\n✔ 얼마나 지원되나요\n💡 전기차 구매를 고민한다면 차종과 시기별 자체 보조금을 꼭 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 전자신문\nAI의 도움을 받아 요약했어요.\n\n#전기차보조금 #테슬라모델Y #BYD #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0042641,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg"
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-09T07:31:34.760619+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 265
+}
