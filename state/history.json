@@ -1,16 +1,6 @@
 {
   "items": [
     {
-      "link": "https://www.donga.com/news/Economy/article/all/20261106/134979710/1",
-      "title": "은마 재건축 재초환 부담금 1인당 4억6334만원…총 2조원",
-      "used_at": "2026-11-06T09:06:22.244855+00:00"
-    },
-    {
-      "link": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008834288&plink=RSSLINK&cooper=RSSREADER",
-      "title": "개장 3분 만에 '서킷브레이커'…코스피 5천 '턱걸이'",
-      "used_at": "2026-11-06T12:31:33.404359+00:00"
-    },
-    {
       "link": "https://www.donga.com/news/Economy/article/all/20261107/134983553/1",
       "title": "“오징어의 귀환”…남미 어획량 회복에 수입 폭증",
       "used_at": "2026-11-07T09:01:27.434422+00:00"
@@ -54,6 +44,11 @@
       "link": "https://www.etnews.com/20261106000223",
       "title": "11월에도 자체 보조금… 테슬라 “모델 Y만 215만원”…BYD “4종 모두 제공”",
       "used_at": "2026-11-09T09:01:32.077619+00:00"
+    },
+    {
+      "link": "https://www.mk.co.kr/news/realestate/12202671",
+      "title": "\"청년임대 한채에 고작 2억\" … 역세권 공급 가능할까",
+      "used_at": "2026-11-09T12:31:35.259182+00:00"
     }
   ]
 }
