@@ -67,7 +67,7 @@
     "cover": "reel_cover.jpg",
     "style": "v2"
   },
-  "status": "approved",
+  "status": "published",
   "history": [
     {
       "status": "generated",
@@ -78,7 +78,24 @@
       "status": "approved",
       "at": "2026-11-09T22:31:40.751873+00:00",
       "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-09T22:31:40.751873+00:00",
+      "note": ""
     }
   ],
-  "telegram_message_id": 285
+  "telegram_message_id": 285,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-10/0730/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-10/0730/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-10/0730/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-10/0730/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17887940049512661",
+    "recovered": true
+  },
+  "media_id": "18112794707148546",
+  "permalink": "https://www.instagram.com/p/DfiaUnBDUJC/"
 }
