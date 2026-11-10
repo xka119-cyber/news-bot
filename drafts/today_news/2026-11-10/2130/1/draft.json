@@ -64,12 +64,17 @@
     "cover": "reel_cover.jpg",
     "style": "v2"
   },
-  "status": "generated",
+  "status": "approved",
   "history": [
     {
       "status": "generated",
       "at": "2026-11-10T11:01:45.644021+00:00",
       "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-10T12:31:37.126624+00:00",
+      "note": "키보드 버튼"
     }
   ],
   "telegram_message_id": 315
