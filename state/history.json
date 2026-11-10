@@ -1,11 +1,6 @@
 {
   "items": [
     {
-      "link": "https://www.donga.com/news/Economy/article/all/20261106/134965042/2",
-      "title": "“부모 집에 공짜로 살았는데”…월세 안 냈다고 증여세 내야 하나 [상속리포트]",
-      "used_at": "2026-11-07T15:14:50.631259+00:00"
-    },
-    {
       "link": "https://www.mk.co.kr/news/realestate/12201523",
       "title": "“앞날이 캄캄”…당첨 기쁨은 잠깐, 대출 금리에 한숨만",
       "used_at": "2026-11-08T00:39:23.603851+00:00"
@@ -64,6 +59,11 @@
       "link": "https://www.etnews.com/20261110000317",
       "title": "'초고속 충전' 뛰는 전기차… '보급률 1%' 기는 초고속 충전소",
       "used_at": "2026-11-10T12:31:37.126624+00:00"
+    },
+    {
+      "link": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008839939&plink=RSSLINK&cooper=RSSREADER",
+      "title": "[날씨] 큰 일교차 유의…오전까지 짙은 안개",
+      "used_at": "2026-11-10T22:31:30.488596+00:00"
     }
   ]
 }
