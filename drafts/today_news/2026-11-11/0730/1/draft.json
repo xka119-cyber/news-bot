@@ -1,0 +1,75 @@
+{
+  "id": "today_news/20261111-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-11T07:30:00+09:00",
+  "slot_label": "11월 11일(수) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "날씨·교통",
+    "cover_title": "출근길 5도, 낮엔 16도",
+    "cover_sub": "일교차 큰 오늘, 오전엔 짙은 안개까지 있어요",
+    "points": [
+      {
+        "title": "오늘 날씨 한눈에",
+        "lines": [
+          "오늘은 일교차가 커서 겉옷이 필요해요.",
+          "오전까지는 짙은 안개가 끼는 곳이 많아요."
+        ]
+      },
+      {
+        "title": "기온은 얼마나 될까",
+        "lines": [
+          "서울 아침 기온은 5도로 어제보다 4도 올라요.",
+          "낮 기온은 16도까지 오르지만 여전히 쌀쌀해요."
+        ]
+      }
+    ],
+    "why_it_matters": "아침은 춥고 낮은 따뜻해서 겉옷 챙기기 애매해요. 안개길 운전은 평소보다 천천히 해 주세요.",
+    "caption_intro": "일교차 큰 오늘, 출근길 몇 도에 겉옷을 챙겨야 할까요?",
+    "hashtags": [
+      "#일교차",
+      "#짙은안개",
+      "#출근길날씨"
+    ],
+    "reel": {
+      "hook": [
+        "출근길 5도인데",
+        "낮엔 16도?"
+      ],
+      "beats": [
+        "오늘 일교차가 큽니다",
+        "서울 아침 5도, 낮 16도",
+        "오전까지 짙은 안개 주의"
+      ],
+      "takeaway": "겉옷 챙기고 안개길은 천천히 가기"
+    },
+    "source_name": "SBS",
+    "source_url": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008839939&plink=RSSLINK&cooper=RSSREADER",
+    "source_title": "[날씨] 큰 일교차 유의…오전까지 짙은 안개"
+  },
+  "caption": "출근길 5도, 낮엔 16도\n일교차 큰 오늘, 출근길 몇 도에 겉옷을 챙겨야 할까요?\n\n✔ 오늘 날씨 한눈에\n✔ 기온은 얼마나 될까\n💡 아침은 춥고 낮은 따뜻해서 겉옷 챙기기 애매해요. 안개길 운전은 평소보다 천천히 해 주세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: SBS\nAI의 도움을 받아 요약했어요.\n\n#일교차 #짙은안개 #출근길날씨 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0044599,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v2"
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-10T21:01:31.125545+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 325
+}
