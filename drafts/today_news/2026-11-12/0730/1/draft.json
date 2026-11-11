@@ -1,0 +1,138 @@
+{
+  "id": "today_news/20261112-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-12T07:30:00+09:00",
+  "slot_label": "11월 12일(목) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "유류세 인하, 1월 말까지 연장",
+    "cover_sub": "이번 달 끝날 예정이던 인하가 2개월 늘어나요",
+    "points": [
+      {
+        "title": "무엇이 바뀌나",
+        "lines": [
+          "정부가 유류세 인하를 2개월 더 연장합니다.",
+          "이번 달 끝날 예정이었지만 내년 1월 말까지예요."
+        ]
+      },
+      {
+        "title": "왜 연장하나",
+        "lines": [
+          "중동 상황의 불안과 비싼 기름값을 함께 봤어요.",
+          "기름값 부담을 덜기 위한 조치예요."
+        ]
+      }
+    ],
+    "why_it_matters": "차를 자주 몰면 주유비 부담이 2개월 더 덜해요. 내년 1월 말 이후 기름값 변화도 확인해 보세요.",
+    "caption_intro": "유류세 인하 연장, 내년 1월까지 기름값은 얼마나 내려갈까요?",
+    "hashtags": [
+      "#유류세인하",
+      "#유류세연장",
+      "#주유비"
+    ],
+    "reel": {
+      "hook": [
+        "매일 차 모는 당신",
+        "주유비 2개월 더 싸요"
+      ],
+      "beats": [
+        "정부가 유류세 인하 연장",
+        "기간은 2개월, 내년 1월 말까지",
+        "이번 달 말 종료 예정이었어요"
+      ],
+      "takeaway": "주유비 계획은 1월 말 이후도 체크",
+      "scenes": [
+        {
+          "say": "기름값, 2개월 더 낮아질까요?",
+          "caption": [
+            "기름값 2개월 더",
+            "낮아질까요?"
+          ],
+          "search": "gas station"
+        },
+        {
+          "say": "정부가 유류세 인하를 2개월 더 늘렸어요.",
+          "caption": [
+            "유류세 인하 연장"
+          ],
+          "search": "city traffic"
+        },
+        {
+          "say": "이번 달 끝날 기한이 내년 1월 말로 늘어요.",
+          "caption": [
+            "내년 1월 말까지",
+            "2개월 연장"
+          ],
+          "search": "city sunrise"
+        },
+        {
+          "say": "주유비 계획은 1월 말 이후도 한번 확인하세요.",
+          "caption": [
+            "1월 말 이후도",
+            "가격 체크"
+          ],
+          "search": "woman smartphone"
+        }
+      ]
+    },
+    "source_name": "SBS",
+    "source_url": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008841707&plink=RSSLINK&cooper=RSSREADER",
+    "source_title": "유류세 인하 2개월 연장…내년 1월 말까지"
+  },
+  "caption": "유류세 인하, 1월 말까지 연장\n유류세 인하 연장, 내년 1월까지 기름값은 얼마나 내려갈까요?\n\n✔ 무엇이 바뀌나\n✔ 왜 연장하나\n💡 차를 자주 몰면 주유비 부담이 2개월 더 덜해요. 내년 1월 말 이후 기름값 변화도 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: SBS\nAI의 도움을 받아 요약했어요.\n\n#유류세인하 #유류세연장 #주유비 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0054842,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 175,
+        "url": "https://cdn.pixabay.com/video/2015/08/09/175-135788388_medium.mp4",
+        "page": "https://pixabay.com/videos/id-175/",
+        "start": 1.2,
+        "match": "full"
+      },
+      {
+        "id": 218013,
+        "url": "https://cdn.pixabay.com/video/2024/06/24/218013_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-218013/",
+        "start": 2.4,
+        "match": "full"
+      },
+      {
+        "id": 221299,
+        "url": "https://cdn.pixabay.com/video/2024/07/15/221299_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-221299/",
+        "start": 1.65,
+        "match": "full"
+      },
+      {
+        "id": 12564,
+        "url": "https://cdn.pixabay.com/video/2017/10/22/12564-240358890_medium.mp4",
+        "page": "https://pixabay.com/videos/id-12564/",
+        "start": 3.3,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-11T21:02:12.802787+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 365
+}
