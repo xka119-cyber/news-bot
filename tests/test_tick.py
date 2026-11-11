@@ -20,7 +20,9 @@ def kst(hour: int, minute: int, day: int = 6) -> datetime:
 @pytest.fixture
 def account():
     # slots 07:30·12:00·18:00·21:30, 창 30~90분. posts_per_slot은 설정이 2로 바뀌어도 테스트가 흔들리지 않게 1로 고정
-    return load_account("today_news").model_copy(update={"posts_per_slot": 1})
+    # slots도 고정: 실제 게시 시각은 바뀔 수 있고(2026-11-11 하루 2번으로 줄임), 여기서는 tick 판단 규칙만 본다
+    return load_account("today_news").model_copy(
+        update={"posts_per_slot": 1, "slots": ["07:30", "12:00", "18:00", "21:30"]})
 
 
 def make_record(root, account, status, slot, number=1):

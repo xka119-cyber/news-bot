@@ -87,8 +87,18 @@ def publish_reel_part(record: dict, account: AccountConfig, root: Path, ig: Inst
             if not (video.exists() and cover.exists()):
                 from newsbot.design.reels import render_reel
 
-                made = render_reel(record["draft"], account, ensure_cards(record, account, root), folder)
-                reel["style"] = made.style  # 성과 비교용: 게시 때 새로 만든 영상은 지금 판(2026-11-09)
+                # 미리보기로 승인받은 판(style)과 그때 고른 배경 영상(clips)으로 다시 만든다 (2026-11-11).
+                # 미리보기를 못 만들었던 초안은 style이 없어 지금 설정대로 만든다.
+                approved = reel.get("style")
+                made = render_reel(record["draft"], account, ensure_cards(record, account, root), folder,
+                                   clips=reel.get("clips"), style=approved)
+                reel["style"] = made.style  # 성과 비교용: 실제로 올라가는 영상의 판
+                if made.clips:
+                    reel["clips"] = made.clips
+                for warning in made.warnings:
+                    log.warning("릴스 %s: %s", draft_id, warning)
+                if approved and made.style != approved:   # 승인한 것과 다른 영상이 올라간다 → 기록하고 알린다
+                    reel["render_note"] = (made.warnings or ["미리보기와 다른 판으로 만들어졌어요"])[0][:300]
                 video, cover = made.video, made.cover
             reel["video_url"], reel["cover_url"] = upload([video, cover], media_dest(draft_id),
                                                           account.publish.media_repo, f"media: {draft_id} 릴스")
@@ -142,7 +152,9 @@ def publish_one(record: dict, account: AccountConfig, root: Path, ig: InstagramC
     if wants_reel(record, account):
         outcome.reel_status, outcome.reel_note = publish_reel_part(record, account, root, ig, upload)
         if outcome.reel_status == "published":
-            _notify(tg, chat_id, record, f"🎬 릴스도 올라갔어요\n{outcome.reel_note}")
+            changed = record["reel"].get("render_note")
+            _notify(tg, chat_id, record, f"🎬 릴스도 올라갔어요\n{outcome.reel_note}"
+                    + (f"\n⚠️ 미리보기와 다른 영상이에요. {changed}" if changed else ""))
         else:
             _notify(tg, chat_id, record, f"⚠️ 릴스는 실패했어요(카드뉴스는 올라감)\n이유: {outcome.reel_note}\n"
                                          "Claude에게 '릴스 다시 올려줘'라고 하면 릴스만 다시 올려요.")

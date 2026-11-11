@@ -9,6 +9,7 @@ v1(2026-11-07)은 카드 이미지를 남색 바탕에 얹은 15초 영상이었
 배경음: 코드로 만든 잔잔한 곡(design/music.py, 2026-11-09 사용자 선택). reels.music: false면 무음.
 """
 
+import logging
 import re
 import subprocess
 from dataclasses import dataclass, field
@@ -20,6 +21,8 @@ from PIL import Image, ImageDraw
 
 from newsbot.config import AccountConfig
 from newsbot.design.cards import CATEGORY_EMOJI, FONTS_DIR, MIN_SCALE, TEMPLATES_DIR
+
+log = logging.getLogger(__name__)
 
 STYLE = "v2"
 # 인스타가 덮는 곳(위 버튼줄, 아래 캡션·계정명, 오른쪽 좋아요·댓글 버튼)을 피한 글자 영역
@@ -42,6 +45,7 @@ class ReelResult:
     seconds: float
     warnings: list[str] = field(default_factory=list)
     style: str = STYLE
+    clips: list[dict] = field(default_factory=list)   # v3: 고른 배경 영상(주소·시작 초). 게시 때 같은 영상으로 다시 만들려고 기록한다
 
 
 def ffmpeg_exe() -> str:
@@ -201,8 +205,22 @@ def encode(frames, size: tuple[int, int], fps: int, out: Path, audio: Path | Non
         raise OSError(f"영상 만들기(ffmpeg) 실패: {error.strip()[-300:]}")
 
 
-def render_reel(draft: dict, account: AccountConfig, card_paths: list[Path], out_dir: Path) -> ReelResult:
-    """reel.mp4와 표지 reel_cover.jpg(첫 장면)를 out_dir에 만든다. card_paths는 예전 호출 모양을 맞추려고 받기만 한다."""
+def render_reel(draft: dict, account: AccountConfig, card_paths: list[Path], out_dir: Path,
+                clips: list[dict] | None = None, style: str | None = None) -> ReelResult:
+    """reel.mp4와 표지 reel_cover.jpg를 out_dir에 만든다. card_paths는 예전 호출 모양을 맞추려고 받기만 한다.
+
+    reels.style이 v3면 목소리 + 실사 영상(reels_v3)으로 만들고, 어떤 이유로든 안 되면 v2 글자 릴스로 대신 만들어
+    경고에 이유를 남긴다(릴스가 아예 빠지는 것보다 낫다). clips: v3에서 이전에 고른 배경 영상.
+    style: 설정 대신 쓸 판. 게시 때 미리보기로 승인받은 판을 그대로 다시 만들려고 넘긴다(v2로 승인했는데 v3가 올라가지 않게)."""
+    fallback = None
+    if (style or account.reels.style) == "v3":
+        from newsbot.design import reels_v3
+
+        try:
+            return reels_v3.render(draft, account, out_dir, clips=clips)
+        except Exception as error:  # noqa: BLE001 — 열쇠 없음·영상 없음·목소리 장애·ffmpeg 어떤 오류든 v2로
+            log.warning("릴스 v3 실패, v2로 대신 만듦: %s: %s", type(error).__name__, error)
+            fallback = f"목소리+실사 릴스를 못 만들어 글자 릴스로 대신했어요: {str(error)[:120]}"
     out_dir.mkdir(parents=True, exist_ok=True)
     size = tuple(account.design.reel_size)
     fps = account.reels.fps
@@ -228,4 +246,6 @@ def render_reel(draft: dict, account: AccountConfig, card_paths: list[Path], out
             music.unlink(missing_ok=True)
     if video.stat().st_size > MAX_BYTES:
         warnings.append("릴스: 영상 파일이 100MB를 넘습니다")
+    if fallback:
+        warnings.insert(0, fallback)
     return ReelResult(video, cover, round(sum(durations), 2), warnings)

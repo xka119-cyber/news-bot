@@ -26,6 +26,12 @@
   "reel": {
     "hook": ["우리 집 전기요금", "1월부터 오른다"],
     "beats": ["가정용 전기요금 인상", "kWh당 5원 더 내요", "인상 폭은 다음 달 확정"],
-    "takeaway": "겨울 대기전력부터 줄여 보세요"
+    "takeaway": "겨울 대기전력부터 줄여 보세요",
+    "scenes": [
+      {"say": "우리 집 전기요금, 1월부터 올라요.", "caption": ["우리 집 전기요금", "1월부터 오른다"], "search": "electricity meter"},
+      {"say": "가정용 전기요금이 인상돼요.", "caption": ["가정용 요금 인상"], "search": "apartment lights night"},
+      {"say": "kWh당 5원씩 더 내게 돼요.", "caption": ["kWh당 5원 더"], "search": "paying bills"},
+      {"say": "겨울엔 대기전력부터 줄여 보세요.", "caption": ["대기전력부터", "줄여 보세요"], "search": "unplugging power cord"}
+    ]
   }
 }

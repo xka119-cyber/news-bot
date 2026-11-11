@@ -15,7 +15,7 @@ def raw():
 def test_today_news_loads():
     account = load_account("today_news")
     assert account.account_key == "today_news"
-    assert account.slots == ["07:30", "12:00", "18:00", "21:30"]
+    assert account.slots == ["07:30", "18:00"]   # 2026-11-11: 출근·퇴근 2번
     assert account.design.card_size == (1080, 1350)
 
 

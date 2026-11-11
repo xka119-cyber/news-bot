@@ -567,3 +567,72 @@ def test_client_wraps_dropped_connections_and_retries(monkeypatch):
     with pytest.raises(InstagramError, match=r"연결 실패 \(ConnectionResetError\)"):
         client.quota_left()
     assert sleeps == [1, 2, 4]
+
+
+# ---------- 릴스 v3: 게시 때 승인한 판·영상으로 다시 만들기 (2026-11-11) ----------
+
+def _remake_setup(tmp_path, monkeypatch, reel_fields, made_style, made_clips=(), made_warnings=()):
+    """영상 파일이 없는 새 러너 상황: render_reel을 가짜로 바꾸고 받은 인자를 기록한다."""
+    from newsbot.design import reels
+
+    draft_id = make_record(tmp_path, "approved", reel=True)
+    folder = drafts.draft_dir(tmp_path, draft_id)
+    (folder / "reel.mp4").unlink()
+    (folder / "reel_cover.jpg").unlink()
+    record = drafts.load(tmp_path, draft_id)
+    record["reel"].update(reel_fields)
+    drafts.save(tmp_path, record)
+    seen = {}
+
+    def fake_render(draft, account, cards, out_dir, clips=None, style=None):
+        seen.update(clips=clips, style=style)
+        (out_dir / "reel.mp4").write_bytes(b"mp4")
+        (out_dir / "reel_cover.jpg").write_bytes(b"jpg")
+        return reels.ReelResult(out_dir / "reel.mp4", out_dir / "reel_cover.jpg", 13.0, list(made_warnings),
+                                style=made_style, clips=list(made_clips))
+
+    monkeypatch.setattr(reels, "render_reel", fake_render)
+    return draft_id, seen
+
+
+def test_publish_remakes_v3_reel_from_saved_clips(account, tmp_path, monkeypatch):
+    clips = [{"id": n, "url": f"https://cdn.pixabay.com/v{n}.mp4", "page": "", "start": 1.0} for n in range(4)]
+    draft_id, seen = _remake_setup(tmp_path, monkeypatch, {"style": "v3", "clips": clips}, "v3", made_clips=clips)
+    tg = FakeTG()
+    outcome = run(account, tmp_path, FakeIG(), tg, [])[0]
+    assert outcome.reel_status == "published"
+    assert seen == {"clips": clips, "style": "v3"}, "미리보기 때 고른 영상과 판을 그대로 넘긴다"
+    reel = drafts.load(tmp_path, draft_id)["reel"]
+    assert reel["style"] == "v3" and reel["clips"] == clips and "render_note" not in reel
+    assert "미리보기와 다른" not in "".join(p["text"] for m, p in tg.sent if m == "sendMessage")
+
+
+def test_publish_keeps_v2_when_preview_was_v2(account, tmp_path, monkeypatch):
+    """미리보기가 v2(그때 v3 실패)였으면, 게시 때 설정이 v3여도 v2로 만든다(승인한 것과 다른 영상이 올라가지 않게)."""
+    assert account.reels.style == "v3"
+    draft_id, seen = _remake_setup(tmp_path, monkeypatch, {"style": "v2"}, "v2")
+    run(account, tmp_path, FakeIG(), FakeTG(), [])
+    assert seen == {"clips": None, "style": "v2"}
+    assert drafts.load(tmp_path, draft_id)["reel"]["style"] == "v2"
+
+
+def test_publish_tells_when_reel_differs_from_preview(account, tmp_path, monkeypatch):
+    """v3로 승인했는데 게시 때 v3를 못 만들어 v2가 올라가면: 기록에 남기고 텔레그램으로 알린다."""
+    why = "목소리+실사 릴스를 못 만들어 글자 릴스로 대신했어요: 영상을 내려받지 못했어요(URLError)"
+    draft_id, _ = _remake_setup(tmp_path, monkeypatch, {"style": "v3", "clips": [{"id": 1, "url": "https://cdn.pixabay.com/a.mp4"}]},
+                                "v2", made_warnings=[why])
+    tg = FakeTG()
+    outcome = run(account, tmp_path, FakeIG(), tg, [])[0]
+    assert outcome.reel_status == "published"
+    reel = drafts.load(tmp_path, draft_id)["reel"]
+    assert reel["style"] == "v2" and reel["render_note"] == why
+    texts = [p["text"] for m, p in tg.sent if m == "sendMessage"]
+    assert "🎬 릴스도 올라갔어요" in texts[-1] and "미리보기와 다른 영상이에요" in texts[-1] and "URLError" in texts[-1]
+
+
+def test_publish_uses_current_setting_when_preview_reel_was_never_made(account, tmp_path, monkeypatch):
+    draft_id, seen = _remake_setup(tmp_path, monkeypatch, {}, "v3")
+    run(account, tmp_path, FakeIG(), FakeTG(), [])
+    assert seen == {"clips": None, "style": None}
+    reel = drafts.load(tmp_path, draft_id)["reel"]
+    assert reel["style"] == "v3" and "render_note" not in reel

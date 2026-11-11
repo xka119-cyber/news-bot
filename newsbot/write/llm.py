@@ -28,12 +28,32 @@ class LLMPoint(BaseModel):
     lines: list[str]
 
 
+class LLMScene(BaseModel):
+    """릴스 v3 한 장면 (2026-11-11): AI 목소리가 읽을 문장 + 화면 자막 + 배경 실사 영상 검색어."""
+
+    say: str            # 목소리가 읽을 한 문장
+    caption: list[str]  # 화면 큰 자막 1~2줄
+    search: str         # 무료 영상 창고(Pixabay)에서 찾을 영어 검색어 2~3단어
+
+
 class LLMReel(BaseModel):
     """릴스 대본 (2026-11-09 v2). 첫 화면 hook가 3초 안에 넘기는 비율을 정한다(v1은 90~99%가 넘김)."""
 
     hook: list[str]   # 첫 화면 큰 글씨 2줄
     beats: list[str]  # 핵심 3줄 (한 화면에 한 줄)
     takeaway: str     # 마지막 화면 한 줄
+    # v3 (2026-11-11): 시청 유지 그래프에서 10명 중 6명이 1초 안에 넘김 → 글자 화면 대신 목소리 + 실사 영상.
+    # 모양이 틀리면 scenes만 버리고(v2 글자 릴스로 대신 만든다) 위 대본은 살린다.
+    scenes: list[LLMScene] = []
+
+    @field_validator("scenes", mode="wrap")
+    @classmethod
+    def _drop_broken_scenes(cls, value: Any, handler):
+        try:
+            return handler(value)
+        except ValidationError:
+            log.info("릴스 장면(scenes) 모양이 틀려 버림: %r", value)
+            return []
 
 
 class LLMDraft(BaseModel):

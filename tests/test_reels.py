@@ -27,7 +27,7 @@ def test_scenes_and_durations_about_12_seconds():
     scenes = reels.build_scenes({**make_draft(), "reel": REEL})
     assert [s["kind"] for s in scenes] == ["hook", "beat", "beat", "beat", "end"]
     durations = reels.scene_durations(account, scenes)
-    assert durations[0] < 3, "첫 장면이 3초 전에 끝나야 다음 장면이 넘기는 손을 붙잡는다"
+    assert durations[0] <= 1.5, "평균 시청이 1.1~1.8초라 첫 장면이 그 안에 끝나야 다음 장면이 보인다(11-10)"
     assert round(sum(durations), 2) == 12.0
 
 
@@ -52,6 +52,8 @@ def test_frames_first_frame_static_then_push_and_progress():
 
 def test_render_reel_makes_instagram_ready_mp4(tmp_path):
     account = load_account("today_news")
+    # 2026-11-11부터 계정 설정은 v3(목소리+실사). 여기서는 v2 글자 릴스 자체를 본다 (v3는 test_reels_v3.py)
+    account = account.model_copy(update={"reels": account.reels.model_copy(update={"style": "v2"})})
     result = reels.render_reel({**make_draft(), "reel": REEL}, account, [], tmp_path)
     assert result.seconds == 12.0 and result.warnings == [] and result.style == "v2"
     with Image.open(result.cover) as im:

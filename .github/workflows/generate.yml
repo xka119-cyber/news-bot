@@ -52,6 +52,7 @@ jobs:
           SLOT: ${{ inputs.slot }}
           MOCK_LLM: ${{ inputs.mock_llm }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}   # 릴스 v3 배경 영상 검색(없으면 글자 릴스로 대신)
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |

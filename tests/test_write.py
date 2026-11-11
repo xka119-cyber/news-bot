@@ -27,7 +27,13 @@ CANDIDATES = [
 
 
 GOOD_REEL = {"hook": ["우리 집 전기요금", "1월부터 오른다"], "beats": ["가정용 요금 인상", "kWh당 5원 더 내요", "1월부터 적용"],
-             "takeaway": "겨울 대기전력부터 줄이기"}
+             "takeaway": "겨울 대기전력부터 줄이기",
+             "scenes": [
+                 {"say": "우리 집 전기요금, 1월부터 올라요.", "caption": ["우리 집 전기요금", "1월부터 오른다"], "search": "electricity meter"},
+                 {"say": "가정용 전기요금이 인상돼요.", "caption": ["가정용 요금 인상"], "search": "apartment lights night"},
+                 {"say": "kWh당 5원씩 더 내게 돼요.", "caption": ["kWh당 5원 더"], "search": "paying bills"},
+                 {"say": "겨울엔 대기전력부터 줄여 보세요.", "caption": ["대기전력부터", "줄여 보세요"], "search": "unplugging power cord"},
+             ]}
 
 
 def make(cid=1, cover_title="전기요금 1월부터 오른다", points=None, why="관리비가 조금 늘 수 있어요", category="생활",
@@ -191,7 +197,7 @@ def test_reel_script_checked_and_kept():
     assert check_draft(GOOD, CANDIDATES[0], [])["retry"] == []
     missing = check_draft(make(reel=None), CANDIDATES[0], [])["retry"]
     assert missing == ["릴스 대본(reel)이 없음"]
-    bad = make(reel={"hook": ["아주아주아주아주 긴 첫 화면 줄"], "beats": ["하나"], "takeaway": "끝"})
+    bad = make(reel={"hook": ["아주아주아주아주 긴 첫 화면 줄"], "beats": ["하나"], "takeaway": "끝", "scenes": GOOD_REEL["scenes"]})
     problems = check_draft(bad, CANDIDATES[0], [])["retry"]
     assert "릴스 첫 화면이 1줄 (2줄이어야 함)" in problems and "릴스 핵심이 1줄 (3줄이어야 함)" in problems
     assert any(p.startswith("릴스 첫 화면 1줄") for p in problems)
@@ -213,6 +219,7 @@ def test_write_keeps_reel_and_missing_reel_only_warns(tmp_path):
 def test_prompt_asks_for_reel_hook():
     prompt = build_prompt(load_account("today_news"), CANDIDATES)
     assert "reel:" in prompt and "hook" in prompt and "1초 안에" in prompt
+    assert "나에게 생기는 일" in prompt and "과징금" in prompt  # 11-10: 2줄째를 기업 처분·관공서 말로 끝내지 않기
 
 
 def test_broken_reel_shape_is_dropped_not_fatal():
@@ -223,3 +230,20 @@ def test_broken_reel_shape_is_dropped_not_fatal():
         assert draft.reel is None
     schema = LLMDraft.model_json_schema()
     assert "LLMReel" in str(schema)  # Claude에게는 대본 모양이 그대로 보인다
+
+
+def test_reel_scenes_checked_and_broken_scenes_dropped():
+    """릴스 v3 장면(2026-11-11): 4개, 읽는 문장·자막 길이, 영어 검색어를 검사한다. 모양이 틀리면 장면만 버린다."""
+    scenes = GOOD_REEL["scenes"]
+    three = check_draft(make(reel={**GOOD_REEL, "scenes": scenes[:3]}), CANDIDATES[0], [])["retry"]
+    assert three == ["릴스 장면(scenes)이 3개 (4개여야 함)"]
+    bad = [{"say": "가" * 27, "caption": ["하나", "둘", "셋"], "search": "전기 계량기"}, *scenes[1:]]
+    problems = check_draft(make(reel={**GOOD_REEL, "scenes": bad}), CANDIDATES[0], [])["retry"]
+    assert any(p.startswith("릴스 1번 장면 읽는 문장 27자") for p in problems)
+    assert "릴스 1번 장면 자막이 3줄 (1~2줄이어야 함)" in problems
+    assert any("검색어는 영어" in p for p in problems)
+    wrong = [{**scenes[0], "say": "전기요금이 9원 올라요."}, *scenes[1:]]   # 읽는 문장 속 숫자도 원문과 대조
+    assert "9" in check_draft(make(reel={**GOOD_REEL, "scenes": wrong}), CANDIDATES[0], [])["warn"][0]
+    broken = make(reel={**GOOD_REEL, "scenes": [{"say": "문장만 있음"}]})
+    assert broken.reel is not None and broken.reel.scenes == [] and broken.reel.hook == GOOD_REEL["hook"]
+    assert "scenes" in build_prompt(load_account("today_news"), CANDIDATES) and "LLMScene" in str(LLMDraft.model_json_schema())

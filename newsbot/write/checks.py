@@ -5,7 +5,11 @@ import re
 from newsbot.collect.rss import Article
 
 LIMITS = {"cover_title": 22, "cover_sub": 30, "point_title": 14, "point_line": 35, "why_it_matters": 60, "caption_intro": 60,
-          "reel_hook": 12, "reel_beat": 20, "reel_takeaway": 24}
+          "reel_hook": 12, "reel_beat": 20, "reel_takeaway": 24,
+          # v3 장면: 읽는 문장 4개가 합쳐 약 13초(1초에 6~7자) 안에 끝나야 한다
+          "scene_say": 26, "scene_caption": 12}
+SCENES = 4
+_SEARCH_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9 -]{2,39}")   # 영어 낱말(숫자·하이픈 허용: "4k city", "wi-fi router")
 COPY_RUN = 20  # 공백 빼고 이만큼 똑같이 이어지면 베낀 것으로 본다
 
 _NUMBER_RE = re.compile(r"\d+(?:[.,]\d+)*")
@@ -68,6 +72,17 @@ def length_problems(draft) -> list[str]:
         for k, line in enumerate(reel.beats, start=1):
             found.append(_over(f"릴스 핵심 {k}줄", line, LIMITS["reel_beat"]))
         found.append(_over("릴스 마무리", reel.takeaway, LIMITS["reel_takeaway"]))
+        scenes = getattr(reel, "scenes", [])
+        if len(scenes) != SCENES:
+            found.append(f"릴스 장면(scenes)이 {len(scenes)}개 ({SCENES}개여야 함)")
+        for n, scene in enumerate(scenes, start=1):
+            found.append(_over(f"릴스 {n}번 장면 읽는 문장", scene.say, LIMITS["scene_say"]))
+            if not 1 <= len(scene.caption) <= 2:
+                found.append(f"릴스 {n}번 장면 자막이 {len(scene.caption)}줄 (1~2줄이어야 함)")
+            for k, line in enumerate(scene.caption, start=1):
+                found.append(_over(f"릴스 {n}번 장면 자막 {k}줄", line, LIMITS["scene_caption"]))
+            if not _SEARCH_RE.fullmatch(scene.search.strip()):
+                found.append(f"릴스 {n}번 장면 검색어는 영어 2~3단어여야 함: {scene.search!r}")
     return [p for p in found if p]
 
 
@@ -78,6 +93,8 @@ def draft_text(draft) -> str:
     reel = getattr(draft, "reel", None)
     if reel is not None:
         parts += [*reel.hook, *reel.beats, reel.takeaway]
+        for scene in getattr(reel, "scenes", []):
+            parts += [scene.say, *scene.caption]
     return " ".join(parts)
 
 

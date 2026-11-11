@@ -50,11 +50,19 @@ class Reels(_Strict):
     (첫 화면 hook → 핵심 3줄 → 마무리·팔로우)으로 바꿨다. 약 12초."""
 
     enabled: bool = False
-    hook_seconds: float = Field(default=2.2, ge=1, le=6)   # 첫 화면 (3초 전에 다음 장면이 나와야 넘기지 않는다)
+    hook_seconds: float = Field(default=1.5, ge=1, le=6)   # 첫 화면 (평균 시청 1.1~1.8초 안에 다음 장면이 나와야 한다, 11-10)
     beat_seconds: float = Field(default=2.4, ge=1.5, le=6)  # 핵심 한 줄씩
-    end_seconds: float = Field(default=2.6, ge=1.5, le=6)   # 마무리 + 팔로우 권유
+    end_seconds: float = Field(default=3.3, ge=1.5, le=6)   # 마무리 + 팔로우 권유
     music: bool = False  # 코드로 만든 잔잔한 배경음(저작권 걱정 없음). false = 무음 (2026-11-09 사용자 선택: 켬)
     fps: int = Field(default=30, ge=24, le=60)
+    # 2026-11-11 v3: AI 목소리 + 무료 실사 영상(Pixabay) + 큰 자막. 시청 유지 그래프에서 10명 중 6명이 1초 안에
+    # (글을 읽기도 전에) 넘겨서, 글자 화면이라는 형식 자체를 바꾼다. 열쇠가 없거나 목소리·영상을 못 구하면 v2로 대신 만든다.
+    style: Literal["v2", "v3"] = "v2"
+    voice: str = "ko-KR-SunHiNeural"   # edge-tts 목소리 이름 (남성: ko-KR-InJoonNeural)
+    voice_rate: str = Field(default="+15%", pattern=r"^[+-]\d{1,2}%$")  # 읽는 빠르기
+    clip_key_env: str = Field(default="PIXABAY_API_KEY", pattern=r"^[A-Z][A-Z0-9_]*$")  # 영상 창고 열쇠가 든 환경변수 '이름'
+    # true = Claude가 후보 영상 썸네일을 보고 문장에 어울리는 것을 고른다(릴스 1개에 약 $0.002). false = 태그 규칙으로만 (2026-11-12)
+    clip_judge: bool = True
     # false = 릴스 탭에만(프로필 격자에 같은 뉴스가 카드·릴스로 두 번 보이지 않게)
     share_to_feed: bool = False
 

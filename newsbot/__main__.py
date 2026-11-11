@@ -134,10 +134,11 @@ def run_generate(account_key: str, slot_hhmm: str | None, mock_llm: bool) -> int
                 "warnings": warnings, "cards": [p.name for p in rendered.paths], "cost_usd": result.cost_usd,
             }
             if account.reels.enabled:
-                from newsbot.design.reels import STYLE
-
-                # style: 릴스 디자인 판(v1 카드 얹은 15초, v2 큰 글씨 장면 12초). 성과 비교용 (2026-11-09)
-                record["reel"] = {"status": "pending", "video": "reel.mp4", "cover": "reel_cover.jpg", "style": STYLE}
+                # style: 실제로 만들어진 릴스 판(v2 큰 글씨 장면, v3 목소리+실사 영상). 성과 비교용 (2026-11-09)
+                # clips: v3에서 고른 배경 영상. 게시 때 다시 만들어도 미리보기와 같은 영상이 나오게 (2026-11-11)
+                record["reel"] = {"status": "pending", "video": "reel.mp4", "cover": "reel_cover.jpg",
+                                  **({"style": reel.style} if reel else {}),
+                                  **({"clips": reel.clips} if reel and reel.clips else {})}
             drafts.set_status(DRAFTS_ROOT, record, "generated", now)
             stage = f"{number}번째 텔레그램 전송"
             text = preview_text(result.draft, caption, label, warnings, account.brand_name, order=f"{number}/{total}",
