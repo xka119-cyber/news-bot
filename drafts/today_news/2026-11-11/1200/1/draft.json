@@ -67,12 +67,17 @@
     "cover": "reel_cover.jpg",
     "style": "v2"
   },
-  "status": "generated",
+  "status": "approved",
   "history": [
     {
       "status": "generated",
       "at": "2026-11-11T01:31:34.830179+00:00",
       "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-11T03:01:35.168672+00:00",
+      "note": "키보드 버튼"
     }
   ],
   "telegram_message_id": 335
