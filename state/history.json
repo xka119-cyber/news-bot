@@ -1,11 +1,6 @@
 {
   "items": [
     {
-      "link": "https://www.donga.com/news/Economy/article/all/20261108/134985783/1",
-      "title": "노도강·금관구도 월세 300만원…‘국민평형’서도 고액 월세 나왔다",
-      "used_at": "2026-11-08T09:01:27.994957+00:00"
-    },
-    {
       "link": "https://www.donga.com/news/Economy/article/all/20261108/134985631/1",
       "title": "내 퇴직연금만 제자리? 운용방식 따라 수익률 최대 5.4배差",
       "used_at": "2026-11-08T12:31:34.277632+00:00"
@@ -59,6 +54,11 @@
       "link": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008840012&plink=RSSLINK&cooper=RSSREADER",
       "title": "[친절한 경제] 인형 껴놓고 거의 4만 원…달랑 2개여도 잘 팔린다?",
       "used_at": "2026-11-11T03:01:35.168672+00:00"
+    },
+    {
+      "link": "https://www.donga.com/news/Economy/article/all/20261111/135007262/1",
+      "title": "서울 주거비 부담에 경기로…올해 1~9월 ‘탈서울’ 순이동 40% 증가",
+      "used_at": "2026-11-11T09:01:31.591865+00:00"
     }
   ]
 }
