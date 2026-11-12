@@ -1,0 +1,144 @@
+{
+  "id": "today_news/20261113-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-13T07:30:00+09:00",
+  "slot_label": "11월 13일(금) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "IT",
+    "cover_title": "삼성 AI 안경 65만 원부터",
+    "cover_sub": "구글 AI 탑재, 12월 10일 국내 출시",
+    "points": [
+      {
+        "title": "무엇이 나왔나",
+        "lines": [
+          "삼성전자가 AI 안경 전체 라인업을 공개했어요.",
+          "구글 AI '제미나이'를 넣은 인텔리전트 아이웨어예요.",
+          "젠틀몬스터 16종, 워비파커 14종 등 총 30종이에요."
+        ]
+      },
+      {
+        "title": "가격과 출시일",
+        "lines": [
+          "12월 10일 국내에서 출시될 예정이에요.",
+          "가격은 65만 원부터 시작해요.",
+          "5월과 7월에 먼저 공개된 4종도 포함돼요."
+        ]
+      }
+    ],
+    "why_it_matters": "안경을 바꿀 생각이라면 12월 출시 전에 기능과 가격부터 비교해 보세요.",
+    "caption_intro": "AI 안경 가격은 얼마? 삼성 인텔리전트 아이웨어 12월 국내 출시",
+    "hashtags": [
+      "#AI안경",
+      "#인텔리전트아이웨어",
+      "#제미나이"
+    ],
+    "reel": {
+      "hook": [
+        "안경이 AI가 된다고?",
+        "65만 원부터래요"
+      ],
+      "beats": [
+        "삼성이 AI 안경 공개",
+        "30종, 65만 원부터",
+        "12월 10일 국내 출시"
+      ],
+      "takeaway": "출시 전 기능과 가격 비교해 보기",
+      "scenes": [
+        {
+          "say": "안경이 AI가 된다는데 얼마일까요?",
+          "caption": [
+            "안경이 AI가 된다",
+            "얼마일까요?"
+          ],
+          "search": "man wearing glasses"
+        },
+        {
+          "say": "삼성이 구글, 젠틀몬스터와 만든 AI 안경이에요.",
+          "caption": [
+            "삼성·구글 AI 안경",
+            "젠틀몬스터와 협업"
+          ],
+          "search": "people walking city"
+        },
+        {
+          "say": "30종이고, 65만 원부터 시작해요.",
+          "caption": [
+            "30종 공개",
+            "65만 원부터"
+          ],
+          "search": "people shopping"
+        },
+        {
+          "say": "12월 10일 출시 전에 가격 비교해 보세요.",
+          "caption": [
+            "12월 10일 출시",
+            "가격부터 비교"
+          ],
+          "search": "office workers"
+        }
+      ]
+    },
+    "source_name": "연합뉴스",
+    "source_url": "https://www.yna.co.kr/view/AKR20261112140300017",
+    "source_title": "삼성 AI 안경 베일 벗었다…12월 10일 국내 출시·65만원부터"
+  },
+  "caption": "삼성 AI 안경 65만 원부터\nAI 안경 가격은 얼마? 삼성 인텔리전트 아이웨어 12월 국내 출시\n\n✔ 무엇이 나왔나\n✔ 가격과 출시일\n💡 안경을 바꿀 생각이라면 12월 출시 전에 기능과 가격부터 비교해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 연합뉴스\nAI의 도움을 받아 요약했어요.\n\n#AI안경 #인텔리전트아이웨어 #제미나이 #3분뉴스 #오늘의뉴스",
+  "warnings": [
+    "릴스 2번 장면 읽는 문장 27자 (최대 26자)",
+    "원문에 없는 숫자: 14, 16, 30, 4, 5, 7"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0050346,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 125430,
+        "url": "https://cdn.pixabay.com/video/2022/07/25/125430-733383712_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-125430/",
+        "start": 1.65,
+        "match": "partial"
+      },
+      {
+        "id": 211636,
+        "url": "https://cdn.pixabay.com/video/2024/05/12/211636_medium.mp4",
+        "page": "https://pixabay.com/videos/id-211636/",
+        "start": 1.5,
+        "match": "full"
+      },
+      {
+        "id": 38084,
+        "url": "https://cdn.pixabay.com/video/2020/05/04/38084-416330724_medium.mp4",
+        "page": "https://pixabay.com/videos/id-38084/",
+        "start": 1.2,
+        "match": "full"
+      },
+      {
+        "id": 204527,
+        "url": "https://cdn.pixabay.com/video/2024/03/17/204527-924780715_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-204527/",
+        "start": 1.2,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-12T21:01:57.796467+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 385
+}
