@@ -1,0 +1,147 @@
+{
+  "id": "today_news/20261112-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-12T18:00:00+09:00",
+  "slot_label": "11월 12일(목) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "서울 아파트 거래 43.9% 뚝",
+    "cover_sub": "3분기 거래금액도 49.0% 줄었어요",
+    "points": [
+      {
+        "title": "무엇이 줄었나",
+        "lines": [
+          "3분기 서울 아파트 매매 거래가 크게 줄었어요.",
+          "거래량은 1만2895건으로 전분기보다 43.9% 감소했어요."
+        ]
+      },
+      {
+        "title": "거래금액도 반토막",
+        "lines": [
+          "거래금액은 14조5930억 원으로 49.0% 줄었어요.",
+          "전국 부동산 거래금액도 27.2% 감소했어요."
+        ]
+      }
+    ],
+    "why_it_matters": "집 살 계획이 있다면 시장 흐름을 먼저 살펴보세요. 거래 통계는 공개된 자료에서 직접 확인할 수 있어요.",
+    "caption_intro": "서울 아파트 거래량이 왜 이렇게 줄었을까요? 3분기 수치를 정리했어요.",
+    "hashtags": [
+      "#서울아파트",
+      "#아파트거래량",
+      "#부동산거래"
+    ],
+    "reel": {
+      "hook": [
+        "서울 집 사려던 분",
+        "거래 43.9% 뚝, 왜?"
+      ],
+      "beats": [
+        "3분기 서울 아파트 거래 뚝",
+        "거래량 1만2895건, 43.9% 감소",
+        "거래금액 49.0% 감소, 전분기 대비"
+      ],
+      "takeaway": "집 계획 있다면 통계부터 확인",
+      "scenes": [
+        {
+          "say": "서울 집 사려던 분, 이 숫자 보셨나요?",
+          "caption": [
+            "서울 집 사려던 분",
+            "거래 43.9% 뚝"
+          ],
+          "search": "apartment buildings"
+        },
+        {
+          "say": "올해 3분기 서울 아파트 거래가 크게 줄었어요.",
+          "caption": [
+            "3분기 서울 아파트",
+            "거래 뚝 줄었어요"
+          ],
+          "search": "city skyline"
+        },
+        {
+          "say": "거래량은 43.9%, 거래금액은 49%나 줄었어요.",
+          "caption": [
+            "거래량 43.9% 감소",
+            "거래금액 49.0% 감소"
+          ],
+          "search": "money coins"
+        },
+        {
+          "say": "집 계획이 있다면 통계부터 한번 확인해 보세요.",
+          "caption": [
+            "집 계획 있다면",
+            "통계부터 확인하기"
+          ],
+          "search": "woman smartphone"
+        }
+      ]
+    },
+    "source_name": "매일경제",
+    "source_url": "https://www.mk.co.kr/news/realestate/12206405",
+    "source_title": "3분기 서울 아파트 거래 43.9% 줄어…거래금액도 49.0% 뚝"
+  },
+  "caption": "서울 아파트 거래 43.9% 뚝\n서울 아파트 거래량이 왜 이렇게 줄었을까요? 3분기 수치를 정리했어요.\n\n✔ 무엇이 줄었나\n✔ 거래금액도 반토막\n💡 집 살 계획이 있다면 시장 흐름을 먼저 살펴보세요. 거래 통계는 공개된 자료에서 직접 확인할 수 있어요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 매일경제\nAI의 도움을 받아 요약했어요.\n\n#서울아파트 #아파트거래량 #부동산거래 #3분뉴스 #오늘의뉴스",
+  "warnings": [
+    "릴스 첫 화면 2줄 14자 (최대 12자)",
+    "릴스 핵심 2줄 21자 (최대 20자)",
+    "릴스 핵심 3줄 21자 (최대 20자)",
+    "릴스 3번 장면 읽는 문장 28자 (최대 26자)",
+    "릴스 3번 장면 자막 2줄 13자 (최대 12자)",
+    "원문에 없는 숫자: 49",
+    "릴스가 17초로 깁니다(목표 15초 이내)"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0062197,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 61193,
+        "url": "https://cdn.pixabay.com/video/2021/01/05/61193-497862950_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-61193/",
+        "start": 1.95,
+        "match": "full"
+      },
+      {
+        "id": 3134,
+        "url": "https://cdn.pixabay.com/video/2016/05/12/3134-166335905_medium.mp4",
+        "page": "https://pixabay.com/videos/id-3134/",
+        "start": 8.1,
+        "match": "full"
+      },
+      {
+        "id": 59134,
+        "url": "https://cdn.pixabay.com/video/2020/12/14/59134-491926072_medium.mp4",
+        "page": "https://pixabay.com/videos/id-59134/",
+        "start": 3.15,
+        "match": "full"
+      },
+      {
+        "id": 38084,
+        "url": "https://cdn.pixabay.com/video/2020/05/04/38084-416330724_medium.mp4",
+        "page": "https://pixabay.com/videos/id-38084/",
+        "start": 1.2,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-12T07:31:36.527304+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 375
+}
