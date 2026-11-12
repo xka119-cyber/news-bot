@@ -1,16 +1,6 @@
 {
   "items": [
     {
-      "link": "https://zdnet.co.kr/view/?no=20261109093430",
-      "title": "KT, 16일부터 골드번호 추첨 응모",
-      "used_at": "2026-11-09T03:01:31.163132+00:00"
-    },
-    {
-      "link": "https://www.etnews.com/20261106000223",
-      "title": "11월에도 자체 보조금… 테슬라 “모델 Y만 215만원”…BYD “4종 모두 제공”",
-      "used_at": "2026-11-09T09:01:32.077619+00:00"
-    },
-    {
       "link": "https://www.mk.co.kr/news/realestate/12202671",
       "title": "\"청년임대 한채에 고작 2억\" … 역세권 공급 가능할까",
       "used_at": "2026-11-09T12:31:35.259182+00:00"
@@ -59,6 +49,11 @@
       "link": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008841707&plink=RSSLINK&cooper=RSSREADER",
       "title": "유류세 인하 2개월 연장…내년 1월 말까지",
       "used_at": "2026-11-11T22:31:39.935159+00:00"
+    },
+    {
+      "link": "https://www.mk.co.kr/news/realestate/12206405",
+      "title": "3분기 서울 아파트 거래 43.9% 줄어…거래금액도 49.0% 뚝",
+      "used_at": "2026-11-12T09:01:57.290776+00:00"
     }
   ]
 }
