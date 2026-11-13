@@ -129,12 +129,17 @@
       }
     ]
   },
-  "status": "generated",
+  "status": "approved",
   "history": [
     {
       "status": "generated",
       "at": "2026-11-13T21:01:41.816068+00:00",
       "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-13T22:31:34.388212+00:00",
+      "note": "키보드 버튼"
     }
   ],
   "telegram_message_id": 404
