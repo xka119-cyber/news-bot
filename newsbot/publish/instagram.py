@@ -8,6 +8,7 @@
 import http.client
 import json
 import logging
+import re
 import time
 import urllib.error
 import urllib.parse
@@ -21,6 +22,18 @@ log = logging.getLogger(__name__)
 
 class InstagramError(RuntimeError):
     """메시지에 토큰이 들어가지 않는 오류."""
+
+
+class ContainerFailed(InstagramError):
+    """게시를 요청하기 '전', 준비 단계에서 인스타가 컨테이너를 ERROR로 만든 경우.
+
+    2026-11-13 18:00: 캐러셀 부모 컨테이너가 'Media upload has failed with error code 2207032'(인스타 쪽 일시 오류,
+    '다시 만들어 보라'는 뜻)로 끝났고, 다시 해 보지 않아 카드뉴스와 릴스가 통째로 빠졌다.
+    아직 게시 요청을 보내기 전이라 글이 올라가 있을 수 없으므로, 컨테이너를 새로 만들어 다시 해도 두 번 올라가지 않는다."""
+
+
+CREATE_TRIES = 3          # 준비 단계 ERROR일 때 컨테이너를 만들어 보는 횟수(처음 1 + 다시 2)
+RECREATE_WAIT = 15        # 다시 만들기 전 기다리는 초
 
 
 @dataclass
@@ -113,10 +126,21 @@ class InstagramClient:
             status = self.status(container_id)
             if status in ("FINISHED", "PUBLISHED"):
                 return status
-            if status in ("ERROR", "EXPIRED") or waited >= timeout:
+            if status == "ERROR":
+                raise ContainerFailed(f"인스타가 이미지·영상을 준비하지 못했어요 (상태 ERROR{self._error_detail(container_id)})")
+            if status == "EXPIRED" or waited >= timeout:
                 raise InstagramError(f"인스타가 이미지·영상을 준비하지 못했어요 (상태 {status})")
             self.sleep(interval)
             waited += interval
+
+    def _error_detail(self, container_id: str) -> str:
+        """ERROR가 된 이유(예: ', 코드 2207032'). 못 읽으면 빈 글자 — 이유를 묻다가 원래 오류를 가리지 않게."""
+        try:
+            text = str(self.request("GET", container_id, fields="status").get("status", ""))
+        except InstagramError:
+            return ""
+        found = re.search(r"error code (\d+)", text)
+        return f", 코드 {found[1]}" if found else ""
 
     def publish(self, container_id: str) -> str:
         return self.request("POST", f"{self.user_id}/media_publish", creation_id=container_id)["id"]
@@ -219,13 +243,22 @@ def publish_carousel(client: InstagramClient, image_urls: list[str], caption: st
         if client.quota_left() < 1:
             raise InstagramError("오늘 게시 한도를 다 썼어요(24시간 기준). 나중에 다시 시도해야 해요.")
         alts = list(alt_texts or []) + [None] * len(image_urls)
-        children = [client.create_item(url, alt) for url, alt in zip(image_urls, alts)]
-        for child in children:
-            client.wait_ready(child)
-        container = client.create_carousel(children, caption)
-        progress["container_id"] = container
-        save()
-        media_id, recovered = _publish_container(client, container, caption, "FEED", interval=5, timeout=300)
+        for attempt in range(1, CREATE_TRIES + 1):
+            try:
+                children = [client.create_item(url, alt) for url, alt in zip(image_urls, alts)]
+                for child in children:
+                    client.wait_ready(child)
+                container = client.create_carousel(children, caption)
+                progress["container_id"] = container
+                save()
+                media_id, recovered = _publish_container(client, container, caption, "FEED", interval=5, timeout=300)
+                break
+            except ContainerFailed as error:
+                # 게시 요청 전의 준비 실패(인스타 쪽 일시 오류): 낱장부터 새로 만들어 다시 한다 (2026-11-13 18:00에 겪음)
+                if attempt == CREATE_TRIES:
+                    raise
+                log.warning("캐러셀 준비 실패 %d/%d, 새로 만들어 다시 시도: %s", attempt, CREATE_TRIES, error)
+                client.sleep(RECREATE_WAIT)
     return Published(media_id, client.permalink(media_id), recovered)
 
 
@@ -237,11 +270,21 @@ def publish_reel(client: InstagramClient, video_url: str, caption: str, progress
     state, media_id = _posted_before(client, container, caption, "REELS") if container else (None, None)
     recovered = media_id is not None
     if media_id is None:
-        if state in (None, "ERROR", "EXPIRED"):  # 컨테이너가 없거나 못 쓰게 됨 → 새로 만든다. 처리 중인 것은 그대로 기다린다
-            if client.quota_left() < 1:
-                raise InstagramError("오늘 게시 한도를 다 썼어요(24시간 기준). 나중에 다시 시도해야 해요.")
-            container = client.create_reel(video_url, caption, cover_url, share_to_feed)
-            progress["container_id"] = container
-            save()
-        media_id, recovered = _publish_container(client, container, caption, "REELS", interval=10, timeout=wait_timeout)
+        for attempt in range(1, CREATE_TRIES + 1):
+            if state in (None, "ERROR", "EXPIRED"):  # 컨테이너가 없거나 못 쓰게 됨 → 새로 만든다. 처리 중인 것은 그대로 기다린다
+                if client.quota_left() < 1:
+                    raise InstagramError("오늘 게시 한도를 다 썼어요(24시간 기준). 나중에 다시 시도해야 해요.")
+                container = client.create_reel(video_url, caption, cover_url, share_to_feed)
+                progress["container_id"] = container
+                save()
+            try:
+                media_id, recovered = _publish_container(client, container, caption, "REELS", interval=10, timeout=wait_timeout)
+                break
+            except ContainerFailed as error:
+                # 게시 요청 전의 영상 처리 실패: 컨테이너를 새로 만들어 다시 한다(카드뉴스와 같은 이유)
+                if attempt == CREATE_TRIES:
+                    raise
+                log.warning("릴스 준비 실패 %d/%d, 새로 만들어 다시 시도: %s", attempt, CREATE_TRIES, error)
+                client.sleep(RECREATE_WAIT)
+                state = "ERROR"
     return Published(media_id, client.permalink(media_id), recovered)

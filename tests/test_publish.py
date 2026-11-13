@@ -636,3 +636,76 @@ def test_publish_uses_current_setting_when_preview_reel_was_never_made(account, 
     assert seen == {"clips": None, "style": None}
     reel = drafts.load(tmp_path, draft_id)["reel"]
     assert reel["style"] == "v3" and "render_note" not in reel
+
+
+# ---------- 준비 단계 ERROR면 새로 만들어 다시 (2026-11-13 18:00 사고) ----------
+
+class FlakyIG(FakeIG):
+    """부모·릴스 컨테이너를 만들 때마다 새 id를 주고, 처음 fail_first개는 준비 단계에서 ERROR가 되는 가짜."""
+
+    def __init__(self, fail_first, **kwargs):
+        super().__init__(**kwargs)
+        self.fail_first, self.made = fail_first, 0
+
+    def create_carousel(self, children, caption):
+        self.calls.append(("carousel", tuple(children), caption))
+        self.made += 1
+        return f"parent{self.made}"
+
+    def create_reel(self, video_url, caption, cover_url=None, share_to_feed=False):
+        self.calls.append(("reel", video_url, cover_url, share_to_feed))
+        self.made += 1
+        return f"reel{self.made}"
+
+    def wait_ready(self, cid, interval=5, timeout=300):
+        from newsbot.publish.instagram import ContainerFailed
+
+        if cid.startswith(("parent", "reel")) and int(cid.lstrip("parentl")) <= self.fail_first:
+            raise ContainerFailed("인스타가 이미지·영상을 준비하지 못했어요 (상태 ERROR, 코드 2207032)")
+        return "FINISHED"
+
+
+def test_carousel_recreated_when_container_errors_before_publish():
+    """11-13 18:00: 부모 컨테이너가 준비 단계에서 ERROR(2207032) → 그대로 포기해 카드뉴스·릴스가 빠졌다."""
+    ig, progress = FlakyIG(fail_first=2), {}
+    result = publish_carousel(ig, URLS, "캡션", progress)
+    assert result.media_id == "media1" and result.recovered is False
+    assert [c[0] for c in ig.calls].count("carousel") == 3 and [c[0] for c in ig.calls].count("item") == 12   # 낱장부터 새로
+    assert [c for c in ig.calls if c[0] == "publish"] == [("publish", "parent3")], "게시 요청은 성공한 컨테이너로 한 번만"
+    assert progress["container_id"] == "parent3" and ig.sleeps == [15, 15]
+
+
+def test_carousel_gives_up_after_three_container_errors():
+    from newsbot.publish.instagram import ContainerFailed
+
+    ig = FlakyIG(fail_first=9)
+    with pytest.raises(ContainerFailed, match="2207032"):
+        publish_carousel(ig, URLS, "캡션", {})
+    assert [c[0] for c in ig.calls].count("carousel") == 3 and not any(c[0] == "publish" for c in ig.calls)
+
+
+def test_publish_error_after_request_is_never_recreated():
+    """게시 요청을 보낸 뒤의 오류는 글이 올라갔을 수 있으므로 새로 만들지 않는다(두 번 올라가지 않게)."""
+    ig = FakeIG(fail_publish=True)
+    ig.published = False
+    ig.status = lambda cid: "ERROR"            # 올라가지도 않았고 최근 글에도 없음
+    with pytest.raises(InstagramError, match="연결 끊김"):
+        publish_carousel(ig, URLS, "캡션", {})
+    assert [c[0] for c in ig.calls].count("carousel") == 1
+
+
+def test_reel_recreated_when_container_errors_before_publish():
+    ig, progress = FlakyIG(fail_first=1), {}
+    result = publish_reel(ig, "https://x/reel.mp4", "캡션", progress)
+    assert result.media_id == "media1"
+    assert [c[0] for c in ig.calls].count("reel") == 2 and ("publish", "reel2") in ig.calls and progress["container_id"] == "reel2"
+
+
+def test_wait_ready_error_carries_instagram_code():
+    from newsbot.publish.instagram import ContainerFailed
+
+    client = InstagramClient("token", "123", "https://graph.facebook.com", "v26.0", sleep=lambda s: None)
+    answers = {"status_code": {"status_code": "ERROR"}, "status": {"status": "Error: Media upload has failed with error code 2207032"}}
+    client.request = lambda method, path, **params: answers[params["fields"]]
+    with pytest.raises(ContainerFailed, match=r"상태 ERROR, 코드 2207032"):
+        client.wait_ready("c1")
