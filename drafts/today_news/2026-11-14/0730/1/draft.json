@@ -1,0 +1,141 @@
+{
+  "id": "today_news/20261114-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-14T07:30:00+09:00",
+  "slot_label": "11월 14일(토) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "잠든 카드 포인트, 내년 5월부터",
+    "cover_sub": "쌓인 2조1000억 원을 지역화폐로 쓸 수 있어요",
+    "points": [
+      {
+        "title": "무엇이 바뀌나",
+        "lines": [
+          "내년 5월부터 안 쓴 카드 포인트를 바꿀 수 있어요.",
+          "지역화폐로 전통시장이나 골목상권에서 쓸 수 있어요."
+        ]
+      },
+      {
+        "title": "얼마나 쌓였나",
+        "lines": [
+          "쓰지 않고 쌓인 포인트 잔액만 2조1000억 원이에요.",
+          "어카운트인포나 지역화폐 앱에서 조회한 뒤 바꿔요."
+        ]
+      }
+    ],
+    "why_it_matters": "안 쓰는 카드 포인트가 있다면 내년 5월 이후 전환 방법을 미리 확인해 보세요.",
+    "caption_intro": "신용카드 포인트를 지역화폐로 바꿀 수 있나요?",
+    "hashtags": [
+      "#신용카드포인트",
+      "#지역화폐",
+      "#지역화폐전환"
+    ],
+    "reel": {
+      "hook": [
+        "잠자는 내 카드 포인트",
+        "내년부터 현금처럼"
+      ],
+      "beats": [
+        "정부가 전환 방안을 발표",
+        "미사용 잔액 2조1000억 원",
+        "내년 5월부터 지역화폐로 전환"
+      ],
+      "takeaway": "안 쓰는 카드 포인트 내년 5월 전 확인",
+      "scenes": [
+        {
+          "say": "잠자는 카드 포인트, 내 돈일 수도 있어요.",
+          "caption": [
+            "잠자는 카드 포인트",
+            "내 돈일 수도?"
+          ],
+          "search": "money coins"
+        },
+        {
+          "say": "정부가 미사용 카드 포인트를 바꿔 준대요.",
+          "caption": [
+            "미사용 카드 포인트",
+            "지역화폐로 전환"
+          ],
+          "search": "supermarket"
+        },
+        {
+          "say": "쌓인 잔액만 2조1000억 원이라니 놀랍죠?",
+          "caption": [
+            "잔액만 2조1000억 원",
+            "내년 5월부터"
+          ],
+          "search": "woman smartphone"
+        },
+        {
+          "say": "지역화폐 앱에서 조회한 뒤 시장에서 쓰세요.",
+          "caption": [
+            "앱에서 포인트 조회",
+            "시장에서 바로 쓰기"
+          ],
+          "search": "people shopping"
+        }
+      ]
+    },
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/Society/article/all/20261113/135023116/2",
+    "source_title": "잠자는 카드 포인트, 내년 5월부터 지역화폐로 전환 가능"
+  },
+  "caption": "잠든 카드 포인트, 내년 5월부터\n신용카드 포인트를 지역화폐로 바꿀 수 있나요?\n\n✔ 무엇이 바뀌나\n✔ 얼마나 쌓였나\n💡 안 쓰는 카드 포인트가 있다면 내년 5월 이후 전환 방법을 미리 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#신용카드포인트 #지역화폐 #지역화폐전환 #3분뉴스 #오늘의뉴스",
+  "warnings": [
+    "릴스 3번 장면 자막 1줄 13자 (최대 12자)"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.006246,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 93550,
+        "url": "https://cdn.pixabay.com/video/2021/10/27/93550-640240281_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-93550/",
+        "start": 1.35,
+        "match": "full"
+      },
+      {
+        "id": 1735,
+        "url": "https://cdn.pixabay.com/video/2015/12/21/1735-149749903_large.mp4",
+        "page": "https://pixabay.com/videos/id-1735/",
+        "start": 2.7,
+        "match": "full"
+      },
+      {
+        "id": 12564,
+        "url": "https://cdn.pixabay.com/video/2017/10/22/12564-240358890_medium.mp4",
+        "page": "https://pixabay.com/videos/id-12564/",
+        "start": 3.3,
+        "match": "full"
+      },
+      {
+        "id": 148501,
+        "url": "https://cdn.pixabay.com/video/2023/01/29/148501-794344007_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-148501/",
+        "start": 2.1,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-13T21:01:41.816068+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 404
+}
