@@ -127,7 +127,7 @@
       }
     ]
   },
-  "status": "approved",
+  "status": "failed",
   "history": [
     {
       "status": "generated",
@@ -138,7 +138,21 @@
       "status": "approved",
       "at": "2026-11-13T09:01:42.037422+00:00",
       "note": "키보드 버튼"
+    },
+    {
+      "status": "failed",
+      "at": "2026-11-13T09:01:42.037422+00:00",
+      "note": "인스타가 이미지·영상을 준비하지 못했어요 (상태 ERROR)"
     }
   ],
-  "telegram_message_id": 395
+  "telegram_message_id": 395,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-13/1800/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-13/1800/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-13/1800/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-13/1800/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17888682528512661"
+  }
 }
