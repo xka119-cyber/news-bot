@@ -1,0 +1,139 @@
+{
+  "id": "today_news/20261113-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-13T18:00:00+09:00",
+  "slot_label": "11월 13일(금) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "서울·경기 집 거래 규제, 연말 끝?",
+    "cover_sub": "토지거래허가제 지정기간 만료 앞두고 정부 검토 중",
+    "points": [
+      {
+        "title": "무슨 일인가요",
+        "lines": [
+          "서울·경기 토지거래허가제가 올해 말 만료돼요",
+          "정부가 연말까지 영향을 검토한다고 밝혔어요"
+        ]
+      },
+      {
+        "title": "구체적으로 뭐가 달라요",
+        "lines": [
+          "재건축 부담금 결론도 이달 안에 나와요",
+          "PF 금융 애로 사업장 8곳, 6000가구도 지원해요"
+        ]
+      }
+    ],
+    "why_it_matters": "집을 사거나 팔 계획이 있다면 연말 정부 발표를 꼭 확인해 보세요.",
+    "caption_intro": "토지거래허가제 연말 만료되면 서울 집 거래는 어떻게 될까요?",
+    "hashtags": [
+      "#토지거래허가제",
+      "#토허제",
+      "#재건축부담금"
+    ],
+    "reel": {
+      "hook": [
+        "집 살 계획이라면",
+        "연말 뒤 규제 풀릴까?"
+      ],
+      "beats": [
+        "서울·경기 토허제 연말 만료",
+        "정부, 영향 연말까지 검토",
+        "재건축 부담금 결론 이달 내"
+      ],
+      "takeaway": "집 계획 있다면 연말 발표부터 확인",
+      "scenes": [
+        {
+          "say": "집 살 계획 있으면 연말이 중요해요",
+          "caption": [
+            "집 살 계획이라면",
+            "연말이 중요해요"
+          ],
+          "search": "apartment buildings"
+        },
+        {
+          "say": "서울과 경기 토지거래허가제가 올해 말 끝나요",
+          "caption": [
+            "서울·경기 토허제",
+            "올해 말 만료"
+          ],
+          "search": "city traffic"
+        },
+        {
+          "say": "재건축 부담금 결론도 이달 안에 나와요",
+          "caption": [
+            "재건축 부담금",
+            "결론 이달 내"
+          ],
+          "search": "office workers"
+        },
+        {
+          "say": "계획 있다면 연말 발표를 꼭 확인하세요",
+          "caption": [
+            "연말 발표 확인",
+            "집 계획 있다면"
+          ],
+          "search": "woman smartphone"
+        }
+      ]
+    },
+    "source_name": "매일경제",
+    "source_url": "https://www.mk.co.kr/news/realestate/12207956",
+    "source_title": "국토부 “토허제 영향 연말까지 검토”…재초환 부과기한 이달내 결론"
+  },
+  "caption": "서울·경기 집 거래 규제, 연말 끝?\n토지거래허가제 연말 만료되면 서울 집 거래는 어떻게 될까요?\n\n✔ 무슨 일인가요\n✔ 구체적으로 뭐가 달라요\n💡 집을 사거나 팔 계획이 있다면 연말 정부 발표를 꼭 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 매일경제\nAI의 도움을 받아 요약했어요.\n\n#토지거래허가제 #토허제 #재건축부담금 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0061914,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 61193,
+        "url": "https://cdn.pixabay.com/video/2021/01/05/61193-497862950_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-61193/",
+        "start": 1.95,
+        "match": "full"
+      },
+      {
+        "id": 218013,
+        "url": "https://cdn.pixabay.com/video/2024/06/24/218013_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-218013/",
+        "start": 2.4,
+        "match": "full"
+      },
+      {
+        "id": 12564,
+        "url": "https://cdn.pixabay.com/video/2017/10/22/12564-240358890_medium.mp4",
+        "page": "https://pixabay.com/videos/id-12564/",
+        "start": 3.3,
+        "match": "full"
+      },
+      {
+        "id": 93550,
+        "url": "https://cdn.pixabay.com/video/2021/10/27/93550-640240281_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-93550/",
+        "start": 1.35,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-13T07:31:47.509133+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 395
+}
