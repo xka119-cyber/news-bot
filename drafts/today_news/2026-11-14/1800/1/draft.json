@@ -1,0 +1,139 @@
+{
+  "id": "today_news/20261114-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-14T18:00:00+09:00",
+  "slot_label": "11월 14일(토) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "날씨·교통",
+    "cover_title": "미국 전역 항공기 이륙 중단",
+    "cover_sub": "관제 통신 장애로 수천 편 지연·결항",
+    "points": [
+      {
+        "title": "무슨 일이 있었나",
+        "lines": [
+          "13일 미 동부 오후 4시쯤부터 이륙이 멈췄어요.",
+          "관제 통신 시스템 장애로 전국 공항이 멈췄어요.",
+          "수천 편이 지연되거나 결항됐어요."
+        ]
+      },
+      {
+        "title": "원인은 아직 조사 중",
+        "lines": [
+          "미국 당국은 사이버 공격 징후는 없다고 밝혔어요.",
+          "소프트웨어 업데이트 오류 등을 원인으로 보고 조사 중이에요."
+        ]
+      }
+    ],
+    "why_it_matters": "미국행 항공편이 있다면 출발 전 항공사 공지를 꼭 확인해 보세요.",
+    "caption_intro": "미국행 비행기 지연·결항, 출발 전 무엇을 확인할까요?",
+    "hashtags": [
+      "#미국항공",
+      "#항공지연",
+      "#항공결항"
+    ],
+    "reel": {
+      "hook": [
+        "미국행 비행기 수천 편",
+        "해킹은 아니었대요"
+      ],
+      "beats": [
+        "미국 전역 이륙 중단",
+        "13일 미 동부 오후 4시부터",
+        "수천 편 지연·결항 발생"
+      ],
+      "takeaway": "미국행 출발 전 항공사 공지 확인",
+      "scenes": [
+        {
+          "say": "미국행 비행기가 한꺼번에 멈췄다면요?",
+          "caption": [
+            "미국행 비행기가",
+            "한꺼번에 멈췄다면?"
+          ],
+          "search": "airplane sky"
+        },
+        {
+          "say": "미국 전역 공항에서 이륙이 멈췄어요.",
+          "caption": [
+            "미국 전역 이륙 중단"
+          ],
+          "search": "airport terminal"
+        },
+        {
+          "say": "13일 오후 4시부터 수천 편이 멈췄어요.",
+          "caption": [
+            "13일 오후 4시부터",
+            "수천 편 지연·결항"
+          ],
+          "search": "city traffic"
+        },
+        {
+          "say": "해킹은 아니래요, 출발 전 공지 확인하세요.",
+          "caption": [
+            "해킹은 아니래요",
+            "출발 전 공지 확인"
+          ],
+          "search": "woman smartphone"
+        }
+      ]
+    },
+    "source_name": "전자신문",
+    "source_url": "https://www.etnews.com/20261114000013",
+    "source_title": "美 전역 항공기 이륙 중단…관제통신 장애에 항공대란"
+  },
+  "caption": "미국 전역 항공기 이륙 중단\n미국행 비행기 지연·결항, 출발 전 무엇을 확인할까요?\n\n✔ 무슨 일이 있었나\n✔ 원인은 아직 조사 중\n💡 미국행 항공편이 있다면 출발 전 항공사 공지를 꼭 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 전자신문\nAI의 도움을 받아 요약했어요.\n\n#미국항공 #항공지연 #항공결항 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0053455,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 35780,
+        "url": "https://cdn.pixabay.com/video/2020/04/12/35780-408600331_medium.mp4",
+        "page": "https://pixabay.com/videos/id-35780/",
+        "start": 1.65,
+        "match": "full"
+      },
+      {
+        "id": 3593,
+        "url": "https://cdn.pixabay.com/video/2016/06/27/3593-172488287_medium.mp4",
+        "page": "https://pixabay.com/videos/id-3593/",
+        "start": 3.0,
+        "match": "full"
+      },
+      {
+        "id": 220480,
+        "url": "https://cdn.pixabay.com/video/2024/07/10/220480_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-220480/",
+        "start": 2.1,
+        "match": "full"
+      },
+      {
+        "id": 211636,
+        "url": "https://cdn.pixabay.com/video/2024/05/12/211636_medium.mp4",
+        "page": "https://pixabay.com/videos/id-211636/",
+        "start": 1.5,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-14T07:41:42.445441+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 415
+}
