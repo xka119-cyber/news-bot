@@ -1,0 +1,140 @@
+{
+  "id": "today_news/20261115-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-15T07:30:00+09:00",
+  "slot_label": "11월 15일(일) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "IT",
+    "cover_title": "운전대 없는 테슬라, 개인도 산다",
+    "cover_sub": "사이버캡 가격 4000만원, 매달 구독료 40만원",
+    "points": [
+      {
+        "title": "무엇이 바뀌나",
+        "lines": [
+          "테슬라가 사이버캡을 일반 소비자에게 팔기 시작했어요.",
+          "일부 고객에게 개인 구매 초청장을 보냈어요."
+        ]
+      },
+      {
+        "title": "얼마나 드나",
+        "lines": [
+          "차값은 약 3만 달러, 4000만 원 수준이에요.",
+          "운행하려면 매달 299달러, 약 40만 원을 더 내요."
+        ]
+      }
+    ],
+    "why_it_matters": "차를 바꿀 계획이라면 구독료까지 합친 총비용을 따져 보세요.",
+    "caption_intro": "테슬라 사이버캡 가격과 구독료는 얼마인가요?",
+    "hashtags": [
+      "#사이버캡",
+      "#자율주행차",
+      "#테슬라"
+    ],
+    "reel": {
+      "hook": [
+        "운전대 없는 차",
+        "개인도 살 수 있대요"
+      ],
+      "beats": [
+        "테슬라 사이버캡 일반 판매 시작",
+        "차값 약 4000만 원",
+        "일부 고객에게 초청장 발송"
+      ],
+      "takeaway": "구독료 포함 총비용부터 따져 보기",
+      "scenes": [
+        {
+          "say": "운전대 없는 차를 개인이 산대요, 얼마일까요?",
+          "caption": [
+            "운전대 없는 차?",
+            "개인도 산다"
+          ],
+          "search": "electric car"
+        },
+        {
+          "say": "테슬라가 사이버캡을 일반인에게 팔아요.",
+          "caption": [
+            "테슬라 사이버캡",
+            "일반인 판매 시작"
+          ],
+          "search": "car showroom"
+        },
+        {
+          "say": "차값 4000만 원, 월 구독료 40만 원이에요.",
+          "caption": [
+            "차값 4000만 원",
+            "구독료 월 40만 원"
+          ],
+          "search": "money coins"
+        },
+        {
+          "say": "차 살 계획이라면 총비용부터 꼭 따져 보세요.",
+          "caption": [
+            "총비용부터 따져보기"
+          ],
+          "search": "office workers"
+        }
+      ]
+    },
+    "source_name": "ZDNet Korea",
+    "source_url": "https://zdnet.co.kr/view/?no=20261114234839",
+    "source_title": "운전대 없는 테슬라 '사이버캡', 개인도 산다…가격은 4000만원"
+  },
+  "caption": "운전대 없는 테슬라, 개인도 산다\n테슬라 사이버캡 가격과 구독료는 얼마인가요?\n\n✔ 무엇이 바뀌나\n✔ 얼마나 드나\n💡 차를 바꿀 계획이라면 구독료까지 합친 총비용을 따져 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: ZDNet Korea\nAI의 도움을 받아 요약했어요.\n\n#사이버캡 #자율주행차 #테슬라 #3분뉴스 #오늘의뉴스",
+  "warnings": [
+    "릴스 3번 장면 읽는 문장 27자 (최대 26자)"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0061419000000000005,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 24123,
+        "url": "https://cdn.pixabay.com/video/2019/06/01/24123-340670586_medium.mp4",
+        "page": "https://pixabay.com/videos/id-24123/",
+        "start": 3.6,
+        "match": "full"
+      },
+      {
+        "id": 184734,
+        "url": "https://cdn.pixabay.com/video/2023/10/12/184734-873923034_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-184734/",
+        "start": 1.5,
+        "match": "partial"
+      },
+      {
+        "id": 93550,
+        "url": "https://cdn.pixabay.com/video/2021/10/27/93550-640240281_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-93550/",
+        "start": 1.35,
+        "match": "full"
+      },
+      {
+        "id": 211636,
+        "url": "https://cdn.pixabay.com/video/2024/05/12/211636_medium.mp4",
+        "page": "https://pixabay.com/videos/id-211636/",
+        "start": 1.5,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-14T21:11:52.668668+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 424
+}
