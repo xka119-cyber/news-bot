@@ -1,0 +1,170 @@
+{
+  "id": "today_news/20261116-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-16T07:30:00+09:00",
+  "slot_label": "11월 16일(월) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "청년 임금근로자 46%가 비정규직",
+    "cover_sub": "8월 기준 역대 최고, 2003년보다 14.2%p 올라",
+    "points": [
+      {
+        "title": "무슨 일이에요?",
+        "lines": [
+          "취업에 성공한 청년도 절반 가까이 비정규직이에요.",
+          "8월 15~29세 임금근로자 중 46.0%가 비정규직이에요."
+        ]
+      },
+      {
+        "title": "얼마나 늘었나요?",
+        "lines": [
+          "2003년 8월 31.8%에서 14.2%포인트 올랐어요.",
+          "전체 임금근로자도 같은 기간 32.6%에서 올랐어요."
+        ]
+      }
+    ],
+    "why_it_matters": "취업을 준비 중이라면 정규직 여부만 보지 말고 근로 조건부터 꼼꼼히 따져 보세요.",
+    "caption_intro": "청년 비정규직 비율 46%, 어느 정도로 높은 걸까요?",
+    "hashtags": [
+      "#청년비정규직",
+      "#비정규직비율",
+      "#청년일자리"
+    ],
+    "reel": {
+      "hook": [
+        "취업 성공해도",
+        "절반 가까이 비정규직?"
+      ],
+      "beats": [
+        "취업한 청년 절반 가까이 비정규직",
+        "8월 기준 46.0%, 역대 최고",
+        "2003년보다 14.2%포인트 상승"
+      ],
+      "takeaway": "취업 전 고용 형태부터 꼭 확인하세요",
+      "scenes": [
+        {
+          "say": "취업만 하면 끝일 줄 아셨죠?",
+          "caption": [
+            "취업만 하면 끝?",
+            "그게 아니에요"
+          ],
+          "search": "office workers"
+        },
+        {
+          "say": "취업한 청년 절반 가까이가 비정규직이에요.",
+          "caption": [
+            "취업 청년 절반 가까이",
+            "비정규직"
+          ],
+          "search": "subway commute"
+        },
+        {
+          "say": "8월 기준 46퍼센트로, 역대 가장 높아요.",
+          "caption": [
+            "46.0%",
+            "역대 최고"
+          ],
+          "search": "money coins"
+        },
+        {
+          "say": "취업 준비한다면 고용 형태부터 꼭 확인하세요.",
+          "caption": [
+            "고용 형태부터",
+            "꼭 확인하세요"
+          ],
+          "search": "woman smartphone"
+        }
+      ]
+    },
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/Society/article/all/20261116/135028681/2",
+    "source_title": "취업문 뚫어도… 임금받는 청년 46% 비정규직"
+  },
+  "caption": "청년 임금근로자 46%가 비정규직\n청년 비정규직 비율 46%, 어느 정도로 높은 걸까요?\n\n✔ 무슨 일이에요?\n✔ 얼마나 늘었나요?\n💡 취업을 준비 중이라면 정규직 여부만 보지 말고 근로 조건부터 꼼꼼히 따져 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#청년비정규직 #비정규직비율 #청년일자리 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0031999999999999997,
+  "reel": {
+    "status": "published",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 7269,
+        "url": "https://cdn.pixabay.com/video/2017/01/12/7269-199224765_medium.mp4",
+        "page": "https://pixabay.com/videos/id-7269/",
+        "start": 2.4,
+        "match": "full"
+      },
+      {
+        "id": 3616,
+        "url": "https://cdn.pixabay.com/video/2016/06/27/3616-172490378_medium.mp4",
+        "page": "https://pixabay.com/videos/id-3616/",
+        "start": 1.65,
+        "match": "full"
+      },
+      {
+        "id": 93550,
+        "url": "https://cdn.pixabay.com/video/2021/10/27/93550-640240281_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-93550/",
+        "start": 1.35,
+        "match": "full"
+      },
+      {
+        "id": 211636,
+        "url": "https://cdn.pixabay.com/video/2024/05/12/211636_medium.mp4",
+        "page": "https://pixabay.com/videos/id-211636/",
+        "start": 1.5,
+        "match": "full"
+      }
+    ],
+    "video_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-16/0730/1/reel.mp4",
+    "cover_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-16/0730/1/reel_cover.jpg",
+    "publish": {
+      "container_id": "17889297594512661"
+    },
+    "media_id": "18139799959637026",
+    "permalink": "https://www.instagram.com/reel/Dfx3L3xlWM2/",
+    "note": "",
+    "recovered": false
+  },
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-15T21:11:39.555910+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-15T22:31:38.045658+00:00",
+      "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-15T22:31:38.045658+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 442,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-16/0730/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-16/0730/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-16/0730/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-16/0730/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17889297540512661",
+    "recovered": true
+  },
+  "media_id": "18133875082782791",
+  "permalink": "https://www.instagram.com/p/Dfx3GcnmK1u/"
+}

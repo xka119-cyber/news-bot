@@ -1,0 +1,97 @@
+{
+  "id": "today_news/20261108-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-08T07:30:00+09:00",
+  "slot_label": "11월 8일(일) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "중도금 대출 금리, 5% 목전",
+    "cover_sub": "분양 당첨자들 이자 부담 커져, 완화 요구도 나와",
+    "points": [
+      {
+        "title": "무슨 일인가요?",
+        "lines": [
+          "분양 아파트 중도금 대출 금리가 5%에 거의 닿았어요.",
+          "당첨 기쁨도 잠깐, 이자 부담에 밤잠 설치는 분들이 많아요."
+        ]
+      },
+      {
+        "title": "왜 완화를 요구할까?",
+        "lines": [
+          "대출 완화 요구가 나오지만 정부는 규제 유지 입장이에요.",
+          "금리 부담이 커지면서 수분양자들의 걱정이 깊어지고 있어요."
+        ]
+      }
+    ],
+    "why_it_matters": "분양을 기다리거나 중도금 납부 일정이 있다면 금리 변화와 대출 조건을 미리 확인해 보세요.",
+    "caption_intro": "중도금 대출 금리가 5%를 앞두고 있는데, 분양 당첨자는 어떻게 대비해야 할까요?",
+    "hashtags": [
+      "#중도금대출",
+      "#분양당첨",
+      "#주택대출"
+    ],
+    "source_name": "매일경제",
+    "source_url": "https://www.mk.co.kr/news/realestate/12201523",
+    "source_title": "“앞날이 캄캄”…당첨 기쁨은 잠깐, 대출 금리에 한숨만"
+  },
+  "caption": "중도금 대출 금리, 5% 목전\n중도금 대출 금리가 5%를 앞두고 있는데, 분양 당첨자는 어떻게 대비해야 할까요?\n\n✔ 무슨 일인가요?\n✔ 왜 완화를 요구할까?\n💡 분양을 기다리거나 중도금 납부 일정이 있다면 금리 변화와 대출 조건을 미리 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 매일경제\nAI의 도움을 받아 요약했어요.\n\n#중도금대출 #분양당첨 #주택대출 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0021421,
+  "reel": {
+    "status": "published",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "video_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/0730/1/reel.mp4",
+    "cover_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/0730/1/reel_cover.jpg",
+    "publish": {
+      "container_id": "17887515753512661"
+    },
+    "media_id": "18376000108214168",
+    "permalink": "https://www.instagram.com/reel/Dfdfa_-kwQa/",
+    "note": "",
+    "recovered": false
+  },
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-07T21:01:31.935801+00:00",
+      "note": ""
+    },
+    {
+      "status": "expired",
+      "at": "2026-11-07T22:31:39.194261+00:00",
+      "note": "승인 없이 게시 시각이 지남"
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-08T09:38:35+09:00",
+      "note": "만료 후 수동 승인(훈 요청, Claude)"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-08T00:39:23.603851+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 201,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/0730/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/0730/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/0730/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-08/0730/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17887515663512661"
+  },
+  "media_id": "17944129632392857",
+  "permalink": "https://www.instagram.com/p/DfdfWBtjUEP/"
+}

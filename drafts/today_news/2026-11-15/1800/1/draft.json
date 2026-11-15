@@ -1,0 +1,146 @@
+{
+  "id": "today_news/20261115-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-15T18:00:00+09:00",
+  "slot_label": "11월 15일(일) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "IT",
+    "cover_title": "AI가 대신 결제하는 시대",
+    "cover_sub": "오픈AI, 챗GPT 월렛 출시…미국부터 시작해요",
+    "points": [
+      {
+        "title": "무엇이 나왔나",
+        "lines": [
+          "오픈AI가 전자지갑 '챗GPT 월렛'을 내놨어요.",
+          "AI가 찾은 상품을 내가 승인하면 AI가 결제해요.",
+          "13일 출시됐고 우선 미국에서 쓸 수 있어요."
+        ]
+      },
+      {
+        "title": "어떻게 쓰나",
+        "lines": [
+          "비자, 마스터카드, 아메리칸익스프레스와 함께 만들었어요.",
+          "미국의 18세 이상 챗GPT 프로 구독자가 먼저 써요.",
+          "신용카드를 한 번 등록해 두면 결제가 이어져요."
+        ]
+      }
+    ],
+    "why_it_matters": "쇼핑 결제를 AI가 대신하는 날이 와요. 카드 등록 전 승인 방식과 보안 설정부터 확인해 보세요.",
+    "caption_intro": "챗GPT 월렛, AI가 대신 결제해도 안전할까요?",
+    "hashtags": [
+      "#챗GPT월렛",
+      "#AI결제",
+      "#전자지갑"
+    ],
+    "reel": {
+      "hook": [
+        "쇼핑 결제, 이제 AI가?",
+        "승인만 누르면 끝"
+      ],
+      "beats": [
+        "오픈AI가 결제 지갑을 출시",
+        "비자·마스터카드 등 카드 연동",
+        "13일 출시, 미국 프로 구독자부터"
+      ],
+      "takeaway": "카드 등록 전 승인·보안 설정 확인",
+      "scenes": [
+        {
+          "say": "쇼핑 결제를 이제 인공지능이 한대요?",
+          "caption": [
+            "쇼핑 결제도 AI가?"
+          ],
+          "search": "woman smartphone"
+        },
+        {
+          "say": "오픈에이아이가 결제용 전자지갑을 냈어요.",
+          "caption": [
+            "결제 전자지갑 출시"
+          ],
+          "search": "people shopping"
+        },
+        {
+          "say": "카드를 한 번 등록해 두면 돼요.",
+          "caption": [
+            "카드 한 번 등록",
+            "승인만 누르면 돼요"
+          ],
+          "search": "money coins"
+        },
+        {
+          "say": "쓰기 전에 승인 방식과 보안부터 확인하세요.",
+          "caption": [
+            "등록 전 보안 확인"
+          ],
+          "search": "office workers"
+        }
+      ]
+    },
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/It/article/all/20261115/135026678/1",
+    "source_title": "오픈AI, 인공지능이 결제하는 ‘챗GPT 월렛’ 출시"
+  },
+  "caption": "AI가 대신 결제하는 시대\n챗GPT 월렛, AI가 대신 결제해도 안전할까요?\n\n✔ 무엇이 나왔나\n✔ 어떻게 쓰나\n💡 쇼핑 결제를 AI가 대신하는 날이 와요. 카드 등록 전 승인 방식과 보안 설정부터 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#챗GPT월렛 #AI결제 #전자지갑 #3분뉴스 #오늘의뉴스",
+  "warnings": [
+    "릴스 첫 화면 1줄 14자 (최대 12자)",
+    "원문을 21자 그대로 옮김: '비자,마스터카드,아메리칸익스프레스와함께…'"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0060196,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 130652,
+        "url": "https://cdn.pixabay.com/video/2022/09/08/130652-747868389_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-130652/",
+        "start": 2.4,
+        "match": "full"
+      },
+      {
+        "id": 38084,
+        "url": "https://cdn.pixabay.com/video/2020/05/04/38084-416330724_medium.mp4",
+        "page": "https://pixabay.com/videos/id-38084/",
+        "start": 1.2,
+        "match": "full"
+      },
+      {
+        "id": 211636,
+        "url": "https://cdn.pixabay.com/video/2024/05/12/211636_medium.mp4",
+        "page": "https://pixabay.com/videos/id-211636/",
+        "start": 1.5,
+        "match": "full"
+      },
+      {
+        "id": 107425,
+        "url": "https://cdn.pixabay.com/video/2022/02/11/107425-678258632_medium.mp4",
+        "page": "https://pixabay.com/videos/id-107425/",
+        "start": 2.4,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "expired",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-15T07:51:38.979304+00:00",
+      "note": ""
+    },
+    {
+      "status": "expired",
+      "at": "2026-11-15T09:01:48.172389+00:00",
+      "note": "승인 없이 게시 시각이 지남"
+    }
+  ],
+  "telegram_message_id": 434
+}
