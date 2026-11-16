@@ -1,11 +1,6 @@
 {
   "items": [
     {
-      "link": "https://www.yna.co.kr/view/AKR20261112140300017",
-      "title": "삼성 AI 안경 베일 벗었다…12월 10일 국내 출시·65만원부터",
-      "used_at": "2026-11-12T22:31:43.702050+00:00"
-    },
-    {
       "link": "https://www.donga.com/news/Society/article/all/20261113/135023116/2",
       "title": "잠자는 카드 포인트, 내년 5월부터 지역화폐로 전환 가능",
       "used_at": "2026-11-13T22:31:34.388212+00:00"
@@ -14,6 +9,11 @@
       "link": "https://www.donga.com/news/Society/article/all/20261116/135028681/2",
       "title": "취업문 뚫어도… 임금받는 청년 46% 비정규직",
       "used_at": "2026-11-15T22:31:38.045658+00:00"
+    },
+    {
+      "link": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008848130&plink=RSSLINK&cooper=RSSREADER",
+      "title": "서울 집값 상승폭 석 달째 둔화…평균 전셋값 5억 원 돌파",
+      "used_at": "2026-11-16T09:01:43.426258+00:00"
     }
   ]
 }
