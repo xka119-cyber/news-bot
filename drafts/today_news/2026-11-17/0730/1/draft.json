@@ -1,0 +1,139 @@
+{
+  "id": "today_news/20261117-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-17T07:30:00+09:00",
+  "slot_label": "11월 17일(화) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "생활",
+    "cover_title": "은행 ATM 1,200대 사라졌다",
+    "cover_sub": "4대 시중은행 자동화기기, 올해만 400대 감소",
+    "points": [
+      {
+        "title": "무슨 일인가요",
+        "lines": [
+          "4대 시중은행의 ATM이 줄고 있어요.",
+          "현금자동입출금기 등 자동화기기 얘기예요.",
+          "1년 9개월 사이 1,200대 넘게 사라졌어요."
+        ]
+      },
+      {
+        "title": "얼마나 줄었나요",
+        "lines": [
+          "올해만 400대가 없어졌다고 해요.",
+          "현금을 뽑을 곳이 점점 멀어지는 셈이에요."
+        ]
+      }
+    ],
+    "why_it_matters": "현금이 필요할 때 가까운 ATM이 있는지 미리 확인해 두세요. 급할 때 뽑을 곳이 줄어들 수 있어요.",
+    "caption_intro": "ATM이 줄어들어 현금 뽑기 힘들어지나요?",
+    "hashtags": [
+      "#ATM감소",
+      "#현금인출",
+      "#시중은행"
+    ],
+    "reel": {
+      "hook": [
+        "지갑에 현금 있나요?",
+        "그 ATM 이제 없어요"
+      ],
+      "beats": [
+        "4대 은행 자동화기기 감소",
+        "1년 9개월 새 1,200대 이상",
+        "올해만 400대 사라져"
+      ],
+      "takeaway": "현금 필요하면 미리 뽑아 두세요",
+      "scenes": [
+        {
+          "say": "지갑에 현금 얼마나 있으세요?",
+          "caption": [
+            "현금 얼마나 있나요?"
+          ],
+          "search": "atm machine"
+        },
+        {
+          "say": "4대 시중은행 ATM이 줄고 있어요.",
+          "caption": [
+            "은행 ATM 감소"
+          ],
+          "search": "city street"
+        },
+        {
+          "say": "1년 9개월 새 1,200대 넘게 사라졌어요.",
+          "caption": [
+            "1,200대 감소",
+            "올해만 400대"
+          ],
+          "search": "subway commute"
+        },
+        {
+          "say": "현금 필요하면 미리 뽑아 두는 게 좋아요.",
+          "caption": [
+            "현금은 미리 챙기기"
+          ],
+          "search": "woman smartphone"
+        }
+      ]
+    },
+    "source_name": "연합뉴스",
+    "source_url": "https://www.yna.co.kr/view/AKR20261116164300002",
+    "source_title": "\"돈 뽑을 데가 없네\"…은행 자동화기기 올해만 400대 사라져"
+  },
+  "caption": "은행 ATM 1,200대 사라졌다\nATM이 줄어들어 현금 뽑기 힘들어지나요?\n\n✔ 무슨 일인가요\n✔ 얼마나 줄었나요\n💡 현금이 필요할 때 가까운 ATM이 있는지 미리 확인해 두세요. 급할 때 뽑을 곳이 줄어들 수 있어요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 연합뉴스\nAI의 도움을 받아 요약했어요.\n\n#ATM감소 #현금인출 #시중은행 #3분뉴스 #오늘의뉴스",
+  "warnings": [
+    "원문에 없는 숫자: 1200"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0027397000000000003,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 1887,
+        "url": "https://cdn.pixabay.com/video/2016/01/08/1887-151131664_small.mp4",
+        "page": "https://pixabay.com/videos/id-1887/",
+        "start": 1.5,
+        "match": "full"
+      },
+      {
+        "id": 21118,
+        "url": "https://cdn.pixabay.com/video/2019/02/01/21118-315137091_small.mp4",
+        "page": "https://pixabay.com/videos/id-21118/",
+        "start": 0.9,
+        "match": "full"
+      },
+      {
+        "id": 115641,
+        "url": "https://cdn.pixabay.com/video/2022/05/01/115641-705433621_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-115641/",
+        "start": 3.15,
+        "match": "full"
+      },
+      {
+        "id": 83865,
+        "url": "https://cdn.pixabay.com/video/2021/08/04/83865-584870625_medium.mp4",
+        "page": "https://pixabay.com/videos/id-83865/",
+        "start": 1.2,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-16T21:01:50.756427+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 462
+}
