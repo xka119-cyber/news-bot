@@ -127,12 +127,17 @@
       }
     ]
   },
-  "status": "generated",
+  "status": "approved",
   "history": [
     {
       "status": "generated",
       "at": "2026-11-16T21:01:50.756427+00:00",
       "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-16T22:31:42.176595+00:00",
+      "note": "키보드 버튼"
     }
   ],
   "telegram_message_id": 462
