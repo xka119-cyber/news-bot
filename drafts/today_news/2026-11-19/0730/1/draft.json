@@ -96,7 +96,7 @@
   ],
   "cost_usd": 0.006249600000000001,
   "reel": {
-    "status": "pending",
+    "status": "published",
     "video": "reel.mp4",
     "cover": "reel_cover.jpg",
     "style": "v3",
@@ -129,7 +129,16 @@
         "start": 2.4,
         "match": "full"
       }
-    ]
+    ],
+    "video_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-19/0730/1/reel.mp4",
+    "cover_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-19/0730/1/reel_cover.jpg",
+    "publish": {
+      "container_id": "17890010625512661"
+    },
+    "media_id": "18110578604364216",
+    "permalink": "https://www.instagram.com/reel/Df5llUNFa2M/",
+    "note": "",
+    "recovered": false
   },
   "status": "published",
   "history": [
