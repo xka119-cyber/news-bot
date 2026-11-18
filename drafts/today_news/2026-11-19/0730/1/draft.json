@@ -1,0 +1,144 @@
+{
+  "id": "today_news/20261119-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-19T07:30:00+09:00",
+  "slot_label": "11월 19일(목) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "매일 로그인하면 할인율 15%",
+    "cover_sub": "삼성카드 모니모페이카드 출시, 혜택 조건을 확인해 보세요",
+    "points": [
+      {
+        "title": "무엇이 나왔나",
+        "lines": [
+          "삼성카드가 모니모페이카드를 새로 내놨어요.",
+          "모니모페이 간편결제를 자주 쓰는 고객을 위한 카드예요.",
+          "실물 카드 없이도 오프라인 결제가 가능해졌어요."
+        ]
+      },
+      {
+        "title": "할인은 얼마나?",
+        "lines": [
+          "모니모페이로 결제하면 기본 10% 할인이 돼요.",
+          "전월 1일부터 말일까지 매일 앱에 로그인하면 15%로 올라가요."
+        ]
+      }
+    ],
+    "why_it_matters": "모니모페이를 자주 쓴다면 매달 할인 차이가 생길 수 있어요. 카드 혜택 조건을 앱에서 먼저 확인해 보세요.",
+    "caption_intro": "모니모페이카드 할인율은 얼마나 되는지 궁금하신가요?",
+    "hashtags": [
+      "#모니모페이카드",
+      "#간편결제할인"
+    ],
+    "reel": {
+      "hook": [
+        "간편결제 자주 쓴다면",
+        "매일 로그인하면 15%"
+      ],
+      "beats": [
+        "삼성카드 모니모페이카드 출시",
+        "모니모페이 결제 기본 10% 할인",
+        "전월 매일 앱 로그인 시 15%"
+      ],
+      "takeaway": "모니모 앱에서 할인 조건 확인하기",
+      "scenes": [
+        {
+          "say": "간편결제 자주 쓰는 분이라면 놓치면 아까워요.",
+          "caption": [
+            "간편결제 자주 쓰면",
+            "할인이 달라져요"
+          ],
+          "search": "woman smartphone"
+        },
+        {
+          "say": "삼성카드가 모니모페이카드를 새로 내놨어요.",
+          "caption": [
+            "모니모페이카드 출시",
+            "실물 카드 없이 결제"
+          ],
+          "search": "people shopping"
+        },
+        {
+          "say": "기본 10% 할인이고, 매일 로그인하면 15%예요.",
+          "caption": [
+            "기본 10% 할인",
+            "매일 로그인 시 15%"
+          ],
+          "search": "money coins"
+        },
+        {
+          "say": "앱에서 할인 조건부터 확인해 보세요.",
+          "caption": [
+            "모니모 앱에서",
+            "할인 조건 확인"
+          ],
+          "search": "office workers"
+        }
+      ]
+    },
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/Culture/article/all/20261118/135043873/1",
+    "source_title": "“매일 로그인하면 할인율 쑥”… 삼성카드 ‘모니모페이카드’ 출시",
+    "focus": "money_action"
+  },
+  "caption": "매일 로그인하면 할인율 15%\n모니모페이카드 할인율은 얼마나 되는지 궁금하신가요?\n\n✔ 무엇이 나왔나\n✔ 할인은 얼마나?\n💡 모니모페이를 자주 쓴다면 매달 할인 차이가 생길 수 있어요. 카드 혜택 조건을 앱에서 먼저 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#모니모페이카드 #간편결제할인 #3분뉴스 #오늘의뉴스 #경제뉴스",
+  "warnings": [
+    "표지 설명 31자 (최대 30자)",
+    "릴스 3번 장면 읽는 문장 28자 (최대 26자)"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.006249600000000001,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 38084,
+        "url": "https://cdn.pixabay.com/video/2020/05/04/38084-416330724_medium.mp4",
+        "page": "https://pixabay.com/videos/id-38084/",
+        "start": 1.2,
+        "match": "full"
+      },
+      {
+        "id": 24603,
+        "url": "https://cdn.pixabay.com/video/2019/06/23/24603-344986224_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-24603/",
+        "start": 1.35,
+        "match": "full"
+      },
+      {
+        "id": 93550,
+        "url": "https://cdn.pixabay.com/video/2021/10/27/93550-640240281_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-93550/",
+        "start": 1.35,
+        "match": "full"
+      },
+      {
+        "id": 107425,
+        "url": "https://cdn.pixabay.com/video/2022/02/11/107425-678258632_medium.mp4",
+        "page": "https://pixabay.com/videos/id-107425/",
+        "start": 2.4,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-18T21:01:47.327092+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 506,
+  "keyboard_message_id": 507
+}
