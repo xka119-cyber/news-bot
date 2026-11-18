@@ -74,6 +74,7 @@ def run_generate(account_key: str, slot_hhmm: str | None, mock_llm: bool) -> int
     from newsbot.write.llm import WriteError, mock_post, write_post
 
     account = load_account(account_key)
+    auto_publish = account.approval.on_timeout == "publish"  # 승인 없이도 게시 시각에 올라감 → 안내·버튼을 건너뛰기용으로
     load_dotenv(ROOT / ".env")
     client, chat_id = telegram_from_env()
     now = datetime.now(timezone.utc)
@@ -142,7 +143,7 @@ def run_generate(account_key: str, slot_hhmm: str | None, mock_llm: bool) -> int
             drafts.set_status(DRAFTS_ROOT, record, "generated", now)
             stage = f"{number}번째 텔레그램 전송"
             text = preview_text(result.draft, caption, label, warnings, account.brand_name, order=f"{number}/{total}",
-                                reel_seconds=reel.seconds if reel else None)
+                                reel_seconds=reel.seconds if reel else None, auto=auto_publish)
             record["telegram_message_id"] = send_preview(client, chat_id, rendered.paths, text, draft_id,
                                                          reel=reel.video if reel else None)
             drafts.save(DRAFTS_ROOT, record)
@@ -155,7 +156,11 @@ def run_generate(account_key: str, slot_hhmm: str | None, mock_llm: bool) -> int
             stage = "승인 버튼 전송"
             local = slot.astimezone(ZoneInfo(account.timezone))
             items = [(r["number"], r["draft"]["cover_title"]) for r in waiting]
-            send_keyboard(client, chat_id, items, label, f"{local:%H:%M}")
+            keyboard_id = send_keyboard(client, chat_id, items, label, f"{local:%H:%M}", auto=auto_publish)
+            # 자동 게시는 미리보기와 건너뛰기 버튼이 둘 다 간 초안만 한다(못 본 초안이 올라가지 않게, QA 11-18)
+            for record in waiting:
+                record["keyboard_message_id"] = keyboard_id
+                drafts.save(DRAFTS_ROOT, record)
     except (WriteError, TelegramError, OSError) as error:
         print(f"❌ {stage} 단계 실패: {error}")
         try:

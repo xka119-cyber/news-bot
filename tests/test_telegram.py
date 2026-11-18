@@ -164,6 +164,27 @@ def test_keyboard_labels():
     assert keyboard_labels([1], "07:30") == [["✅ 승인 (07:30)", "⏭ 건너뛰기 (07:30)"]]
 
 
+def test_keyboard_labels_auto_mode_only_skip():
+    assert keyboard_labels([1], "07:30", auto=True) == [["⏭ 건너뛰기 (07:30)"]]
+    assert keyboard_labels([1, 2], "07:30", auto=True) == [
+        ["⏭ 모두 건너뛰기 (07:30)"], ["⏭ 1번 건너뛰기 (07:30)", "⏭ 2번 건너뛰기 (07:30)"]]
+
+
+def test_preview_text_auto_mode_says_it_posts_itself():
+    draft = {"cover_title": "제목", "source_url": "https://a.kr/1", "source_name": "연합뉴스", "source_title": "기사"}
+    text = preview_text(draft, "캡션", "11월 4일(수) 07:30", [], "오늘의 3분 뉴스", reel_seconds=15.0, auto=True)
+    assert "자동으로 올라가요" in text and "건너뛰기" in text and "승인하면" not in text
+    assert "승인하세요" in preview_text(draft, "캡션", "11월 4일(수) 07:30", [], "오늘의 3분 뉴스")
+
+
+def test_keyboard_number_skip_skips_only_that_one(tmp_path):
+    first, second = make_numbered(tmp_path, 1), make_numbered(tmp_path, 2)
+    client = FakeClient([text_msg(1, "⏭ 2번 건너뛰기 (07:30)")])
+    decisions = process_updates(client, CHAT, tmp_path, tmp_path / "tg.json", NOW)
+    assert [(d.draft_id, d.status) for d in decisions] == [(second, "skipped")]
+    assert drafts.load(tmp_path, first)["status"] == "generated"
+
+
 def test_keyboard_number_approves_only_that_one(tmp_path):
     first, second = make_numbered(tmp_path, 1), make_numbered(tmp_path, 2)
     client = FakeClient([text_msg(1, "✅ 2번 승인 (07:30)")])

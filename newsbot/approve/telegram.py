@@ -110,18 +110,23 @@ def parse_callback(data: str) -> tuple[str, str] | None:
 
 
 def preview_text(draft: dict, caption: str, slot_label: str, warnings: list[str], brand: str, order: str = "",
-                 reel_seconds: float | None = None) -> str:
+                 reel_seconds: float | None = None, auto: bool = False) -> str:
     """order: 같은 시각 게시물 중 몇 번째인지(예: "1/2"). 하나씩 따로 승인한다.
-    reel_seconds가 있으면 승인 한 번으로 카드뉴스와 릴스가 같이 올라간다고 적는다(2026-11-07)."""
+    reel_seconds가 있으면 승인 한 번으로 카드뉴스와 릴스가 같이 올라간다고 적는다(2026-11-07).
+    auto: 승인이 없어도 게시 시각에 올라가는 설정(on_timeout: publish, 2026-11-18) — 건너뛰기만 안내한다."""
     e = html.escape
     title = f"<b>📮 {e(brand)} 미리보기" + (f" ({e(order)})" if order else "") + "</b>"
-    kinds = "카드뉴스 4장" + (f" + 릴스 {reel_seconds:g}초 (승인하면 둘 다 올라가요)" if reel_seconds else "")
+    together = "둘 다 자동으로 올라가요" if auto else "승인하면 둘 다 올라가요"
+    kinds = "카드뉴스 4장" + (f" + 릴스 {reel_seconds:g}초 ({together})" if reel_seconds else "")
     lines = [title, f"게시 예정: <b>{e(slot_label)}</b> · {kinds}", ""]
     lines += [f"<b>{e(draft['cover_title'])}</b>", "", "<b>캡션</b>", f"<blockquote expandable>{e(caption)}</blockquote>"]
     lines.append(f'<b>원문</b>: <a href="{e(draft["source_url"], quote=True)}">{e(draft["source_name"])} · {e(draft["source_title"])}</a>')
     if warnings:
         lines += ["", "<b>⚠️ 확인할 점</b>"] + [f"• {e(w)}" for w in warnings]
-    lines += ["", "맨 아래(입력칸 자리) 버튼으로 승인하세요."]
+    if auto:
+        lines += ["", "그대로 두면 게시 시각에 자동으로 올라가요. 올리기 싫을 때만 맨 아래(입력칸 자리) ⏭ 건너뛰기를 누르세요."]
+    else:
+        lines += ["", "맨 아래(입력칸 자리) 버튼으로 승인하세요."]
     text = "\n".join(lines)
     return text[:4000]
 
@@ -153,26 +158,37 @@ def send_preview(client: TelegramClient, chat_id: int, cards: list[Path], text: 
 # 메시지 안 버튼(인라인)은 봇이 2~3분 안에 대답하지 않으면 텔레그램이 누름 기록을 버린다.
 # 아래 키보드 버튼은 누르면 '글 메시지'가 보내져 24시간 남으므로, 정해진 때만 깨어나는 봇도 읽을 수 있다.
 
-def keyboard_labels(numbers: list[int], hhmm: str) -> list[list[str]]:
-    """예: [["✅ 모두 승인 (07:30)", "⏭ 모두 건너뛰기 (07:30)"], ["✅ 1번 승인 (07:30)", "✅ 2번 승인 (07:30)"]]"""
+def keyboard_labels(numbers: list[int], hhmm: str, auto: bool = False) -> list[list[str]]:
+    """예: [["✅ 모두 승인 (07:30)", "⏭ 모두 건너뛰기 (07:30)"], ["✅ 1번 승인 (07:30)", "✅ 2번 승인 (07:30)"]]
+    auto(자동 게시)면 승인 버튼은 필요 없어서 건너뛰기 버튼만 둔다."""
+    if auto:
+        if len(numbers) == 1:
+            return [[f"⏭ 건너뛰기 ({hhmm})"]]
+        return [[f"⏭ 모두 건너뛰기 ({hhmm})"], [f"⏭ {n}번 건너뛰기 ({hhmm})" for n in numbers]]
     if len(numbers) == 1:
         return [[f"✅ 승인 ({hhmm})", f"⏭ 건너뛰기 ({hhmm})"]]
     return [[f"✅ 모두 승인 ({hhmm})", f"⏭ 모두 건너뛰기 ({hhmm})"],
             [f"✅ {n}번 승인 ({hhmm})" for n in numbers]]
 
 
-def send_keyboard(client: TelegramClient, chat_id: int, items: list[tuple[int, str]], slot_label: str, hhmm: str) -> int:
+def send_keyboard(client: TelegramClient, chat_id: int, items: list[tuple[int, str]], slot_label: str, hhmm: str,
+                  auto: bool = False) -> int:
     """미리보기들 아래에 고르는 방법 안내 + 아래 키보드 버튼을 띄운다. items: (번호, 표지 제목)"""
-    lines = [f"👇 {slot_label} 게시분을 아래 버튼으로 골라 주세요."]
+    if auto:
+        lines = [f"👇 {slot_label}에 자동으로 올라가요. 올리기 싫을 때만 아래 ⏭ 건너뛰기를 누르세요."]
+    else:
+        lines = [f"👇 {slot_label} 게시분을 아래 버튼으로 골라 주세요."]
     if len(items) > 1:
         lines += [f"{n}번 「{title}」" for n, title in items]
-        lines.append("번호 버튼은 여러 개 눌러도 돼요. 안 누른 것은 올라가지 않아요.")
+        lines.append("번호 버튼은 여러 개 눌러도 돼요. " + ("건너뛰지 않은 것은 올라가요." if auto else "안 누른 것은 올라가지 않아요."))
     lines.append("누르면 내 메시지로 남고, 게시 시각에 봇이 읽어서 처리해요.")
     message = client.call(
         "sendMessage", chat_id=chat_id, text="\n".join(lines),
         reply_markup={
-            "keyboard": [[{"text": label} for label in row] for row in keyboard_labels([n for n, _ in items], hhmm)],
-            "resize_keyboard": True, "is_persistent": True, "input_field_placeholder": "승인할 게시물을 골라 주세요",
+            "keyboard": [[{"text": label} for label in row]
+                         for row in keyboard_labels([n for n, _ in items], hhmm, auto=auto)],
+            "resize_keyboard": True, "is_persistent": True,
+            "input_field_placeholder": "건너뛸 때만 눌러 주세요" if auto else "승인할 게시물을 골라 주세요",
         },
     )
     return message["message_id"]

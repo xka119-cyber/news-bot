@@ -185,6 +185,11 @@ def account():
     return load_account("today_news")
 
 
+def with_timeout(account, on_timeout):
+    """실제 설정과 상관없이 '승인 없이 시각이 지나면' 동작을 정해서 시험한다(2026-11-18 실제 설정은 publish)."""
+    return account.model_copy(update={"approval": account.approval.model_copy(update={"on_timeout": on_timeout})})
+
+
 def make_record(root, status, slot=SLOT, hhmm="2130", number=None, reel=False):
     draft_id = f"today_news/20261104-{hhmm}" + (f"-{number}" if number else "")
     folder = drafts.draft_dir(root, draft_id)
@@ -259,7 +264,7 @@ def test_skipped_is_never_published(account, tmp_path):
 def test_unapproved_past_slot_expires(account, tmp_path):
     draft_id = make_record(tmp_path, "generated")
     ig, tg = FakeIG(), FakeTG()
-    outcomes = run(account, tmp_path, ig, tg, [])
+    outcomes = run(with_timeout(account, "skip"), tmp_path, ig, tg, [])
     assert [o.status for o in outcomes] == ["expired"]
     assert drafts.load(tmp_path, draft_id)["status"] == "expired"
     assert ig.calls == []
@@ -272,9 +277,40 @@ def test_expiry_also_removes_approve_all_button(account, tmp_path):
     record["approve_all_message_id"] = 99
     drafts.save(tmp_path, record)
     tg = FakeTG()
-    run(account, tmp_path, FakeIG(), tg, [])
+    run(with_timeout(account, "skip"), tmp_path, FakeIG(), tg, [])
     cleared = [p["message_id"] for m, p in tg.sent if m == "editMessageReplyMarkup"]
     assert 99 in cleared and 7 in cleared
+
+
+def test_real_config_publishes_automatically():
+    # 2026-11-18 사용자 요청: 승인 없이도 게시 시각에 올라간다(건너뛰기를 누른 것만 빠짐)
+    assert load_account("today_news").approval.on_timeout == "publish"
+
+
+def previewed(root, draft_id):
+    record = drafts.load(root, draft_id)
+    record["keyboard_message_id"] = 8  # 건너뛰기 버튼까지 전달됨
+    drafts.save(root, record)
+    return draft_id
+
+
+def test_auto_mode_publishes_unapproved_at_slot(account, tmp_path):
+    draft_id = previewed(tmp_path, make_record(tmp_path, "generated"))
+    ig, tg = FakeIG(), FakeTG()
+    outcomes = run(with_timeout(account, "publish"), tmp_path, ig, tg, [])
+    assert [o.status for o in outcomes] == ["published"]
+    record = drafts.load(tmp_path, draft_id)
+    assert record["status"] == "published"
+    assert any(h.get("note") == "시간 초과 자동 승인" for h in record.get("history", []))
+    assert "📸" in tg.sent[-1][1]["text"] and tg.sent[-1][1]["reply_markup"] == {"remove_keyboard": True}
+
+
+def test_auto_mode_never_publishes_skipped_or_early(account, tmp_path):
+    make_record(tmp_path, "skipped", number=1)
+    make_record(tmp_path, "generated", slot=NOW + timedelta(hours=1), number=2)
+    ig = FakeIG()
+    assert run(with_timeout(account, "publish"), tmp_path, ig, FakeTG(), []) == []
+    assert ig.calls == []
 
 
 def test_approved_but_not_due_waits(account, tmp_path):
@@ -709,3 +745,18 @@ def test_wait_ready_error_carries_instagram_code():
     client.request = lambda method, path, **params: answers[params["fields"]]
     with pytest.raises(ContainerFailed, match=r"상태 ERROR, 코드 2207032"):
         client.wait_ready("c1")
+
+
+def test_auto_mode_does_not_post_draft_whose_preview_failed(account, tmp_path):
+    # 미리보기는 갔지만 건너뛰기 버튼이 안 간 초안, 미리보기 자체가 안 간 초안 → 둘 다 올리지 않는다
+    no_keyboard = make_record(tmp_path, "generated", number=1)
+    no_preview = make_record(tmp_path, "generated", number=2)
+    record = drafts.load(tmp_path, no_preview)
+    del record["telegram_message_id"]
+    drafts.save(tmp_path, record)
+    ig, tg = FakeIG(), FakeTG()
+    outcomes = run(with_timeout(account, "publish"), tmp_path, ig, tg, [])
+    assert [o.status for o in outcomes] == ["expired", "expired"]
+    assert ig.calls == []
+    assert drafts.load(tmp_path, no_keyboard)["status"] == "expired"
+    assert "미리보기가 제대로 전달되지 않아" in tg.sent[-1][1]["text"]

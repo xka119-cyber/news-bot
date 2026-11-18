@@ -78,4 +78,5 @@ caption:
 
 approval:
   required: true
-  on_timeout: skip
+  # 2026-11-18 사용자 요청: 자동 게시. 미리보기는 그대로 오고, ⏭ 건너뛰기를 누르지 않으면 게시 시각에 올라간다
+  on_timeout: publish

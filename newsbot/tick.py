@@ -60,7 +60,7 @@ def decide(account: AccountConfig, root: Path, now: datetime) -> Todo:
     if due:
         todo.publish = True
         names = ", ".join(f"{r['id']}({r['status']})" for r in due)
-        todo.reasons.append(f"게시 시각이 지난 초안 {len(due)}개 처리 (승인된 것은 게시, 아니면 건너뜀): {names}")
+        todo.reasons.append(f"게시 시각이 지난 초안 {len(due)}개 처리 (승인된 것은 게시, 미승인은 설정에 따라 자동 게시 또는 만료): {names}")
 
     if not todo.reasons:
         todo.reasons.append("지금은 할 일이 없습니다")

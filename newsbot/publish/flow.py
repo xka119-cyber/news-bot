@@ -172,12 +172,19 @@ def run(account: AccountConfig, root: Path, ig: InstagramClient, tg: TelegramCli
         status = record.get("status")
         if status == "generated" and due:
             close_approve_all(tg, chat_id, record)
-            if account.approval.on_timeout == "publish":
+            # 미리보기나 건너뛰기 버튼 전송이 실패한 초안은 사람이 못 봤으므로 자동 게시하지 않는다(QA 11-18)
+            previewed = bool(record.get("telegram_message_id")) and bool(record.get("keyboard_message_id"))
+            if account.approval.on_timeout == "publish" and previewed:
                 drafts.set_status(root, record, "approved", now, note="시간 초과 자동 승인")
                 status = "approved"
             else:
-                drafts.set_status(root, record, "expired", now, note="승인 없이 게시 시각이 지남")
-                _notify(tg, chat_id, record, f"⌛ 승인이 없어 {record['slot_label']} 게시는 건너뛰었어요.", clear_buttons=True)
+                if account.approval.on_timeout == "publish":
+                    note, text = ("미리보기가 전달되지 않아 자동 게시하지 않음",
+                                  f"⌛ 미리보기가 제대로 전달되지 않아 {record['slot_label']} 게시는 자동으로 올리지 않았어요.")
+                else:
+                    note, text = "승인 없이 게시 시각이 지남", f"⌛ 승인이 없어 {record['slot_label']} 게시는 건너뛰었어요."
+                drafts.set_status(root, record, "expired", now, note=note)
+                _notify(tg, chat_id, record, text, clear_buttons=True)
                 outcomes.append(Outcome(record["id"], "expired"))
                 continue
         retry_failed = only_id is not None and status == "failed"
