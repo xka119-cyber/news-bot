@@ -328,7 +328,10 @@ def run_collect(account_key: str, show_excluded: bool) -> int:
 
     print(f"기사 {result.fetched}개 받음 → 최근 {account.collect.lookback_hours}시간 {result.recent}개")
     print(f"→ 중복 {result.duplicates}개, 최근 3일 사용 {result.used_before}개, 제외 {len(result.excluded)}개 빼고")
-    print(f"→ 후보 {len(result.candidates)}개 (언론사별로 고르게)\n")
+    print(f"→ 후보 {len(result.candidates)}개 (언론사별로 고르게)")
+    if account.collect.priority_keywords:
+        print(f"  그중 우선 낱말(내 돈·할 일) 기사 {result.prioritized}개를 앞에 넣음 (최대 20개)")
+    print()
     print("| # | 언론사 | 시각 | 제목 |")
     print("|---|---|---|---|")
     for number, article in enumerate(result.candidates, start=1):

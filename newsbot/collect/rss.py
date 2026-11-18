@@ -23,6 +23,7 @@ TITLE_SIMILARITY = 0.5
 HISTORY_DAYS = 3
 MAX_CANDIDATES = 30
 MIN_CANDIDATES = 15
+PRIORITY_MAX = 20  # 우선 낱말 기사는 30개 중 최대 20개까지만 — 나머지 10개는 늘 언론사별 최신 기사로 채운다
 
 # 사진·영상·운세·인사 같은 카드뉴스로 쓰기 어려운 기사
 JUNK_KEYWORDS = [
@@ -64,6 +65,7 @@ class CollectResult:
     used_before: int = 0
     excluded: list[tuple[Article, str]] = field(default_factory=list)
     failed_feeds: list[str] = field(default_factory=list)
+    prioritized: int = 0  # 후보 중 우선 낱말(collect.priority_keywords)로 앞에 넣은 기사 수
 
 
 def clean_text(raw: str) -> str:
@@ -171,6 +173,11 @@ def _balance(articles: list[Article], limit: int) -> list[Article]:
     return sorted(picked, key=lambda a: a.published, reverse=True)
 
 
+def is_priority(article: Article, keywords: list[str]) -> bool:
+    """제목에 우선 낱말이 있는가. 요약은 '마감(증시)' 같은 엉뚱한 낱말이 많아 보지 않는다."""
+    return any(word in article.title for word in keywords)
+
+
 def collect(account: AccountConfig, history_path: Path, now: datetime | None = None, fetch=fetch_feed) -> CollectResult:
     now = now or datetime.now(timezone.utc)
     cfg = account.collect
@@ -213,5 +220,9 @@ def collect(account: AccountConfig, history_path: Path, now: datetime | None = N
             continue
         kept.append(article)
 
-    result.candidates = _balance(kept, MAX_CANDIDATES)
+    keywords = cfg.priority_keywords
+    first = _balance([a for a in kept if is_priority(a, keywords)], PRIORITY_MAX) if keywords else []
+    rest = _balance([a for a in kept if a not in first], MAX_CANDIDATES - len(first))
+    result.prioritized = len(first)
+    result.candidates = first + rest
     return result

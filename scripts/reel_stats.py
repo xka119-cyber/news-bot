@@ -6,7 +6,9 @@
     .venv/Scripts/python.exe scripts/reel_stats.py --since 2026-11-09T20:00
 
 머무른 비율 = 100 - reels_skip_rate (3초 안에 넘기지 않은 사람 비율). 목표 50% 이상.
-릴스 디자인 판(v1/v2)은 media 브랜치의 초안 기록(reel.media_id → reel.style, 없으면 v1)에서 찾는다.
+릴스 디자인 판(v1/v2/v3)은 media 브랜치의 초안 기록(reel.media_id → reel.style, 없으면 v1)에서 찾는다.
+기사 고르기 초점이 '내 돈 + 할 일'(draft.focus = money_action, 2026-11-19 실험)이면 판 뒤에 '·돈'을 붙인다.
+도달 = 본 사람 수. 팔로워가 0명인 동안은 도달 전부가 팔로워 아닌 사람이다(11-19 판정 기준의 '비팔로워 도달').
 """
 
 import argparse
@@ -58,11 +60,13 @@ def reel_styles() -> dict[str, str]:
             raw = subprocess.run(git + ["show", f"origin/media:{name}"], capture_output=True, text=True,
                                  encoding="utf-8").stdout
             try:
-                reel = json.loads(raw).get("reel") or {}
+                record = json.loads(raw)
             except ValueError:
                 continue
+            reel = record.get("reel") or {}
             if reel.get("media_id"):
-                styles[reel["media_id"]] = reel.get("style", "v1")
+                focus = (record.get("draft") or {}).get("focus")
+                styles[reel["media_id"]] = reel.get("style", "v1") + ("·돈" if focus == "money_action" else "")
     return styles
 
 
@@ -96,16 +100,16 @@ def main() -> int:
         rows.append({
             "id": item["id"], "posted": posted.astimezone().strftime("%m-%d %H:%M"), "style": styles.get(item["id"], "v1"),
             "title": (item.get("caption") or "").split("\n")[0][:24], "permalink": item.get("permalink"),
-            "views": values.get("views"), "stay_pct": round(100 - values["reels_skip_rate"], 1)
+            "views": values.get("views"), "reach": values.get("reach"), "stay_pct": round(100 - values["reels_skip_rate"], 1)
             if values.get("reels_skip_rate") is not None else None,
             "avg_s": round(values["ig_reels_avg_watch_time"] / 1000, 2) if values.get("ig_reels_avg_watch_time") else None,
             "saved": values.get("saved"), "shares": values.get("shares"), "likes": values.get("likes"),
             "error": found.get("error", "")[:80],
         })
     print(f"팔로워 {account.get('followers_count')}명 · 게시물 {account.get('media_count')}개")
-    print(f"{'게시':<12}{'판':<4}{'조회':>6}{'머무름%':>9}{'평균초':>7}{'저장':>5}{'공유':>5}{'좋아요':>6}  제목")
+    print(f"{'게시':<12}{'판':<6}{'조회':>6}{'도달':>6}{'머무름%':>9}{'평균초':>7}{'저장':>5}{'공유':>5}{'좋아요':>6}  제목")
     for r in rows:
-        print(f"{r['posted']:<12}{r['style']:<4}{str(r['views']):>6}{str(r['stay_pct']):>9}{str(r['avg_s']):>7}"
+        print(f"{r['posted']:<12}{r['style']:<6}{str(r['views']):>6}{str(r['reach']):>6}{str(r['stay_pct']):>9}{str(r['avg_s']):>7}"
               f"{str(r['saved']):>5}{str(r['shares']):>5}{str(r['likes']):>6}  {r['title']} {r['error']}")
     out = ROOT / "out" / "stats"
     out.mkdir(parents=True, exist_ok=True)

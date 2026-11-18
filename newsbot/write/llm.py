@@ -153,6 +153,12 @@ def build_prompt(account: AccountConfig, candidates: list[Article], avoid: list[
         tone=account.write.tone,
         candidates=format_candidates(candidates),
     )
+    if account.write.focus != "general":
+        # 고르는 기준 실험(2026-11-19~): 후보 목록 바로 앞에 끼워 넣는다
+        focus = (PROMPTS_DIR / f"focus_{account.write.focus}.md").read_text(encoding="utf-8").strip()
+        marker = "## 뉴스 후보"
+        head, sep, tail = prompt.rpartition(marker)
+        prompt = head + focus + "\n\n" + sep + tail if sep else prompt + "\n\n" + focus + "\n"
     if avoid:
         prompt += (
             "\n## 이미 고른 소식 (같은 시각에 함께 올라가거나, 최근에 이미 다룬 소식)\n"
@@ -299,6 +305,7 @@ def write_post(
         ]
 
     result.draft = to_output(draft, candidates)
+    result.draft["focus"] = account.write.focus  # 성과 표에서 실험 전·후를 나누려고 남긴다
     result.warnings = checks["warn"]
     return result
 

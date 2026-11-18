@@ -79,6 +79,9 @@ class Collect(_Strict):
     include_categories: list[str]
     exclude_categories: list[str]
     exclude_keywords: list[str] = Field(default_factory=list)
+    # 제목에 이 낱말이 든 기사를 후보 30개 앞쪽에 먼저 넣는다(2026-11-19 실험: 내 돈 + 지금 할 일).
+    # 비우면 예전처럼 언론사별 최신순으로만 고른다.
+    priority_keywords: list[str] = Field(default_factory=list)
     items_per_post: int = Field(gt=0)
 
 
@@ -87,6 +90,9 @@ class Write(_Strict):
     max_output_tokens: int = Field(gt=0)
     tone: str
     monthly_budget_usd: float = Field(gt=0)
+    # 기사 고르기 초점. general = 예전 기준, money_action = 내 돈·생활 + 지금 할 일 1개(2026-11-19 실험).
+    # money_action이면 prompts/focus_money_action.md를 프롬프트에 끼워 넣고, 초안 기록에 focus를 남긴다.
+    focus: Literal["general", "money_action"] = "general"
     # 1백만 토큰당 달러. 공식 가격표가 바뀌면 여기만 고친다(Haiku 5.5, 10만 토큰 이하 요청 기준).
     price_input_per_mtok: float = Field(default=0.10, ge=0)
     price_output_per_mtok: float = Field(default=0.50, ge=0)

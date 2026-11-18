@@ -247,3 +247,25 @@ def test_reel_scenes_checked_and_broken_scenes_dropped():
     broken = make(reel={**GOOD_REEL, "scenes": [{"say": "문장만 있음"}]})
     assert broken.reel is not None and broken.reel.scenes == [] and broken.reel.hook == GOOD_REEL["hook"]
     assert "scenes" in build_prompt(load_account("today_news"), CANDIDATES) and "LLMScene" in str(LLMDraft.model_json_schema())
+
+
+def test_focus_money_action_inserted_before_candidates(tmp_path):
+    """11-19 실험: focus=money_action이면 '내 돈 + 지금 할 일' 기준이 후보 목록 바로 앞에 들어간다."""
+    account = load_account("today_news")
+    assert account.write.focus == "money_action"
+    prompt = build_prompt(account, CANDIDATES)
+    assert "지금 할 일 1개" in prompt and "{" not in prompt
+    assert prompt.index("이번 기간의 고르는 기준") < prompt.index("## 뉴스 후보") < prompt.index("[1] (연합뉴스)")
+    assert prompt.count("## 뉴스 후보") == 1
+
+    account.write.focus = "general"
+    assert "이번 기간의 고르는 기준" not in build_prompt(account, CANDIDATES)
+
+
+def test_focus_recorded_in_draft(tmp_path):
+    account = load_account("today_news")
+    result = write_post(account, CANDIDATES, tmp_path / "c.json", client=FakeClient([GOOD]), now=NOW)
+    assert result.draft["focus"] == "money_action"
+    account.write.focus = "general"
+    result = write_post(account, CANDIDATES, tmp_path / "c.json", client=FakeClient([GOOD]), now=NOW)
+    assert result.draft["focus"] == "general"
