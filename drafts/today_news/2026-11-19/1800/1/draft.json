@@ -1,0 +1,144 @@
+{
+  "id": "today_news/20261119-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-19T18:00:00+09:00",
+  "slot_label": "11월 19일(목) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "생활",
+    "cover_title": "실손보험료 최대 87.8% 할인",
+    "cover_sub": "23일부터 1·2세대 가입자 전환 할인 시작",
+    "points": [
+      {
+        "title": "무엇이 바뀌나",
+        "lines": [
+          "23일부터 실손보험 계약 전환 할인이 시작돼요.",
+          "1·2세대 가입자가 5세대로 바꾸면 보험료가 줄어요."
+        ]
+      },
+      {
+        "title": "얼마나 아끼나",
+        "lines": [
+          "5세대로 전환하면 3년간 보험료가 50% 할인돼요.",
+          "비급여 보장을 빼면 최대 87.8%까지 낮아져요.",
+          "다만 보장 범위가 줄고 할인은 3년 뒤 끝나요."
+        ]
+      }
+    ],
+    "why_it_matters": "1·2세대 실손보험에 가입하셨다면 23일 이후 5세대 전환 조건을 꼭 확인해 보세요.",
+    "caption_intro": "실손보험 전환 할인, 나도 받을 수 있을까요?",
+    "hashtags": [
+      "#실손보험",
+      "#5세대실손",
+      "#보험료할인"
+    ],
+    "reel": {
+      "hook": [
+        "실손보험 아직 그대로?",
+        "보험료 반값 될 수도"
+      ],
+      "beats": [
+        "23일부터 전환 할인 시작",
+        "1·2세대 가입자가 대상",
+        "5세대 전환 시 3년간 반값"
+      ],
+      "takeaway": "내 실손 세대 확인하고 전환 검토",
+      "scenes": [
+        {
+          "say": "2013년 전에 실손보험 드셨나요?",
+          "caption": [
+            "2013년 이전 가입?",
+            "보험료 반값 가능"
+          ],
+          "search": "hospital waiting room"
+        },
+        {
+          "say": "23일부터 실손보험 전환 할인이 시작돼요.",
+          "caption": [
+            "23일부터 전환 할인",
+            "1·2세대 가입자 대상"
+          ],
+          "search": "office workers"
+        },
+        {
+          "say": "5세대로 바꾸면 3년간 보험료가 절반이에요.",
+          "caption": [
+            "5세대 전환 시",
+            "3년간 보험료 절반"
+          ],
+          "search": "money coins"
+        },
+        {
+          "say": "내 세대를 확인하고 전환을 검토해 보세요.",
+          "caption": [
+            "내 세대 확인하기",
+            "3년 뒤 할인 종료"
+          ],
+          "search": "woman smartphone"
+        }
+      ]
+    },
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/Economy/article/all/20261119/135054074/1",
+    "source_title": "“월 17만7000원 실손보험료가 2만2000원으로”…23일부터 전환 할인",
+    "focus": "money_action"
+  },
+  "caption": "실손보험료 최대 87.8% 할인\n실손보험 전환 할인, 나도 받을 수 있을까요?\n\n✔ 무엇이 바뀌나\n✔ 얼마나 아끼나\n💡 1·2세대 실손보험에 가입하셨다면 23일 이후 5세대 전환 조건을 꼭 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#실손보험 #5세대실손 #보험료할인 #3분뉴스 #오늘의뉴스",
+  "warnings": [
+    "원문에 없는 숫자: 2013"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0059338,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 4039,
+        "url": "https://cdn.pixabay.com/video/2016/07/27/4039-176748894_medium.mp4",
+        "page": "https://pixabay.com/videos/id-4039/",
+        "start": 3.0,
+        "match": "partial"
+      },
+      {
+        "id": 107425,
+        "url": "https://cdn.pixabay.com/video/2022/02/11/107425-678258632_medium.mp4",
+        "page": "https://pixabay.com/videos/id-107425/",
+        "start": 2.4,
+        "match": "full"
+      },
+      {
+        "id": 93550,
+        "url": "https://cdn.pixabay.com/video/2021/10/27/93550-640240281_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-93550/",
+        "start": 1.35,
+        "match": "full"
+      },
+      {
+        "id": 38084,
+        "url": "https://cdn.pixabay.com/video/2020/05/04/38084-416330724_medium.mp4",
+        "page": "https://pixabay.com/videos/id-38084/",
+        "start": 1.2,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-19T07:41:38.289376+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 516,
+  "keyboard_message_id": 517
+}
