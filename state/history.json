@@ -1,11 +1,6 @@
 {
   "items": [
     {
-      "link": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008848130&plink=RSSLINK&cooper=RSSREADER",
-      "title": "서울 집값 상승폭 석 달째 둔화…평균 전셋값 5억 원 돌파",
-      "used_at": "2026-11-16T09:01:43.426258+00:00"
-    },
-    {
       "link": "https://www.yna.co.kr/view/AKR20261116164300002",
       "title": "\"돈 뽑을 데가 없네\"…은행 자동화기기 올해만 400대 사라져",
       "used_at": "2026-11-16T22:31:42.176595+00:00"
@@ -29,6 +24,11 @@
       "link": "https://www.donga.com/news/Culture/article/all/20261118/135043873/1",
       "title": "“매일 로그인하면 할인율 쑥”… 삼성카드 ‘모니모페이카드’ 출시",
       "used_at": "2026-11-18T22:31:51.124950+00:00"
+    },
+    {
+      "link": "https://www.donga.com/news/Economy/article/all/20261119/135054074/1",
+      "title": "“월 17만7000원 실손보험료가 2만2000원으로”…23일부터 전환 할인",
+      "used_at": "2026-11-19T09:03:31.648481+00:00"
     }
   ]
 }
