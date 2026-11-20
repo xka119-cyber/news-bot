@@ -1,0 +1,141 @@
+{
+  "id": "today_news/20261120-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-20T18:00:00+09:00",
+  "slot_label": "11월 20일(금) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "생활",
+    "cover_title": "김장 재료 할인, 내달 9일까지",
+    "cover_sub": "농협하나로마트에서 배추·무를 싸게 살 수 있어요",
+    "points": [
+      {
+        "title": "무슨 일이에요",
+        "lines": [
+          "농협경제지주가 김장철 할인 행사를 엽니다.",
+          "배추와 무를 평소보다 싸게 살 수 있어요."
+        ]
+      },
+      {
+        "title": "얼마나, 언제까지예요",
+        "lines": [
+          "전국 농협하나로마트에서 내달 9일까지 진행해요.",
+          "배추·무 농가를 돕고 김장 부담도 낮추려는 행사예요."
+        ]
+      }
+    ],
+    "why_it_matters": "김장 준비 중이라면 농협하나로마트에서 배추·무 할인을 확인해 보세요. 내달 9일까지예요.",
+    "caption_intro": "김장재료 배추·무 할인은 어디서 언제까지 하나요?",
+    "hashtags": [
+      "#김장재료",
+      "#농협하나로마트",
+      "#배추값"
+    ],
+    "reel": {
+      "hook": [
+        "김장 준비 중이라면",
+        "배추·무 싸게 사는 법"
+      ],
+      "beats": [
+        "농협이 김장 재료 할인에 나서요",
+        "배추·무 할인, 농가 지원도",
+        "전국 농협하나로마트, 내달 9일까지"
+      ],
+      "takeaway": "가까운 농협하나로마트에서 배추·무 확인",
+      "scenes": [
+        {
+          "say": "김장 앞두고 배추값 걱정되시죠?",
+          "caption": [
+            "김장 앞두고",
+            "배추값 걱정되시죠?"
+          ],
+          "search": "vegetable market"
+        },
+        {
+          "say": "농협이 배추와 무를 싸게 파는 행사를 열어요.",
+          "caption": [
+            "농협 배추·무 할인",
+            "김장 재료 행사"
+          ],
+          "search": "supermarket shelf"
+        },
+        {
+          "say": "전국 농협하나로마트에서 다음 달 9일까지예요.",
+          "caption": [
+            "전국 농협하나로마트",
+            "다음 달 9일까지"
+          ],
+          "search": "supermarket"
+        },
+        {
+          "say": "김장 준비하신다면 가까운 농협에서 확인해요.",
+          "caption": [
+            "김장 준비한다면",
+            "농협에서 확인하기"
+          ],
+          "search": "cooking kitchen"
+        }
+      ]
+    },
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/Economy/article/all/20261120/135059820/1",
+    "source_title": "농협경제지주, 김장철 맞아 배추·무 할인…내달 9일까지 행사",
+    "focus": "money_action"
+  },
+  "caption": "김장 재료 할인, 내달 9일까지\n김장재료 배추·무 할인은 어디서 언제까지 하나요?\n\n✔ 무슨 일이에요\n✔ 얼마나, 언제까지예요\n💡 김장 준비 중이라면 농협하나로마트에서 배추·무 할인을 확인해 보세요. 내달 9일까지예요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#김장재료 #농협하나로마트 #배추값 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.005115300000000001,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 20910,
+        "url": "https://cdn.pixabay.com/video/2019/01/24/20910-313490233_medium.mp4",
+        "page": "https://pixabay.com/videos/id-20910/",
+        "start": 2.7,
+        "match": "full"
+      },
+      {
+        "id": 4730,
+        "url": "https://cdn.pixabay.com/video/2016/08/22/4730-179738652_medium.mp4",
+        "page": "https://pixabay.com/videos/id-4730/",
+        "start": 2.1,
+        "match": "partial"
+      },
+      {
+        "id": 159164,
+        "url": "https://cdn.pixabay.com/video/2023/04/16/159164-818219669_medium.mp4",
+        "page": "https://pixabay.com/videos/id-159164/",
+        "start": 1.2,
+        "match": "full"
+      },
+      {
+        "id": 11606,
+        "url": "https://cdn.pixabay.com/video/2017/08/29/11606-231571862_medium.mp4",
+        "page": "https://pixabay.com/videos/id-11606/",
+        "start": 5.7,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-20T07:51:50.312116+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 539,
+  "keyboard_message_id": 540
+}
