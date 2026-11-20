@@ -1,0 +1,144 @@
+{
+  "id": "today_news/20261121-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-21T07:30:00+09:00",
+  "slot_label": "11월 21일(토) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "생활",
+    "cover_title": "26일부터 채널 4개 안 나와요",
+    "cover_sub": "LG헬로비전, CJ ENM 채널 송출 종료 예정",
+    "points": [
+      {
+        "title": "무슨 일인가요",
+        "lines": [
+          "LG헬로비전이 26일 CJ ENM 채널 4개를 끊어요.",
+          "대상은 tvN 스포츠, tvN 쇼, 중화TV, 투니버스예요."
+        ]
+      },
+      {
+        "title": "왜 이런 일이 생겼나요",
+        "lines": [
+          "양사가 콘텐츠 사용료를 두고 갈등을 빚어 왔어요.",
+          "가처분 신청에도 LG헬로비전은 종료 입장을 그대로 유지해요."
+        ]
+      }
+    ],
+    "why_it_matters": "케이블로 이 채널을 보신다면 26일 전에 시청 계획을 미리 확인해 보세요.",
+    "caption_intro": "LG헬로비전 채널 송출 종료, 26일부터 뭐가 안 나올까요?",
+    "hashtags": [
+      "#LG헬로비전",
+      "#케이블채널",
+      "#tvN스포츠"
+    ],
+    "reel": {
+      "hook": [
+        "tvN 보는 분이라면",
+        "26일부터 못 봐요"
+      ],
+      "beats": [
+        "LG헬로비전이 채널 송출 종료",
+        "CJ ENM 채널 4개가 대상",
+        "26일에 송출 종료 예정"
+      ],
+      "takeaway": "26일 전에 내 채널 나오는지 확인",
+      "scenes": [
+        {
+          "say": "tvN 보는 분, 26일부터 못 볼 수 있어요.",
+          "caption": [
+            "tvN 보는 분",
+            "26일부터 주의"
+          ],
+          "search": "woman smartphone"
+        },
+        {
+          "say": "LG헬로비전이 CJ ENM 채널 4개를 끊어요.",
+          "caption": [
+            "CJ ENM 채널 4개",
+            "송출 종료"
+          ],
+          "search": "living room sofa"
+        },
+        {
+          "say": "tvN 스포츠, tvN 쇼, 투니버스 등이에요.",
+          "caption": [
+            "tvN 스포츠·쇼",
+            "투니버스·중화TV"
+          ],
+          "search": "television screen"
+        },
+        {
+          "say": "26일 전에 내 채널 나오는지 꼭 확인하세요.",
+          "caption": [
+            "26일 전에",
+            "내 채널 확인"
+          ],
+          "search": "apartment buildings"
+        }
+      ]
+    },
+    "source_name": "ZDNet Korea",
+    "source_url": "https://zdnet.co.kr/view/?no=20261120194250",
+    "source_title": "LG헬로비전 \"CJ ENM 채널 송출종료 입장 변화 없다”",
+    "focus": "money_action"
+  },
+  "caption": "26일부터 채널 4개 안 나와요\nLG헬로비전 채널 송출 종료, 26일부터 뭐가 안 나올까요?\n\n✔ 무슨 일인가요\n✔ 왜 이런 일이 생겼나요\n💡 케이블로 이 채널을 보신다면 26일 전에 시청 계획을 미리 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: ZDNet Korea\nAI의 도움을 받아 요약했어요.\n\n#LG헬로비전 #케이블채널 #tvN스포츠 #3분뉴스 #오늘의뉴스",
+  "warnings": [
+    "원문을 21자 그대로 옮김: 'tvN스포츠,tvN쇼,중화TV,투니버스…'",
+    "릴스가 17초로 깁니다(목표 15초 이내)"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0067833,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 38084,
+        "url": "https://cdn.pixabay.com/video/2020/05/04/38084-416330724_medium.mp4",
+        "page": "https://pixabay.com/videos/id-38084/",
+        "start": 1.2,
+        "match": "full"
+      },
+      {
+        "id": 24603,
+        "url": "https://cdn.pixabay.com/video/2019/06/23/24603-344986224_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-24603/",
+        "start": 1.35,
+        "match": "full"
+      },
+      {
+        "id": 5366,
+        "url": "https://cdn.pixabay.com/video/2016/09/21/5366-184226677_medium.mp4",
+        "page": "https://pixabay.com/videos/id-5366/",
+        "start": 2.1,
+        "match": "full"
+      },
+      {
+        "id": 61193,
+        "url": "https://cdn.pixabay.com/video/2021/01/05/61193-497862950_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-61193/",
+        "start": 1.95,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-20T21:41:59.249874+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 552,
+  "keyboard_message_id": 553
+}
