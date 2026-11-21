@@ -1,0 +1,137 @@
+{
+  "id": "today_news/20261121-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-21T18:00:00+09:00",
+  "slot_label": "11월 21일(토) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "날씨·교통",
+    "cover_title": "주말 내내 강추위, 일요일 영하 4도",
+    "cover_sub": "일요일 서울 영하 4도, 외출 전 보온 챙기세요",
+    "points": [
+      {
+        "title": "주말 날씨가 달라요",
+        "lines": [
+          "주말 내내 강한 추위가 이어져요",
+          "서울 기온이 영하 3.8도까지 내려갔어요"
+        ]
+      },
+      {
+        "title": "일요일이 가장 춥대요",
+        "lines": [
+          "절기상 소설인 일요일 강추위가 절정이에요",
+          "올가을 들어 가장 낮은 기온을 기록한 곳도 많아요"
+        ]
+      }
+    ],
+    "why_it_matters": "일요일 외출 계획이 있다면 외투와 목도리를 미리 챙기세요. 아침에 나갈 때 특히 춥습니다.",
+    "caption_intro": "주말 강추위, 일요일 외출 복장은 어떻게 할까요?",
+    "hashtags": [
+      "#강추위",
+      "#주말날씨",
+      "#일요일날씨"
+    ],
+    "reel": {
+      "hook": [
+        "일요일 나들이 계획?",
+        "서울 영하 4도인데요"
+      ],
+      "beats": [
+        "주말 내내 강추위가 와요",
+        "일요일 서울 영하 4도까지",
+        "절기상 소설인 일요일이 절정"
+      ],
+      "takeaway": "일요일 외출 전 외투·목도리 챙기기",
+      "scenes": [
+        {
+          "say": "일요일 나들이 계획 있으신가요?",
+          "caption": [
+            "일요일 나들이?"
+          ],
+          "search": "people walking city"
+        },
+        {
+          "say": "이번 주말 강추위가 찾아와요.",
+          "caption": [
+            "주말 내내 강추위"
+          ],
+          "search": "city sunrise"
+        },
+        {
+          "say": "서울 기온이 영하 4도까지 떨어져요.",
+          "caption": [
+            "서울 영하 4도"
+          ],
+          "search": "apartment buildings"
+        },
+        {
+          "say": "외출 전 외투와 목도리를 꼭 챙기세요.",
+          "caption": [
+            "외투·목도리 챙기기"
+          ],
+          "search": "people shopping"
+        }
+      ]
+    },
+    "source_name": "SBS",
+    "source_url": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008856575&plink=RSSLINK&cooper=RSSREADER",
+    "source_title": "[날씨] 주말 내내 '강추위'…일요일 '소설' 서울 영하 4도",
+    "focus": "money_action"
+  },
+  "caption": "주말 내내 강추위, 일요일 영하 4도\n주말 강추위, 일요일 외출 복장은 어떻게 할까요?\n\n✔ 주말 날씨가 달라요\n✔ 일요일이 가장 춥대요\n💡 일요일 외출 계획이 있다면 외투와 목도리를 미리 챙기세요. 아침에 나갈 때 특히 춥습니다.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: SBS\nAI의 도움을 받아 요약했어요.\n\n#강추위 #주말날씨 #일요일날씨 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0063005000000000005,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 39836,
+        "url": "https://cdn.pixabay.com/video/2020/05/22/39836-424360861_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-39836/",
+        "start": 3.6,
+        "match": "full"
+      },
+      {
+        "id": 2337,
+        "url": "https://cdn.pixabay.com/video/2016/02/29/2337-157269912_medium.mp4",
+        "page": "https://pixabay.com/videos/id-2337/",
+        "start": 6.6,
+        "match": "full"
+      },
+      {
+        "id": 34330,
+        "url": "https://cdn.pixabay.com/video/2020/03/26/34330-402333178_medium.mp4",
+        "page": "https://pixabay.com/videos/id-34330/",
+        "start": 2.1,
+        "match": "full"
+      },
+      {
+        "id": 148501,
+        "url": "https://cdn.pixabay.com/video/2023/01/29/148501-794344007_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-148501/",
+        "start": 2.1,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-21T07:51:55.900860+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 563,
+  "keyboard_message_id": 564
+}
