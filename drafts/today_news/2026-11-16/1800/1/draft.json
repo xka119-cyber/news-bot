@@ -1,0 +1,170 @@
+{
+  "id": "today_news/20261116-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-16T18:00:00+09:00",
+  "slot_label": "11월 16일(월) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "서울 평균 전셋값 5억 돌파",
+    "cover_sub": "집값 상승폭은 둔화, 경기 집값은 서울 앞질러",
+    "points": [
+      {
+        "title": "무슨 일인지",
+        "lines": [
+          "지난달 서울 집값 상승폭이 석 달째 둔화했어요.",
+          "같은 기간 경기 집값 상승률은 서울을 앞질렀어요."
+        ]
+      },
+      {
+        "title": "얼마나 올랐나",
+        "lines": [
+          "서울 평균 전셋값이 5억 원을 넘어섰어요.",
+          "강남권은 떨어졌지만 서대문·노원은 올랐어요."
+        ]
+      }
+    ],
+    "why_it_matters": "전세를 구하거나 집을 알아보는 중이라면, 지역별 시세 흐름을 직접 비교해 보세요.",
+    "caption_intro": "서울 전셋값 평균 5억 원, 지금 전세 구하기 어려운가요?",
+    "hashtags": [
+      "#전셋값",
+      "#서울전세",
+      "#전세시세"
+    ],
+    "reel": {
+      "hook": [
+        "서울 전세 구한다면",
+        "평균이 5억이라고?"
+      ],
+      "beats": [
+        "서울 평균 전셋값 돌파",
+        "보증금 5억 원 넘어",
+        "지난달 기준 집계"
+      ],
+      "takeaway": "전세 계약 전 지역 시세부터 비교",
+      "scenes": [
+        {
+          "say": "서울에서 전세 구하면 깜짝 놀랄 숫자예요.",
+          "caption": [
+            "서울 전세 구한다면",
+            "평균 5억 원"
+          ],
+          "search": "apartment buildings"
+        },
+        {
+          "say": "지난달 서울 집값 상승폭이 석 달째 둔화했어요.",
+          "caption": [
+            "집값 상승폭 둔화",
+            "석 달째 이어져요"
+          ],
+          "search": "city skyline"
+        },
+        {
+          "say": "서울 평균 전셋값이 5억 원을 넘었어요.",
+          "caption": [
+            "평균 전셋값",
+            "5억 원 돌파"
+          ],
+          "search": "living room sofa"
+        },
+        {
+          "say": "전세 계약 전엔 지역 시세부터 비교해 보세요.",
+          "caption": [
+            "계약 전에",
+            "지역 시세 비교"
+          ],
+          "search": "woman smartphone"
+        }
+      ]
+    },
+    "source_name": "SBS",
+    "source_url": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008848130&plink=RSSLINK&cooper=RSSREADER",
+    "source_title": "서울 집값 상승폭 석 달째 둔화…평균 전셋값 5억 원 돌파"
+  },
+  "caption": "서울 평균 전셋값 5억 돌파\n서울 전셋값 평균 5억 원, 지금 전세 구하기 어려운가요?\n\n✔ 무슨 일인지\n✔ 얼마나 올랐나\n💡 전세를 구하거나 집을 알아보는 중이라면, 지역별 시세 흐름을 직접 비교해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: SBS\nAI의 도움을 받아 요약했어요.\n\n#전셋값 #서울전세 #전세시세 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0031586,
+  "reel": {
+    "status": "published",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 61193,
+        "url": "https://cdn.pixabay.com/video/2021/01/05/61193-497862950_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-61193/",
+        "start": 1.95,
+        "match": "full"
+      },
+      {
+        "id": 3134,
+        "url": "https://cdn.pixabay.com/video/2016/05/12/3134-166335905_medium.mp4",
+        "page": "https://pixabay.com/videos/id-3134/",
+        "start": 8.1,
+        "match": "full"
+      },
+      {
+        "id": 258301,
+        "url": "https://cdn.pixabay.com/video/2025/02/14/258301_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-258301/",
+        "start": 4.2,
+        "match": "full"
+      },
+      {
+        "id": 38084,
+        "url": "https://cdn.pixabay.com/video/2020/05/04/38084-416330724_medium.mp4",
+        "page": "https://pixabay.com/videos/id-38084/",
+        "start": 1.2,
+        "match": "full"
+      }
+    ],
+    "video_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-16/1800/1/reel.mp4",
+    "cover_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-16/1800/1/reel_cover.jpg",
+    "publish": {
+      "container_id": "17889389787512661"
+    },
+    "media_id": "18416877766094715",
+    "permalink": "https://www.instagram.com/reel/Dfy_SQSCvj4/",
+    "note": "",
+    "recovered": false
+  },
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-16T07:31:40.646292+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-16T09:01:43.426258+00:00",
+      "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-16T09:01:43.426258+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 452,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-16/1800/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-16/1800/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-16/1800/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-16/1800/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17889389658512661",
+    "recovered": true
+  },
+  "media_id": "18118663462966797",
+  "permalink": "https://www.instagram.com/p/Dfy_Mc-Fx8j/"
+}

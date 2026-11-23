@@ -1,0 +1,172 @@
+{
+  "id": "today_news/20261123-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-23T07:30:00+09:00",
+  "slot_label": "11월 23일(월) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "실손 5세대 갈아타면 보험료 반값",
+    "cover_sub": "병원 자주 가는 분은 오히려 불리해요",
+    "points": [
+      {
+        "title": "무엇이 바뀌나",
+        "lines": [
+          "다음 주부터 5세대 실손보험 상품이 나와요.",
+          "오래된 실손 가입자가 갈아타면 보험료를 당분간 반값으로 줘요."
+        ]
+      },
+      {
+        "title": "병원 자주 가면 불리해요",
+        "lines": [
+          "병원을 자주 다니면 오히려 손해일 수 있어요.",
+          "갈아타기 전 내 병원 이용 횟수부터 따져 보세요."
+        ]
+      }
+    ],
+    "why_it_matters": "다음 주부터 5세대 실손 갈아타기가 가능해요. 실손보험이 있다면 병원 이용 내역부터 확인해 보세요.",
+    "caption_intro": "실손보험 5세대 갈아타면 보험료 반값 맞나요?",
+    "hashtags": [
+      "#실손보험",
+      "#5세대실손",
+      "#실손갈아타기"
+    ],
+    "reel": {
+      "hook": [
+        "실손보험 가입자라면",
+        "병원 자주 가면 손해?"
+      ],
+      "beats": [
+        "다음 주부터 5세대 시행",
+        "오래된 실손 갈아타면 반값",
+        "병원 자주 가면 불리"
+      ],
+      "takeaway": "갈아타기 전 병원 이용부터 확인",
+      "scenes": [
+        {
+          "say": "보험료 반값이라는데 나도 될까요?",
+          "caption": [
+            "보험료 반값?",
+            "나도 해당될까요"
+          ],
+          "search": "woman smartphone"
+        },
+        {
+          "say": "오래된 실손보험을 5세대로 갈아탈 수 있어요.",
+          "caption": [
+            "5세대로 갈아타면",
+            "다음 주부터"
+          ],
+          "search": "office workers"
+        },
+        {
+          "say": "당분간 보험료를 반값으로 내도 돼요.",
+          "caption": [
+            "보험료 반값",
+            "당분간"
+          ],
+          "search": "money coins"
+        },
+        {
+          "say": "병원 자주 가신다면 이용 내역부터 확인하세요.",
+          "caption": [
+            "병원 자주 가면?",
+            "이용 내역부터 확인"
+          ],
+          "search": "hospital corridor"
+        }
+      ]
+    },
+    "source_name": "SBS",
+    "source_url": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008857893&plink=RSSLINK&cooper=RSSREADER",
+    "source_title": "5세대 실손 갈아타면 반값…병원 자주 가면 '불리'",
+    "focus": "money_action"
+  },
+  "caption": "실손 5세대 갈아타면 보험료 반값\n실손보험 5세대 갈아타면 보험료 반값 맞나요?\n\n✔ 무엇이 바뀌나\n✔ 병원 자주 가면 불리해요\n💡 다음 주부터 5세대 실손 갈아타기가 가능해요. 실손보험이 있다면 병원 이용 내역부터 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: SBS\nAI의 도움을 받아 요약했어요.\n\n#실손보험 #5세대실손 #실손갈아타기 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0066794,
+  "reel": {
+    "status": "published",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 12564,
+        "url": "https://cdn.pixabay.com/video/2017/10/22/12564-240358890_medium.mp4",
+        "page": "https://pixabay.com/videos/id-12564/",
+        "start": 3.3,
+        "match": "full"
+      },
+      {
+        "id": 93550,
+        "url": "https://cdn.pixabay.com/video/2021/10/27/93550-640240281_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-93550/",
+        "start": 1.35,
+        "match": "full"
+      },
+      {
+        "id": 27710,
+        "url": "https://cdn.pixabay.com/video/2019/10/10/27710-365891006_medium.mp4",
+        "page": "https://pixabay.com/videos/id-27710/",
+        "start": 5.55,
+        "match": "full"
+      },
+      {
+        "id": 49815,
+        "url": "https://cdn.pixabay.com/video/2020/09/13/49815-458438877_medium.mp4",
+        "page": "https://pixabay.com/videos/id-49815/",
+        "start": 3.15,
+        "match": "partial"
+      }
+    ],
+    "video_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-23/0730/1/reel.mp4",
+    "cover_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-23/0730/1/reel_cover.jpg",
+    "publish": {
+      "container_id": "17891012001512661"
+    },
+    "media_id": "17906059599374177",
+    "permalink": "https://www.instagram.com/reel/DgD4uXAGXou/",
+    "note": "",
+    "recovered": false
+  },
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-22T21:01:46.928134+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-22T22:31:37.729124+00:00",
+      "note": "시간 초과 자동 승인"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-22T22:31:37.729124+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 590,
+  "keyboard_message_id": 591,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-23/0730/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-23/0730/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-23/0730/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-23/0730/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17891011920512661",
+    "recovered": true
+  },
+  "media_id": "18037823411668817",
+  "permalink": "https://www.instagram.com/p/DgD4puDF57a/"
+}

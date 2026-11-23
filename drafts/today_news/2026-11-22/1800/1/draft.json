@@ -1,0 +1,172 @@
+{
+  "id": "today_news/20261122-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-22T18:00:00+09:00",
+  "slot_label": "11월 22일(일) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "생활",
+    "cover_title": "미취업 청년 응시료 연 12만 원 지원",
+    "cover_sub": "내년부터 대구에서 자격증·어학 시험 응시료를 지원해요",
+    "points": [
+      {
+        "title": "무엇이 바뀌나",
+        "lines": [
+          "대구시가 내년부터 새로 지원을 시작해요.",
+          "대상은 미취업 청년이고, 자격증과 어학 시험이 해당돼요."
+        ]
+      },
+      {
+        "title": "얼마나 받나요",
+        "lines": [
+          "응시료를 1인당 연 최대 12만 원까지 지원해요.",
+          "자격증과 어학 시험 응시료 모두 대상에 포함돼요."
+        ]
+      }
+    ],
+    "why_it_matters": "미취업 청년이라면 내년 대구시 지원 공고부터 확인해 보세요. 시험 준비 비용을 덜 수 있어요.",
+    "caption_intro": "미취업 청년 자격증 응시료, 대구에서 얼마나 지원받나요?",
+    "hashtags": [
+      "#응시료지원",
+      "#자격증시험",
+      "#대구청년"
+    ],
+    "reel": {
+      "hook": [
+        "대구 취준생이라면",
+        "시험비 최대 12만 원"
+      ],
+      "beats": [
+        "대구시가 내년부터 지원해요",
+        "미취업 청년, 자격증·어학 시험",
+        "1인당 연 최대 12만 원"
+      ],
+      "takeaway": "내년 지원 공고에서 해당 여부 확인",
+      "scenes": [
+        {
+          "say": "자격증 시험비, 매번 부담되시죠?",
+          "caption": [
+            "자격증 시험비",
+            "매번 부담이죠?"
+          ],
+          "search": "students classroom"
+        },
+        {
+          "say": "대구시가 미취업 청년 응시료를 지원해요.",
+          "caption": [
+            "대구시 응시료 지원",
+            "미취업 청년 대상"
+          ],
+          "search": "city skyline"
+        },
+        {
+          "say": "자격증과 어학 시험, 연 최대 12만 원이요.",
+          "caption": [
+            "연 최대 12만 원",
+            "자격증·어학 시험"
+          ],
+          "search": "money coins"
+        },
+        {
+          "say": "내년 지원 공고에서 해당되는지 확인해요.",
+          "caption": [
+            "내년 공고 확인",
+            "해당되는지 보세요"
+          ],
+          "search": "office workers"
+        }
+      ]
+    },
+    "source_name": "연합뉴스",
+    "source_url": "https://www.yna.co.kr/view/AKR20261122015400053",
+    "source_title": "대구시, 내년부터 미취업 청년 시험 응시료 연 최대 12만원 지원",
+    "focus": "money_action"
+  },
+  "caption": "미취업 청년 응시료 연 12만 원 지원\n미취업 청년 자격증 응시료, 대구에서 얼마나 지원받나요?\n\n✔ 무엇이 바뀌나\n✔ 얼마나 받나요\n💡 미취업 청년이라면 내년 대구시 지원 공고부터 확인해 보세요. 시험 준비 비용을 덜 수 있어요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 연합뉴스\nAI의 도움을 받아 요약했어요.\n\n#응시료지원 #자격증시험 #대구청년 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0062531,
+  "reel": {
+    "status": "published",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 215471,
+        "url": "https://cdn.pixabay.com/video/2024/06/06/215471_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-215471/",
+        "start": 1.35,
+        "match": "full"
+      },
+      {
+        "id": 3134,
+        "url": "https://cdn.pixabay.com/video/2016/05/12/3134-166335905_medium.mp4",
+        "page": "https://pixabay.com/videos/id-3134/",
+        "start": 8.1,
+        "match": "full"
+      },
+      {
+        "id": 93550,
+        "url": "https://cdn.pixabay.com/video/2021/10/27/93550-640240281_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-93550/",
+        "start": 1.35,
+        "match": "full"
+      },
+      {
+        "id": 107425,
+        "url": "https://cdn.pixabay.com/video/2022/02/11/107425-678258632_medium.mp4",
+        "page": "https://pixabay.com/videos/id-107425/",
+        "start": 2.4,
+        "match": "full"
+      }
+    ],
+    "video_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-22/1800/1/reel.mp4",
+    "cover_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-22/1800/1/reel_cover.jpg",
+    "publish": {
+      "container_id": "17890861935512661"
+    },
+    "media_id": "18646662289018983",
+    "permalink": "https://www.instagram.com/reel/DgCcIJ9k6TJ/",
+    "note": "",
+    "recovered": false
+  },
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-22T07:31:40.384502+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-22T09:01:47.119905+00:00",
+      "note": "시간 초과 자동 승인"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-22T09:01:47.119905+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 581,
+  "keyboard_message_id": 582,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-22/1800/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-22/1800/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-22/1800/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-22/1800/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17890861848512661",
+    "recovered": true
+  },
+  "media_id": "17997242202105424",
+  "permalink": "https://www.instagram.com/p/DgCb929FyjV/"
+}

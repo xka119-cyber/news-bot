@@ -1,0 +1,170 @@
+{
+  "id": "today_news/20261117-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-17T18:00:00+09:00",
+  "slot_label": "11월 17일(화) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "생활",
+    "cover_title": "“굿 나잇” 한마디에 집이 알아서",
+    "cover_sub": "GS건설 AI 홈, 내년 7월 이후 분양 자이에 적용",
+    "points": [
+      {
+        "title": "무엇이 바뀌나",
+        "lines": [
+          "“굿 나잇” 한마디에 조명이 꺼져요",
+          "온도도 잠들기 좋게 맞춰 줘요",
+          "카메라 없이 센서로 사람 움직임을 알아봐요"
+        ]
+      },
+      {
+        "title": "언제 볼 수 있나",
+        "lines": [
+          "GS건설이 16일 AI 홈을 공개했어요",
+          "내년 7월 이후 분양하는 자이에 순차 적용"
+        ]
+      }
+    ],
+    "why_it_matters": "새 아파트를 보러 갈 때 AI 홈 적용 여부를 꼭 물어보세요. 내년 7월 이후 분양 단지부터 적용돼요.",
+    "caption_intro": "내년 자이 아파트에 AI 홈이 들어간다는데, 어떤 기능일까요?",
+    "hashtags": [
+      "#AI홈",
+      "#자이아파트",
+      "#스마트홈"
+    ],
+    "reel": {
+      "hook": [
+        "잘 때 말 한마디면",
+        "집이 알아서 잠들어요"
+      ],
+      "beats": [
+        "GS건설이 AI 홈 공개",
+        "“굿 나잇”에 조명 끄고 온도 조절",
+        "내년 7월 이후 분양 자이부터"
+      ],
+      "takeaway": "새 아파트 옵션에서 AI 홈 적용 확인",
+      "scenes": [
+        {
+          "say": "자기 전 말 한마디로 집이 잠들어요.",
+          "caption": [
+            "말 한마디에",
+            "집이 잠들어요"
+          ],
+          "search": "apartment buildings"
+        },
+        {
+          "say": "GS건설이 이 AI 홈을 공개했어요.",
+          "caption": [
+            "GS건설 AI 홈 공개"
+          ],
+          "search": "city traffic"
+        },
+        {
+          "say": "내년 7월 이후 분양하는 자이에 들어가요.",
+          "caption": [
+            "내년 7월 이후",
+            "분양 자이 아파트"
+          ],
+          "search": "apartment complex"
+        },
+        {
+          "say": "새 아파트 보러 가면 AI 홈부터 물어보세요.",
+          "caption": [
+            "새 아파트 볼 때",
+            "AI 홈 적용 확인"
+          ],
+          "search": "woman smartphone"
+        }
+      ]
+    },
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/Economy/article/all/20261117/135040243/1",
+    "source_title": "알아서 조명 끄고 냉난방-환기까지…GS건설 “내년 자이에 AI홈 도입”"
+  },
+  "caption": "“굿 나잇” 한마디에 집이 알아서\n내년 자이 아파트에 AI 홈이 들어간다는데, 어떤 기능일까요?\n\n✔ 무엇이 바뀌나\n✔ 언제 볼 수 있나\n💡 새 아파트를 보러 갈 때 AI 홈 적용 여부를 꼭 물어보세요. 내년 7월 이후 분양 단지부터 적용돼요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#AI홈 #자이아파트 #스마트홈 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0030935,
+  "reel": {
+    "status": "published",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 61193,
+        "url": "https://cdn.pixabay.com/video/2021/01/05/61193-497862950_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-61193/",
+        "start": 1.95,
+        "match": "full"
+      },
+      {
+        "id": 21118,
+        "url": "https://cdn.pixabay.com/video/2019/02/01/21118-315137091_small.mp4",
+        "page": "https://pixabay.com/videos/id-21118/",
+        "start": 0.9,
+        "match": "full"
+      },
+      {
+        "id": 377378,
+        "url": "https://cdn.pixabay.com/video/2026/09/19/377378_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-377378/",
+        "start": 1.95,
+        "match": "full"
+      },
+      {
+        "id": 211636,
+        "url": "https://cdn.pixabay.com/video/2024/05/12/211636_medium.mp4",
+        "page": "https://pixabay.com/videos/id-211636/",
+        "start": 1.5,
+        "match": "full"
+      }
+    ],
+    "video_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-17/1800/1/reel.mp4",
+    "cover_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-17/1800/1/reel_cover.jpg",
+    "publish": {
+      "container_id": "17889630837512661"
+    },
+    "media_id": "18141664126728145",
+    "permalink": "https://www.instagram.com/reel/Df1kF7bD9Ui/",
+    "note": "",
+    "recovered": false
+  },
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-17T08:12:03.400400+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-17T09:01:53.832031+00:00",
+      "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-17T09:01:53.832031+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 476,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-17/1800/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-17/1800/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-17/1800/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-17/1800/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17889630585512661",
+    "recovered": true
+  },
+  "media_id": "17897523507427444",
+  "permalink": "https://www.instagram.com/p/Df1kAueDYPX/"
+}

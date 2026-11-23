@@ -1,0 +1,174 @@
+{
+  "id": "today_news/20261118-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-18T07:30:00+09:00",
+  "slot_label": "11월 18일(수) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "IT",
+    "cover_title": "직장인 3명 중 2명은 업무에 AI 써요",
+    "cover_sub": "AI 유료 서비스에 월 평균 4만9000원, 한국은행 조사",
+    "points": [
+      {
+        "title": "얼마나 쓰고 있나",
+        "lines": [
+          "국내 직장인은 생성형 AI 유료 서비스에 월 4만9000원을 써요.",
+          "업무에 AI를 쓰는 직장인은 3명 중 2명꼴이에요.",
+          "1년 새 AI 활용률이 15%포인트 올랐어요."
+        ]
+      },
+      {
+        "title": "핵심 업무는 아직 약해요",
+        "lines": [
+          "핵심 업무일수록 AI 활용도가 낮은 경향이에요.",
+          "유료 이용자 상위 1%는 월평균 35만 원을 냈어요.",
+          "한국은행이 'AI 확산과 생산성 효과' 보고서로 공개했어요."
+        ]
+      }
+    ],
+    "why_it_matters": "월 5만 원 가까이 드는 AI 구독료, 내가 실제로 자주 쓰는지 한번 점검해 보세요.",
+    "caption_intro": "생성형 AI 유료 구독, 직장인은 한 달에 얼마나 쓸까요?",
+    "hashtags": [
+      "#생성형AI",
+      "#AI유료구독",
+      "#AI활용"
+    ],
+    "reel": {
+      "hook": [
+        "월 5만 원 AI 구독",
+        "나만 뒤처진 걸까?"
+      ],
+      "beats": [
+        "직장인 AI 유료 서비스 이용",
+        "월평균 4만9000원 지출",
+        "한국은행 보고서 17일 공개"
+      ],
+      "takeaway": "내 AI 구독료 한 번 점검해 보기",
+      "scenes": [
+        {
+          "say": "월급에서 AI 구독료가 빠지고 있나요?",
+          "caption": [
+            "월급에서 AI 구독료?"
+          ],
+          "search": "office workers"
+        },
+        {
+          "say": "직장인 3명 중 2명은 업무에 AI를 써요.",
+          "caption": [
+            "직장인 3명 중 2명",
+            "업무에 AI 활용"
+          ],
+          "search": "woman smartphone"
+        },
+        {
+          "say": "유료 이용자는 월 4만9000원을 써요.",
+          "caption": [
+            "월 평균 4만9000원",
+            "유료 AI 구독"
+          ],
+          "search": "money coins"
+        },
+        {
+          "say": "내가 쓰는 만큼 내고 있는지 점검해 봐요.",
+          "caption": [
+            "구독료 한 번 점검",
+            "실제로 쓰는지 확인"
+          ],
+          "search": "subway commute"
+        }
+      ]
+    },
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/Economy/article/all/20261117/135042517/2",
+    "source_title": "직장인 66% “AI 활용”… 한달 평균 5만원 지출"
+  },
+  "caption": "직장인 3명 중 2명은 업무에 AI 써요\n생성형 AI 유료 구독, 직장인은 한 달에 얼마나 쓸까요?\n\n✔ 얼마나 쓰고 있나\n✔ 핵심 업무는 아직 약해요\n💡 월 5만 원 가까이 드는 AI 구독료, 내가 실제로 자주 쓰는지 한번 점검해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#생성형AI #AI유료구독 #AI활용 #3분뉴스 #오늘의뉴스",
+  "warnings": [
+    "표지 설명 32자 (최대 30자)",
+    "1번 카드 1줄 37자 (최대 35자)"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0029739000000000002,
+  "reel": {
+    "status": "published",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 107425,
+        "url": "https://cdn.pixabay.com/video/2022/02/11/107425-678258632_medium.mp4",
+        "page": "https://pixabay.com/videos/id-107425/",
+        "start": 2.4,
+        "match": "full"
+      },
+      {
+        "id": 211636,
+        "url": "https://cdn.pixabay.com/video/2024/05/12/211636_medium.mp4",
+        "page": "https://pixabay.com/videos/id-211636/",
+        "start": 1.5,
+        "match": "full"
+      },
+      {
+        "id": 38084,
+        "url": "https://cdn.pixabay.com/video/2020/05/04/38084-416330724_medium.mp4",
+        "page": "https://pixabay.com/videos/id-38084/",
+        "start": 1.2,
+        "match": "full"
+      },
+      {
+        "id": 204527,
+        "url": "https://cdn.pixabay.com/video/2024/03/17/204527-924780715_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-204527/",
+        "start": 1.2,
+        "match": "full"
+      }
+    ],
+    "video_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-18/0730/1/reel.mp4",
+    "cover_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-18/0730/1/reel_cover.jpg",
+    "publish": {
+      "container_id": "17889775689512661"
+    },
+    "media_id": "18079391672449910",
+    "permalink": "https://www.instagram.com/reel/Df3AxYcjVz-/",
+    "note": "",
+    "recovered": false
+  },
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-17T21:01:39.743058+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-17T22:31:47.588475+00:00",
+      "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-17T22:31:47.588475+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 486,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-18/0730/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-18/0730/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-18/0730/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-18/0730/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17889775557512661",
+    "recovered": true
+  },
+  "media_id": "18152187958565291",
+  "permalink": "https://www.instagram.com/p/Df3AsQlmuT6/"
+}

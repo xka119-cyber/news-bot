@@ -1,0 +1,169 @@
+{
+  "id": "today_news/20261118-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-18T18:00:00+09:00",
+  "slot_label": "11월 18일(수) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "생활",
+    "cover_title": "최저가 보습크림, 만족도 1위",
+    "cover_sub": "비싼 크림 말고, 소비자원이 직접 발라 본 결과",
+    "points": [
+      {
+        "title": "무슨 일이에요",
+        "lines": [
+          "한국소비자원이 보습크림 8개를 비교했어요.",
+          "최저가 제품이 사용 만족도 1위를 차지했어요."
+        ]
+      },
+      {
+        "title": "왜 눈여겨볼까요",
+        "lines": [
+          "날이 쌀쌀해지며 피부가 건조해지는 시기예요.",
+          "입소문 대신 직접 시험해 매긴 성적표예요."
+        ]
+      }
+    ],
+    "why_it_matters": "비싼 제품만 고집하지 않아도 된다는 뜻이에요. 크림을 고르기 전에 시험 결과를 한번 확인해 보세요.",
+    "caption_intro": "보습크림 고를 때 비싼 것이 꼭 좋을까요?",
+    "hashtags": [
+      "#보습크림",
+      "#건조한피부",
+      "#소비자원"
+    ],
+    "reel": {
+      "hook": [
+        "겨울 크림, 비싼 게 답?",
+        "최저가가 만족도 1위"
+      ],
+      "beats": [
+        "한국소비자원 크림 8개 비교",
+        "최저가 제품 만족도 1위",
+        "직접 발라 보고 성적 매김"
+      ],
+      "takeaway": "크림 살 때 시험 결과부터 확인",
+      "scenes": [
+        {
+          "say": "겨울 크림, 비싼 게 꼭 좋을까요?",
+          "caption": [
+            "비싼 게 꼭 좋을까요?"
+          ],
+          "search": "people shopping"
+        },
+        {
+          "say": "한국소비자원이 크림 8개를 직접 비교했어요.",
+          "caption": [
+            "크림 8개 비교"
+          ],
+          "search": "woman smartphone"
+        },
+        {
+          "say": "그런데 최저가 제품이 만족도 1위였어요.",
+          "caption": [
+            "최저가가 1위",
+            "만족도 1위"
+          ],
+          "search": "money coins"
+        },
+        {
+          "say": "비싼 크림보다 시험 성적표부터 보세요.",
+          "caption": [
+            "시험 성적표부터"
+          ],
+          "search": "supermarket"
+        }
+      ]
+    },
+    "source_name": "SBS",
+    "source_url": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008850709&plink=RSSLINK&cooper=RSSREADER",
+    "source_title": "[친절한 경제] '비싼 게 좋다고?' 보습 크림 8개 직접 발라 보니"
+  },
+  "caption": "최저가 보습크림, 만족도 1위\n보습크림 고를 때 비싼 것이 꼭 좋을까요?\n\n✔ 무슨 일이에요\n✔ 왜 눈여겨볼까요\n💡 비싼 제품만 고집하지 않아도 된다는 뜻이에요. 크림을 고르기 전에 시험 결과를 한번 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: SBS\nAI의 도움을 받아 요약했어요.\n\n#보습크림 #건조한피부 #소비자원 #3분뉴스 #오늘의뉴스",
+  "warnings": [
+    "릴스 첫 화면 1줄 14자 (최대 12자)"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0058365,
+  "reel": {
+    "status": "published",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 24114,
+        "url": "https://cdn.pixabay.com/video/2019/06/01/24114-340421422_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-24114/",
+        "start": 1.95,
+        "match": "full"
+      },
+      {
+        "id": 1887,
+        "url": "https://cdn.pixabay.com/video/2016/01/08/1887-151131664_small.mp4",
+        "page": "https://pixabay.com/videos/id-1887/",
+        "start": 1.5,
+        "match": "full"
+      },
+      {
+        "id": 12564,
+        "url": "https://cdn.pixabay.com/video/2017/10/22/12564-240358890_medium.mp4",
+        "page": "https://pixabay.com/videos/id-12564/",
+        "start": 3.3,
+        "match": "full"
+      },
+      {
+        "id": 3626,
+        "url": "https://cdn.pixabay.com/video/2016/06/27/3626-172488383_medium.mp4",
+        "page": "https://pixabay.com/videos/id-3626/",
+        "start": 2.1,
+        "match": "full"
+      }
+    ],
+    "video_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-18/1800/1/reel.mp4",
+    "cover_url": "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-18/1800/1/reel_cover.jpg",
+    "publish": {
+      "container_id": "17889855036512661"
+    },
+    "media_id": "18137554129671078",
+    "permalink": "https://www.instagram.com/reel/Df4JBw7FXWN/",
+    "note": "",
+    "recovered": false
+  },
+  "status": "published",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-18T07:31:46.850631+00:00",
+      "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-18T09:02:10.065718+00:00",
+      "note": "키보드 버튼"
+    },
+    {
+      "status": "published",
+      "at": "2026-11-18T09:02:10.065718+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 496,
+  "media_urls": [
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-18/1800/1/card_1.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-18/1800/1/card_2.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-18/1800/1/card_3.jpg",
+    "https://raw.githubusercontent.com/xka119-cyber/news-bot/media/drafts/today_news/2026-11-18/1800/1/card_4.jpg"
+  ],
+  "publish": {
+    "container_id": "17889854829512661",
+    "recovered": true
+  },
+  "media_id": "18388471900225217",
+  "permalink": "https://www.instagram.com/p/Df4I1feF0aq/"
+}
