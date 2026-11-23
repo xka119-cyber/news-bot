@@ -1,0 +1,141 @@
+{
+  "id": "today_news/20261124-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-24T07:30:00+09:00",
+  "slot_label": "11월 24일(화) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "생활",
+    "cover_title": "주택조합도 공사비 검증 의무",
+    "cover_sub": "내년 3월부터, 조합원 5분의 1 요구 시",
+    "points": [
+      {
+        "title": "무엇이 바뀌나",
+        "lines": [
+          "내년 3월부터 주택조합도 공사비 검증 의무가 생겨요.",
+          "공동주택 리모델링 사업에도 같이 적용돼요."
+        ]
+      },
+      {
+        "title": "어떤 경우에 적용되나",
+        "lines": [
+          "조합원 5분의 1이 요구하는 경우가 기준이에요.",
+          "공사비가 적정한지 따져볼 수 있는 장치예요."
+        ]
+      }
+    ],
+    "why_it_matters": "재건축·리모델링 조합원이라면 우리 조합의 공사비 내역을 한번 확인해 보세요.",
+    "caption_intro": "주택조합 공사비 검증은 내년 언제부터 받을 수 있을까요?",
+    "hashtags": [
+      "#주택조합",
+      "#공사비검증",
+      "#리모델링"
+    ],
+    "reel": {
+      "hook": [
+        "조합원 5분의 1이면",
+        "공사비 검증 요구 가능"
+      ],
+      "beats": [
+        "내년 3월부터 도입",
+        "주택조합·리모델링 대상",
+        "조합원 5분의 1 요구 시"
+      ],
+      "takeaway": "조합 공사비 내역부터 확인하기",
+      "scenes": [
+        {
+          "say": "재건축 조합원이라면 공사비, 궁금하지 않나요?",
+          "caption": [
+            "재건축 조합원이라면",
+            "공사비 궁금하죠?"
+          ],
+          "search": "apartment buildings"
+        },
+        {
+          "say": "내년 3월부터 주택조합도 공사비 검증을 받아요.",
+          "caption": [
+            "내년 3월부터",
+            "주택조합도 검증"
+          ],
+          "search": "construction site"
+        },
+        {
+          "say": "조합원 5분의 1이 요구하면 적용돼요.",
+          "caption": [
+            "조합원 5분의 1",
+            "요구하면 적용"
+          ],
+          "search": "construction crane"
+        },
+        {
+          "say": "우리 조합 공사비 내역부터 한번 확인해 보세요.",
+          "caption": [
+            "조합 공사비 내역",
+            "지금 확인해 보기"
+          ],
+          "search": "office workers"
+        }
+      ]
+    },
+    "source_name": "연합뉴스",
+    "source_url": "https://www.yna.co.kr/view/AKR20261123124600003",
+    "source_title": "내년부터 주택조합도 공사비 검증 의무…조합원 5분의 1 요구 시",
+    "focus": "money_action"
+  },
+  "caption": "주택조합도 공사비 검증 의무\n주택조합 공사비 검증은 내년 언제부터 받을 수 있을까요?\n\n✔ 무엇이 바뀌나\n✔ 어떤 경우에 적용되나\n💡 재건축·리모델링 조합원이라면 우리 조합의 공사비 내역을 한번 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 연합뉴스\nAI의 도움을 받아 요약했어요.\n\n#주택조합 #공사비검증 #리모델링 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0063257,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 61193,
+        "url": "https://cdn.pixabay.com/video/2021/01/05/61193-497862950_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-61193/",
+        "start": 1.95,
+        "match": "full"
+      },
+      {
+        "id": 42926,
+        "url": "https://cdn.pixabay.com/video/2020/06/23/42926-434300944_medium.mp4",
+        "page": "https://pixabay.com/videos/id-42926/",
+        "start": 2.4,
+        "match": "full"
+      },
+      {
+        "id": 1887,
+        "url": "https://cdn.pixabay.com/video/2016/01/08/1887-151131664_small.mp4",
+        "page": "https://pixabay.com/videos/id-1887/",
+        "start": 1.5,
+        "match": "full"
+      },
+      {
+        "id": 8252,
+        "url": "https://cdn.pixabay.com/video/2017/03/08/8252-207598592_medium.mp4",
+        "page": "https://pixabay.com/videos/id-8252/",
+        "start": 2.7,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-23T21:51:44.735879+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 614,
+  "keyboard_message_id": 615
+}
