@@ -1,0 +1,142 @@
+{
+  "id": "today_news/20261123-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-23T18:00:00+09:00",
+  "slot_label": "11월 23일(월) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "생활",
+    "cover_title": "고구마 반값? 12월 12일 영암",
+    "cover_sub": "영암 고구마 달빛축제에서 할인 판매도 해요",
+    "points": [
+      {
+        "title": "무슨 행사인가요",
+        "lines": [
+          "12월 12일 오후 영암읍에서 열려요.",
+          "영암문화관광재단이 준비한 축제예요."
+        ]
+      },
+      {
+        "title": "어떤 혜택이 있나요",
+        "lines": [
+          "고구마 50% 할인 판매도 함께 진행돼요.",
+          "장소는 구 대동공장 일대예요."
+        ]
+      }
+    ],
+    "why_it_matters": "12월 12일에 영암을 찾을 계획이라면 할인 판매 여부를 미리 확인해 보세요.",
+    "caption_intro": "영암 고구마 달빛축제 할인은 언제 어디서 하나요?",
+    "hashtags": [
+      "#영암고구마",
+      "#달빛축제",
+      "#고구마할인"
+    ],
+    "reel": {
+      "hook": [
+        "겨울 간식 고구마 반값?",
+        "12월 12일 영암에서요"
+      ],
+      "beats": [
+        "12월 12일 영암 고구마 축제",
+        "고구마 50% 할인 판매",
+        "오후 영암읍 구 대동공장"
+      ],
+      "takeaway": "12월 12일 전 영암 축제 할인 확인",
+      "scenes": [
+        {
+          "say": "겨울 간식 고구마, 반값에 살 수 있대요.",
+          "caption": [
+            "겨울 간식 고구마",
+            "반값 가능?"
+          ],
+          "search": "people shopping"
+        },
+        {
+          "say": "영암에서 고구마 달빛축제가 열려요.",
+          "caption": [
+            "영암 고구마 축제",
+            "12월 12일"
+          ],
+          "search": "city night street"
+        },
+        {
+          "say": "고구마 50% 할인 판매도 함께 해요.",
+          "caption": [
+            "고구마 50% 할인"
+          ],
+          "search": "market stall"
+        },
+        {
+          "say": "나들이 간다면 할인 여부부터 확인하세요.",
+          "caption": [
+            "행사 전 확인하기"
+          ],
+          "search": "woman smartphone"
+        }
+      ]
+    },
+    "source_name": "연합뉴스",
+    "source_url": "https://www.yna.co.kr/view/AKR20261123105300054",
+    "source_title": "영암서 내달 12일 '고구마 달빛축제'…50% 할인 판매도",
+    "focus": "money_action"
+  },
+  "caption": "고구마 반값? 12월 12일 영암\n영암 고구마 달빛축제 할인은 언제 어디서 하나요?\n\n✔ 무슨 행사인가요\n✔ 어떤 혜택이 있나요\n💡 12월 12일에 영암을 찾을 계획이라면 할인 판매 여부를 미리 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 연합뉴스\nAI의 도움을 받아 요약했어요.\n\n#영암고구마 #달빛축제 #고구마할인 #3분뉴스 #오늘의뉴스",
+  "warnings": [
+    "릴스 첫 화면 1줄 13자 (최대 12자)",
+    "릴스 첫 화면 2줄 13자 (최대 12자)"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0059418000000000006,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 24603,
+        "url": "https://cdn.pixabay.com/video/2019/06/23/24603-344986224_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-24603/",
+        "start": 1.35,
+        "match": "full"
+      },
+      {
+        "id": 41315,
+        "url": "https://cdn.pixabay.com/video/2020/06/07/41315-429396382_medium.mp4",
+        "page": "https://pixabay.com/videos/id-41315/",
+        "start": 1.65,
+        "match": "full"
+      },
+      {
+        "id": 18089,
+        "url": "https://cdn.pixabay.com/video/2018/09/05/18089-288458766_medium.mp4",
+        "page": "https://pixabay.com/videos/id-18089/",
+        "start": 1.2,
+        "match": "full"
+      },
+      {
+        "id": 44860,
+        "url": "https://cdn.pixabay.com/video/2020/07/16/44860-440261070_medium.mp4",
+        "page": "https://pixabay.com/videos/id-44860/",
+        "start": 1.5,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-23T07:41:48.818189+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 600,
+  "keyboard_message_id": 601
+}
