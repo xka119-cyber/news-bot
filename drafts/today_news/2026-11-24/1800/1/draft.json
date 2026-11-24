@@ -1,0 +1,141 @@
+{
+  "id": "today_news/20261124-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-24T18:00:00+09:00",
+  "slot_label": "11월 24일(화) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "생활",
+    "cover_title": "유니클로 6년 만의 감사제",
+    "cover_sub": "27일부터 2주간, 히트텍·파카 할인",
+    "points": [
+      {
+        "title": "무슨 일인지",
+        "lines": [
+          "유니클로가 6년 만에 감사제를 열어요",
+          "11월 27일부터 12월 10일까지 2주간이에요"
+        ]
+      },
+      {
+        "title": "얼마나 싸질까",
+        "lines": [
+          "1탄 파카 6만 9900원, 스웨터 9만 9900원",
+          "히트텍 주요 제품도 특가로 판매해요"
+        ]
+      }
+    ],
+    "why_it_matters": "겨울 옷 살 계획이 있다면 할인 기간과 품목을 미리 확인해 보세요.",
+    "caption_intro": "유니클로 감사제는 언제까지인가요? 히트텍 할인도 있을까요?",
+    "hashtags": [
+      "#유니클로감사제",
+      "#히트텍",
+      "#겨울옷할인"
+    ],
+    "reel": {
+      "hook": [
+        "겨울 옷 사야 한다면",
+        "파카 6만 원대로?"
+      ],
+      "beats": [
+        "유니클로가 감사제를 열어요",
+        "퍼프테크 파카 6만 9900원",
+        "11월 27일~12월 10일 2주간"
+      ],
+      "takeaway": "1탄·2탄 할인 품목 미리 확인하기",
+      "scenes": [
+        {
+          "say": "겨울 옷 사려는데 6만 원대 파카요?",
+          "caption": [
+            "파카 6만 원대?",
+            "겨울 옷 할인"
+          ],
+          "search": "people shopping"
+        },
+        {
+          "say": "유니클로가 6년 만에 감사제를 열어요.",
+          "caption": [
+            "6년 만에 감사제",
+            "2주간 진행"
+          ],
+          "search": "clothing store"
+        },
+        {
+          "say": "파카 6만 9900원, 히트텍도 특가예요.",
+          "caption": [
+            "파카 6만 9900원",
+            "히트텍도 특가"
+          ],
+          "search": "shopping bags"
+        },
+        {
+          "say": "12월 10일 전에 살 옷부터 정해요.",
+          "caption": [
+            "12월 10일 전",
+            "살 옷부터 정하기"
+          ],
+          "search": "woman smartphone"
+        }
+      ]
+    },
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/Economy/article/all/20261124/135079785/1",
+    "source_title": "유니클로, 6년 만에 ‘감사제’ 2주간 진행…히트텍 등 할인 판매",
+    "focus": "money_action"
+  },
+  "caption": "유니클로 6년 만의 감사제\n유니클로 감사제는 언제까지인가요? 히트텍 할인도 있을까요?\n\n✔ 무슨 일인지\n✔ 얼마나 싸질까\n💡 겨울 옷 살 계획이 있다면 할인 기간과 품목을 미리 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#유니클로감사제 #히트텍 #겨울옷할인 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0063401,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 24114,
+        "url": "https://cdn.pixabay.com/video/2019/06/01/24114-340421422_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-24114/",
+        "start": 1.95,
+        "match": "full"
+      },
+      {
+        "id": 30703,
+        "url": "https://cdn.pixabay.com/video/2019/12/30/30703-383980330_medium.mp4",
+        "page": "https://pixabay.com/videos/id-30703/",
+        "start": 1.2,
+        "match": "full"
+      },
+      {
+        "id": 1006,
+        "url": "https://cdn.pixabay.com/video/2015/10/16/1006-142621176_medium.mp4",
+        "page": "https://pixabay.com/videos/id-1006/",
+        "start": 2.85,
+        "match": "partial"
+      },
+      {
+        "id": 1887,
+        "url": "https://cdn.pixabay.com/video/2016/01/08/1887-151131664_small.mp4",
+        "page": "https://pixabay.com/videos/id-1887/",
+        "start": 1.5,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-24T07:31:49.815557+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 623,
+  "keyboard_message_id": 624
+}
