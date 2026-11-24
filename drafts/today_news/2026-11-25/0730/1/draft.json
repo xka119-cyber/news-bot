@@ -1,0 +1,140 @@
+{
+  "id": "today_news/20261125-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-25T07:30:00+09:00",
+  "slot_label": "11월 25일(수) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "날씨·교통",
+    "cover_title": "서울 영하 4도, 오늘 아침 더 추워요",
+    "cover_sub": "낮부터 풀려도 아침 외출은 든든하게",
+    "points": [
+      {
+        "title": "오늘 아침 무슨 일?",
+        "lines": [
+          "밤사이 기온이 더 떨어졌어요.",
+          "오늘 아침은 어제보다 더 춥겠어요."
+        ]
+      },
+      {
+        "title": "얼마나 추울까요?",
+        "lines": [
+          "서울은 영하 4도까지 떨어질 전망이에요.",
+          "낮부터는 기온이 누그러진다고 해요."
+        ]
+      }
+    ],
+    "why_it_matters": "아침 출근길엔 두꺼운 외투와 목도리를 챙기세요. 낮에는 풀리니 겉옷으로 체온을 조절하기 좋아요.",
+    "caption_intro": "날씨 보니 서울 영하 4도, 출근길 뭘 입을까요?",
+    "hashtags": [
+      "#출근길날씨",
+      "#아침기온",
+      "#영하날씨"
+    ],
+    "reel": {
+      "hook": [
+        "출근길 외투 챙기셨나요?",
+        "아침 영하 4도래요"
+      ],
+      "beats": [
+        "밤사이 기온이 뚝 떨어져요",
+        "서울 영하 4도까지 내려가요",
+        "낮부터는 조금 누그러져요"
+      ],
+      "takeaway": "출근 전 외투·목도리 챙기기",
+      "scenes": [
+        {
+          "say": "출근길 옷 뭐 입을지 고민이라면요?",
+          "caption": [
+            "출근길 옷차림 고민?"
+          ],
+          "search": "city sunrise"
+        },
+        {
+          "say": "밤사이 기온이 뚝 떨어졌어요.",
+          "caption": [
+            "밤사이 기온 뚝"
+          ],
+          "search": "rain street"
+        },
+        {
+          "say": "서울은 영하 4도까지 내려간대요.",
+          "caption": [
+            "서울 영하 4도",
+            "낮부터는 누그러져요"
+          ],
+          "search": "winter street"
+        },
+        {
+          "say": "외투랑 목도리 챙겨서 나가세요.",
+          "caption": [
+            "외투·목도리 챙기기"
+          ],
+          "search": "subway commute"
+        }
+      ]
+    },
+    "source_name": "SBS",
+    "source_url": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008861818&plink=RSSLINK&cooper=RSSREADER",
+    "source_title": "[날씨] 밤사이 기온 '뚝' 추운 아침…낮부터 누그러져",
+    "focus": "money_action"
+  },
+  "caption": "서울 영하 4도, 오늘 아침 더 추워요\n날씨 보니 서울 영하 4도, 출근길 뭘 입을까요?\n\n✔ 오늘 아침 무슨 일?\n✔ 얼마나 추울까요?\n💡 아침 출근길엔 두꺼운 외투와 목도리를 챙기세요. 낮에는 풀리니 겉옷으로 체온을 조절하기 좋아요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: SBS\nAI의 도움을 받아 요약했어요.\n\n#출근길날씨 #아침기온 #영하날씨 #3분뉴스 #오늘의뉴스",
+  "warnings": [
+    "릴스 첫 화면 1줄 13자 (최대 12자)"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.006603,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 218013,
+        "url": "https://cdn.pixabay.com/video/2024/06/24/218013_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-218013/",
+        "start": 2.4,
+        "match": "full"
+      },
+      {
+        "id": 188535,
+        "url": "https://cdn.pixabay.com/video/2023/11/09/188535-883127092_medium.mp4",
+        "page": "https://pixabay.com/videos/id-188535/",
+        "start": 0.9,
+        "match": "full"
+      },
+      {
+        "id": 7048,
+        "url": "https://cdn.pixabay.com/video/2017/01/05/7048-198606703_medium.mp4",
+        "page": "https://pixabay.com/videos/id-7048/",
+        "start": 2.25,
+        "match": "full"
+      },
+      {
+        "id": 21985,
+        "url": "https://cdn.pixabay.com/video/2019/03/13/21985-323496013_medium.mp4",
+        "page": "https://pixabay.com/videos/id-21985/",
+        "start": 2.1,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-24T21:01:51.451608+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 632,
+  "keyboard_message_id": 633
+}
