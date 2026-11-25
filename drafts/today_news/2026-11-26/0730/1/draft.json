@@ -1,0 +1,147 @@
+{
+  "id": "today_news/20261126-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-26T07:30:00+09:00",
+  "slot_label": "11월 26일(목) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "해외 결제 3.5% 무조건 할인",
+    "cover_sub": "전월 실적·할인 한도 없는 삼성카드 신상품",
+    "points": [
+      {
+        "title": "무엇이 새로 나왔나",
+        "lines": [
+          "삼성카드가 해외 3.5% 할인 카드를 내놨어요.",
+          "전월 실적이나 할인 한도 조건이 없어요.",
+          "해외 온·오프라인 결제 모두 적용돼요."
+        ]
+      },
+      {
+        "title": "얼마나 아낄 수 있나",
+        "lines": [
+          "해외에서 100만 원을 쓰면 3만5000원 할인",
+          "해외 직접구매와 구매대행도 한도 없이 적용돼요.",
+          "해외 결제가 잦다면 내 카드 혜택과 비교해 보세요."
+        ]
+      }
+    ],
+    "why_it_matters": "해외 결제가 잦다면 지금 쓰는 카드의 해외 할인율과 비교해 보세요. 조건 없이 3.5%를 받을 수 있어요.",
+    "caption_intro": "해외 결제 할인 카드, 조건 없이 3.5%면 괜찮을까요?",
+    "hashtags": [
+      "#해외결제할인",
+      "#해외직구카드",
+      "#삼성카드"
+    ],
+    "reel": {
+      "hook": [
+        "해외서 100만 원 쓰면",
+        "3만5000원 깎아줘요"
+      ],
+      "beats": [
+        "삼성카드 신상품이 나왔어요",
+        "해외 이용액의 3.5%를 할인",
+        "결제일에 바로 할인, 한도 없음"
+      ],
+      "takeaway": "해외 결제 많다면 내 카드 해외 할인율 비교",
+      "scenes": [
+        {
+          "say": "해외에서 자주 결제하는 분, 카드 바꾸셨어요?",
+          "caption": [
+            "해외 결제 많다면",
+            "카드 바꾸셨어요?"
+          ],
+          "search": "airplane sky"
+        },
+        {
+          "say": "삼성카드가 해외 3.5% 할인 카드를 내놨어요.",
+          "caption": [
+            "삼성카드 신상품",
+            "해외 3.5% 할인"
+          ],
+          "search": "people shopping"
+        },
+        {
+          "say": "실적도 한도도 없이 3.5%를 깎아줘요.",
+          "caption": [
+            "실적·한도 없이",
+            "해외 3.5% 할인"
+          ],
+          "search": "airport terminal"
+        },
+        {
+          "say": "해외 결제 많다면 내 카드 혜택과 비교해 보세요.",
+          "caption": [
+            "내 카드와 비교",
+            "해외 할인율 확인"
+          ],
+          "search": "office workers"
+        }
+      ]
+    },
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/Economy/article/all/20261125/135083279/2",
+    "source_title": "조건 없이 해외 이용 금액 3.5% 할인",
+    "focus": "money_action"
+  },
+  "caption": "해외 결제 3.5% 무조건 할인\n해외 결제 할인 카드, 조건 없이 3.5%면 괜찮을까요?\n\n✔ 무엇이 새로 나왔나\n✔ 얼마나 아낄 수 있나\n💡 해외 결제가 잦다면 지금 쓰는 카드의 해외 할인율과 비교해 보세요. 조건 없이 3.5%를 받을 수 있어요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#해외결제할인 #해외직구카드 #삼성카드 #3분뉴스 #오늘의뉴스",
+  "warnings": [
+    "릴스 첫 화면 1줄 13자 (최대 12자)",
+    "릴스 4번 장면 읽는 문장 27자 (최대 26자)",
+    "릴스가 17초로 깁니다(목표 15초 이내)"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.006585400000000001,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 32975,
+        "url": "https://cdn.pixabay.com/video/2020/02/27/32975-394513987_medium.mp4",
+        "page": "https://pixabay.com/videos/id-32975/",
+        "start": 4.5,
+        "match": "full"
+      },
+      {
+        "id": 44860,
+        "url": "https://cdn.pixabay.com/video/2020/07/16/44860-440261070_medium.mp4",
+        "page": "https://pixabay.com/videos/id-44860/",
+        "start": 1.5,
+        "match": "full"
+      },
+      {
+        "id": 29804,
+        "url": "https://cdn.pixabay.com/video/2019/12/04/29804-377520739_medium.mp4",
+        "page": "https://pixabay.com/videos/id-29804/",
+        "start": 2.1,
+        "match": "full"
+      },
+      {
+        "id": 12564,
+        "url": "https://cdn.pixabay.com/video/2017/10/22/12564-240358890_medium.mp4",
+        "page": "https://pixabay.com/videos/id-12564/",
+        "start": 3.3,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-25T21:01:52.051905+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 647,
+  "keyboard_message_id": 648
+}
