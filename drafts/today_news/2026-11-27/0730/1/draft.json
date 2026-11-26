@@ -129,12 +129,17 @@
       }
     ]
   },
-  "status": "generated",
+  "status": "approved",
   "history": [
     {
       "status": "generated",
       "at": "2026-11-26T21:11:42.139133+00:00",
       "note": ""
+    },
+    {
+      "status": "approved",
+      "at": "2026-11-26T22:31:53.903804+00:00",
+      "note": "시간 초과 자동 승인"
     }
   ],
   "telegram_message_id": 670,
