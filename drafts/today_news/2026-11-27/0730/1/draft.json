@@ -1,0 +1,142 @@
+{
+  "id": "today_news/20261127-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-27T07:30:00+09:00",
+  "slot_label": "11월 27일(금) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "기준금리 또 올랐다, 내년엔?",
+    "cover_sub": "올 하반기 세 번째 인상, 대출 이자 부담 커질까요",
+    "points": [
+      {
+        "title": "무슨 일인가요",
+        "lines": [
+          "한국은행이 기준금리를 또 올렸어요.",
+          "올해 하반기에만 벌써 세 번째 인상이에요."
+        ]
+      },
+      {
+        "title": "왜 부담이 커지나요",
+        "lines": [
+          "고물가 우려 속에 나온 결정이에요.",
+          "내년에도 금리를 더 올릴 전망이라고 해요.",
+          "서민은 고물가에 고금리까지 겹쳤어요."
+        ]
+      }
+    ],
+    "why_it_matters": "변동금리 대출이 있다면 매달 내는 이자가 늘 수 있어요. 대출 금리 조건부터 확인해 보세요.",
+    "caption_intro": "기준금리가 오르면 대출 이자는 얼마나 늘어날까요?",
+    "hashtags": [
+      "#기준금리",
+      "#변동금리대출",
+      "#대출이자"
+    ],
+    "reel": {
+      "hook": [
+        "변동금리 대출 있다면",
+        "이자 또 오를 수 있어요"
+      ],
+      "beats": [
+        "기준금리 또 인상",
+        "올 하반기 세 번째",
+        "내년에도 더 오를 전망"
+      ],
+      "takeaway": "대출 금리 조건부터 확인하기",
+      "scenes": [
+        {
+          "say": "변동금리 대출이 있으면 이자가 오를 수 있어요.",
+          "caption": [
+            "변동금리 대출이라면",
+            "이자 부담 늘어요"
+          ],
+          "search": "apartment buildings"
+        },
+        {
+          "say": "한국은행이 기준금리를 또 올렸어요.",
+          "caption": [
+            "기준금리 또 인상",
+            "올 하반기 세 번째"
+          ],
+          "search": "money coins"
+        },
+        {
+          "say": "올해 하반기에만 벌써 세 번째예요.",
+          "caption": [
+            "하반기 세 번째 인상"
+          ],
+          "search": "office workers"
+        },
+        {
+          "say": "내 대출 금리 조건부터 한번 확인해 보세요.",
+          "caption": [
+            "대출 금리 확인하기"
+          ],
+          "search": "woman smartphone"
+        }
+      ]
+    },
+    "source_name": "SBS",
+    "source_url": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008865827&plink=RSSLINK&cooper=RSSREADER",
+    "source_title": "'고물가 우려' 금리 또 인상…내년 성장률 4.1%",
+    "focus": "money_action"
+  },
+  "caption": "기준금리 또 올랐다, 내년엔?\n기준금리가 오르면 대출 이자는 얼마나 늘어날까요?\n\n✔ 무슨 일인가요\n✔ 왜 부담이 커지나요\n💡 변동금리 대출이 있다면 매달 내는 이자가 늘 수 있어요. 대출 금리 조건부터 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: SBS\nAI의 도움을 받아 요약했어요.\n\n#기준금리 #변동금리대출 #대출이자 #3분뉴스 #오늘의뉴스",
+  "warnings": [
+    "릴스 첫 화면 2줄 13자 (최대 12자)"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0067206,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 61193,
+        "url": "https://cdn.pixabay.com/video/2021/01/05/61193-497862950_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-61193/",
+        "start": 1.95,
+        "match": "full"
+      },
+      {
+        "id": 12751,
+        "url": "https://cdn.pixabay.com/video/2017/11/04/12751-241674238_medium.mp4",
+        "page": "https://pixabay.com/videos/id-12751/",
+        "start": 1.8,
+        "match": "full"
+      },
+      {
+        "id": 12564,
+        "url": "https://cdn.pixabay.com/video/2017/10/22/12564-240358890_medium.mp4",
+        "page": "https://pixabay.com/videos/id-12564/",
+        "start": 3.3,
+        "match": "full"
+      },
+      {
+        "id": 93550,
+        "url": "https://cdn.pixabay.com/video/2021/10/27/93550-640240281_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-93550/",
+        "start": 1.35,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-26T21:11:42.139133+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 670,
+  "keyboard_message_id": 671
+}
