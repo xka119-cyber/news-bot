@@ -1,11 +1,6 @@
 {
   "items": [
     {
-      "link": "https://www.yna.co.kr/view/AKR20261123124600003",
-      "title": "내년부터 주택조합도 공사비 검증 의무…조합원 5분의 1 요구 시",
-      "used_at": "2026-11-23T22:31:46.092628+00:00"
-    },
-    {
       "link": "https://www.donga.com/news/Economy/article/all/20261124/135079785/1",
       "title": "유니클로, 6년 만에 ‘감사제’ 2주간 진행…히트텍 등 할인 판매",
       "used_at": "2026-11-24T09:01:52.914720+00:00"
@@ -24,6 +19,11 @@
       "link": "https://www.mk.co.kr/news/realestate/12219359",
       "title": "수도권 공공주택 공급 ‘속도전’…내년 5.6만가구 모집, 전월세 안정은 ‘숙제’",
       "used_at": "2026-11-26T09:02:07.235907+00:00"
+    },
+    {
+      "link": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008865827&plink=RSSLINK&cooper=RSSREADER",
+      "title": "'고물가 우려' 금리 또 인상…내년 성장률 4.1%",
+      "used_at": "2026-11-26T22:31:53.903804+00:00"
     }
   ]
 }
