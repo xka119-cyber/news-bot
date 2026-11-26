@@ -1,0 +1,143 @@
+{
+  "id": "today_news/20261126-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-26T18:00:00+09:00",
+  "slot_label": "11월 26일(목) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "생활",
+    "cover_title": "내년 수도권 공공주택 5.6만 가구 모집",
+    "cover_sub": "올해보다 40% 넘게 늘어나는 공공주택 모집이에요",
+    "points": [
+      {
+        "title": "무엇이 바뀌나",
+        "lines": [
+          "정부가 내년 수도권 공공주택 입주자를 모집합니다.",
+          "규모는 5만6000가구로, 올해보다 40% 이상 늘어요."
+        ]
+      },
+      {
+        "title": "어떤 내용인가",
+        "lines": [
+          "국토교통부가 26일 주택공급 브리핑에서 밝혔어요.",
+          "다만 전월세 안정은 아직 숙제로 남아 있어요."
+        ]
+      }
+    ],
+    "why_it_matters": "내 집 마련을 준비 중이라면 내년 모집 공고가 나왔을 때 자격 조건부터 확인해 보세요.",
+    "caption_intro": "공공주택 모집, 내년에 나도 신청할 수 있을까요?",
+    "hashtags": [
+      "#공공주택",
+      "#입주자모집",
+      "#전월세"
+    ],
+    "reel": {
+      "hook": [
+        "월세 살고 계시나요?",
+        "내년엔 기회가 늘어요"
+      ],
+      "beats": [
+        "정부, 내년 공공주택 모집",
+        "수도권 5만6000가구 규모",
+        "올해보다 40% 넘게 늘어요"
+      ],
+      "takeaway": "내년 모집 공고부터 확인하기",
+      "scenes": [
+        {
+          "say": "월세 사는 분, 내 집 기회 생길까요?",
+          "caption": [
+            "월세 사는 분?",
+            "내 집 기회 생길까요"
+          ],
+          "search": "apartment buildings"
+        },
+        {
+          "say": "정부가 내년 수도권 공공주택을 모집해요.",
+          "caption": [
+            "내년 공공주택 모집",
+            "수도권에서 시작"
+          ],
+          "search": "city skyline"
+        },
+        {
+          "say": "수도권에서 5만 6천 가구를 뽑아요.",
+          "caption": [
+            "5만6000가구",
+            "올해보다 40%↑"
+          ],
+          "search": "office workers"
+        },
+        {
+          "say": "내 집 준비 중이라면 모집 공고부터 보세요.",
+          "caption": [
+            "모집 공고부터 확인",
+            "자격 조건 살펴보기"
+          ],
+          "search": "woman smartphone"
+        }
+      ]
+    },
+    "source_name": "매일경제",
+    "source_url": "https://www.mk.co.kr/news/realestate/12219359",
+    "source_title": "수도권 공공주택 공급 ‘속도전’…내년 5.6만가구 모집, 전월세 안정은 ‘숙제’",
+    "focus": "money_action"
+  },
+  "caption": "내년 수도권 공공주택 5.6만 가구 모집\n공공주택 모집, 내년에 나도 신청할 수 있을까요?\n\n✔ 무엇이 바뀌나\n✔ 어떤 내용인가\n💡 내 집 마련을 준비 중이라면 내년 모집 공고가 나왔을 때 자격 조건부터 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 매일경제\nAI의 도움을 받아 요약했어요.\n\n#공공주택 #입주자모집 #전월세 #3분뉴스 #오늘의뉴스",
+  "warnings": [
+    "원문에 없는 숫자: 6"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0061672,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 61193,
+        "url": "https://cdn.pixabay.com/video/2021/01/05/61193-497862950_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-61193/",
+        "start": 1.95,
+        "match": "full"
+      },
+      {
+        "id": 3134,
+        "url": "https://cdn.pixabay.com/video/2016/05/12/3134-166335905_medium.mp4",
+        "page": "https://pixabay.com/videos/id-3134/",
+        "start": 8.1,
+        "match": "full"
+      },
+      {
+        "id": 1887,
+        "url": "https://cdn.pixabay.com/video/2016/01/08/1887-151131664_small.mp4",
+        "page": "https://pixabay.com/videos/id-1887/",
+        "start": 1.5,
+        "match": "full"
+      },
+      {
+        "id": 211636,
+        "url": "https://cdn.pixabay.com/video/2024/05/12/211636_medium.mp4",
+        "page": "https://pixabay.com/videos/id-211636/",
+        "start": 1.5,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-26T08:11:42.950713+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 660,
+  "keyboard_message_id": 661
+}
