@@ -1,0 +1,141 @@
+{
+  "id": "today_news/20261127-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-27T18:00:00+09:00",
+  "slot_label": "11월 27일(금) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "생활",
+    "cover_title": "네이버 예약 쿠폰, 최대 50% 할인",
+    "cover_sub": "연말 맛집·호텔 뷔페 예약 기획전이 열렸어요",
+    "points": [
+      {
+        "title": "무슨 일인가요",
+        "lines": [
+          "네이버가 연말 예약 기획전을 열었어요.",
+          "맛집과 호텔 뷔페 예약 상품을 모았어요."
+        ]
+      },
+      {
+        "title": "얼마나 할인되나요",
+        "lines": [
+          "최대 50% 할인 쿠폰을 제공한다고 해요.",
+          "정확한 할인 조건은 기획전에서 확인해야 해요."
+        ]
+      }
+    ],
+    "why_it_matters": "연말 모임이나 외식 계획이 있다면 네이버 예약 기획전에서 쿠폰 조건부터 확인해 보세요.",
+    "caption_intro": "연말 맛집 예약 쿠폰, 최대 50% 할인 받을 수 있을까요?",
+    "hashtags": [
+      "#예약기획전",
+      "#연말맛집",
+      "#호텔뷔페"
+    ],
+    "reel": {
+      "hook": [
+        "외식비 아끼고 싶다면",
+        "최대 50% 쿠폰이?"
+      ],
+      "beats": [
+        "네이버 연말 예약 기획전 열림",
+        "맛집·호텔 뷔페 상품 모아",
+        "최대 50% 할인 쿠폰 제공"
+      ],
+      "takeaway": "기획전에서 쿠폰 조건부터 확인하기",
+      "scenes": [
+        {
+          "say": "외식비 아끼고 싶은 분, 이거 보셨어요?",
+          "caption": [
+            "외식비 아끼고 싶다면",
+            "최대 50% 쿠폰"
+          ],
+          "search": "restaurant dinner"
+        },
+        {
+          "say": "네이버가 연말 예약 기획전을 열었어요.",
+          "caption": [
+            "네이버 연말 기획전",
+            "맛집·호텔 뷔페"
+          ],
+          "search": "woman smartphone"
+        },
+        {
+          "say": "최대 50% 할인 쿠폰도 함께 준대요.",
+          "caption": [
+            "최대 50% 할인",
+            "쿠폰 제공"
+          ],
+          "search": "money coins"
+        },
+        {
+          "say": "쿠폰 조건부터 확인하고 예약해 보세요.",
+          "caption": [
+            "쿠폰 조건 먼저 확인",
+            "네이버 예약에서"
+          ],
+          "search": "cooking kitchen"
+        }
+      ]
+    },
+    "source_name": "연합뉴스",
+    "source_url": "https://www.yna.co.kr/view/AKR20261127057900017",
+    "source_title": "[테크스냅] 네이버, 연말 '예약N예약' 기획전…최대 50% 할인 쿠폰",
+    "focus": "money_action"
+  },
+  "caption": "네이버 예약 쿠폰, 최대 50% 할인\n연말 맛집 예약 쿠폰, 최대 50% 할인 받을 수 있을까요?\n\n✔ 무슨 일인가요\n✔ 얼마나 할인되나요\n💡 연말 모임이나 외식 계획이 있다면 네이버 예약 기획전에서 쿠폰 조건부터 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 연합뉴스\nAI의 도움을 받아 요약했어요.\n\n#예약기획전 #연말맛집 #호텔뷔페 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.005812,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 10878,
+        "url": "https://cdn.pixabay.com/video/2017/07/23/10878-226635359_medium.mp4",
+        "page": "https://pixabay.com/videos/id-10878/",
+        "start": 3.0,
+        "match": "full"
+      },
+      {
+        "id": 38084,
+        "url": "https://cdn.pixabay.com/video/2020/05/04/38084-416330724_medium.mp4",
+        "page": "https://pixabay.com/videos/id-38084/",
+        "start": 1.2,
+        "match": "full"
+      },
+      {
+        "id": 24603,
+        "url": "https://cdn.pixabay.com/video/2019/06/23/24603-344986224_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-24603/",
+        "start": 1.35,
+        "match": "full"
+      },
+      {
+        "id": 1887,
+        "url": "https://cdn.pixabay.com/video/2016/01/08/1887-151131664_small.mp4",
+        "page": "https://pixabay.com/videos/id-1887/",
+        "start": 1.5,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-27T07:31:48.375947+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 679,
+  "keyboard_message_id": 680
+}
