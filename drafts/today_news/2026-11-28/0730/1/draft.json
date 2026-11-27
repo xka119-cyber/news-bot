@@ -1,0 +1,143 @@
+{
+  "id": "today_news/20261128-0730-1",
+  "account": "today_news",
+  "slot": "2026-11-28T07:30:00+09:00",
+  "slot_label": "11월 28일(토) 07:30",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "집 한 채인데도 종부세 대상",
+    "cover_sub": "공시가 12억 원 넘는 아파트가 늘어났어요",
+    "points": [
+      {
+        "title": "무슨 일인가요",
+        "lines": [
+          "지난해 서울 집값이 크게 올랐어요",
+          "왕십리·당산·고덕 1주택자도 종부세 대상이 됐어요",
+          "전용 84㎡ 아파트 공시가가 12억 원을 넘었어요"
+        ]
+      },
+      {
+        "title": "왜 이런 일이 생겼나요",
+        "lines": [
+          "1주택자 종부세 기준은 공시가 12억 원이에요",
+          "집값이 오르면서 공시가도 함께 올라갔어요",
+          "보유세 부담에 집을 내놓는 다주택자도 늘었어요"
+        ]
+      }
+    ],
+    "why_it_matters": "집 한 채여도 공시가가 12억 원을 넘으면 종부세 대상일 수 있어요. 내 집 공시가격부터 확인해 보세요.",
+    "caption_intro": "종부세 대상, 집 한 채여도 해당될까요?",
+    "hashtags": [
+      "#종부세",
+      "#공시가격",
+      "#1주택자"
+    ],
+    "reel": {
+      "hook": [
+        "내 집 한 채인데",
+        "종부세 낸다고요?"
+      ],
+      "beats": [
+        "공시가 12억 넘는 아파트 늘어",
+        "1주택자 종부세 기준은 12억",
+        "지난해 서울 집값이 크게 올라서"
+      ],
+      "takeaway": "내 집 공시가격부터 확인하기",
+      "scenes": [
+        {
+          "say": "집 한 채만 있어도 세금 낼 수 있어요?",
+          "caption": [
+            "집 한 채만 있어도",
+            "종부세 대상?"
+          ],
+          "search": "apartment buildings"
+        },
+        {
+          "say": "공시가 12억 넘는 아파트가 늘었어요.",
+          "caption": [
+            "공시가 12억 넘어",
+            "아파트 늘었어요"
+          ],
+          "search": "city skyline"
+        },
+        {
+          "say": "기준은 1주택자 공시가 12억 원이에요.",
+          "caption": [
+            "1주택 공시가 12억",
+            "넘으면 종부세"
+          ],
+          "search": "money coins"
+        },
+        {
+          "say": "내 집 공시가격부터 확인해 보세요.",
+          "caption": [
+            "내 집 공시가격",
+            "먼저 확인하기"
+          ],
+          "search": "woman smartphone"
+        }
+      ]
+    },
+    "source_name": "동아일보",
+    "source_url": "https://www.donga.com/news/Economy/article/all/20261127/135106266/2",
+    "source_title": "공시가 12억 넘는 아파트 늘어… 왕십리-당산 1주택도 종부세",
+    "focus": "money_action"
+  },
+  "caption": "집 한 채인데도 종부세 대상\n종부세 대상, 집 한 채여도 해당될까요?\n\n✔ 무슨 일인가요\n✔ 왜 이런 일이 생겼나요\n💡 집 한 채여도 공시가가 12억 원을 넘으면 종부세 대상일 수 있어요. 내 집 공시가격부터 확인해 보세요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: 동아일보\nAI의 도움을 받아 요약했어요.\n\n#종부세 #공시가격 #1주택자 #3분뉴스 #오늘의뉴스",
+  "warnings": [],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.0030292,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 61193,
+        "url": "https://cdn.pixabay.com/video/2021/01/05/61193-497862950_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-61193/",
+        "start": 1.95,
+        "match": "full"
+      },
+      {
+        "id": 3134,
+        "url": "https://cdn.pixabay.com/video/2016/05/12/3134-166335905_medium.mp4",
+        "page": "https://pixabay.com/videos/id-3134/",
+        "start": 8.1,
+        "match": "full"
+      },
+      {
+        "id": 93550,
+        "url": "https://cdn.pixabay.com/video/2021/10/27/93550-640240281_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-93550/",
+        "start": 1.35,
+        "match": "full"
+      },
+      {
+        "id": 211636,
+        "url": "https://cdn.pixabay.com/video/2024/05/12/211636_medium.mp4",
+        "page": "https://pixabay.com/videos/id-211636/",
+        "start": 1.5,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-27T21:01:56.742763+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 688,
+  "keyboard_message_id": 689
+}
