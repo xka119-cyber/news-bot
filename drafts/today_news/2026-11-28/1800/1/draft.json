@@ -1,0 +1,142 @@
+{
+  "id": "today_news/20261128-1800-1",
+  "account": "today_news",
+  "slot": "2026-11-28T18:00:00+09:00",
+  "slot_label": "11월 28일(토) 18:00",
+  "number": 1,
+  "format": "carousel",
+  "draft": {
+    "category": "경제",
+    "cover_title": "내년 국민연금 지원 98만 명으로",
+    "cover_sub": "지원 기준 소득이 월 100만 원 미만으로 올라요",
+    "points": [
+      {
+        "title": "무엇이 달라지나",
+        "lines": [
+          "내년 국민연금 보험료를 지원받는 저소득 지역가입자가 늘어요.",
+          "지원 대상이 98만 5천 명으로 늘어나요."
+        ]
+      },
+      {
+        "title": "기준 소득이 얼마나 오르나",
+        "lines": [
+          "지원 기준 소득이 월 80만 원 미만에서 100만 원 미만으로 올라요.",
+          "소득이 빠듯했던 분도 대상에 들어올 수 있어요."
+        ]
+      }
+    ],
+    "why_it_matters": "지역가입자라면 내년 지원 대상인지 확인해 보세요. 기준소득이 월 100만 원 미만으로 올랐어요.",
+    "caption_intro": "국민연금 보험료 지원, 나도 받을 수 있을까요?",
+    "hashtags": [
+      "#국민연금보험료",
+      "#지역가입자",
+      "#국민연금지원"
+    ],
+    "reel": {
+      "hook": [
+        "지역가입자라면",
+        "보험료 도와준대요"
+      ],
+      "beats": [
+        "내년 국민연금 지원 확대",
+        "저소득 지역가입자 98만 5천 명",
+        "기준소득 월 100만 원 미만"
+      ],
+      "takeaway": "내 소득이 기준에 드는지 확인하기",
+      "scenes": [
+        {
+          "say": "소득이 적은 지역가입자라면 꼭 보세요.",
+          "caption": [
+            "지역가입자라면",
+            "꼭 확인하세요"
+          ],
+          "search": "apartment buildings"
+        },
+        {
+          "say": "내년부터 국민연금 보험료 지원 대상이 늘어나요.",
+          "caption": [
+            "내년 지원 대상 늘어",
+            "98만 5천 명"
+          ],
+          "search": "office workers"
+        },
+        {
+          "say": "기준 소득이 월 100만 원 미만으로 올라가요.",
+          "caption": [
+            "기준소득 월",
+            "100만 원 미만"
+          ],
+          "search": "money coins"
+        },
+        {
+          "say": "내 소득이 기준에 드는지 확인해 보세요.",
+          "caption": [
+            "내 소득 확인하기"
+          ],
+          "search": "woman smartphone"
+        }
+      ]
+    },
+    "source_name": "SBS",
+    "source_url": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008867655&plink=RSSLINK&cooper=RSSREADER",
+    "source_title": "내년 저소득층 국민연금 보험료 지원 대상 98만 5천 명…기준소득 월 100만 원 미만",
+    "focus": "money_action"
+  },
+  "caption": "내년 국민연금 지원 98만 명으로\n국민연금 보험료 지원, 나도 받을 수 있을까요?\n\n✔ 무엇이 달라지나\n✔ 기준 소득이 얼마나 오르나\n💡 지역가입자라면 내년 지원 대상인지 확인해 보세요. 기준소득이 월 100만 원 미만으로 올랐어요.\n\n📌 저장해 두면 나중에 다시 볼 수 있어요. 궁금해할 친구에게도 보내 주세요.\n\n출처: SBS\nAI의 도움을 받아 요약했어요.\n\n#국민연금보험료 #지역가입자 #국민연금지원 #3분뉴스 #오늘의뉴스",
+  "warnings": [
+    "2번 카드 1줄 39자 (최대 35자)"
+  ],
+  "cards": [
+    "card_1.jpg",
+    "card_2.jpg",
+    "card_3.jpg",
+    "card_4.jpg"
+  ],
+  "cost_usd": 0.006273300000000001,
+  "reel": {
+    "status": "pending",
+    "video": "reel.mp4",
+    "cover": "reel_cover.jpg",
+    "style": "v3",
+    "clips": [
+      {
+        "id": 61193,
+        "url": "https://cdn.pixabay.com/video/2021/01/05/61193-497862950_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-61193/",
+        "start": 1.95,
+        "match": "full"
+      },
+      {
+        "id": 12564,
+        "url": "https://cdn.pixabay.com/video/2017/10/22/12564-240358890_medium.mp4",
+        "page": "https://pixabay.com/videos/id-12564/",
+        "start": 3.3,
+        "match": "full"
+      },
+      {
+        "id": 12751,
+        "url": "https://cdn.pixabay.com/video/2017/11/04/12751-241674238_medium.mp4",
+        "page": "https://pixabay.com/videos/id-12751/",
+        "start": 1.8,
+        "match": "full"
+      },
+      {
+        "id": 93550,
+        "url": "https://cdn.pixabay.com/video/2021/10/27/93550-640240281_tiny.mp4",
+        "page": "https://pixabay.com/videos/id-93550/",
+        "start": 1.35,
+        "match": "full"
+      }
+    ]
+  },
+  "status": "generated",
+  "history": [
+    {
+      "status": "generated",
+      "at": "2026-11-28T07:42:01.570697+00:00",
+      "note": ""
+    }
+  ],
+  "telegram_message_id": 698,
+  "keyboard_message_id": 699
+}
