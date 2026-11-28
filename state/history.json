@@ -1,11 +1,6 @@
 {
   "items": [
     {
-      "link": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008861818&plink=RSSLINK&cooper=RSSREADER",
-      "title": "[날씨] 밤사이 기온 '뚝' 추운 아침…낮부터 누그러져",
-      "used_at": "2026-11-24T22:32:12.815114+00:00"
-    },
-    {
       "link": "https://www.donga.com/news/Economy/article/all/20261125/135083279/2",
       "title": "조건 없이 해외 이용 금액 3.5% 할인",
       "used_at": "2026-11-25T22:32:03.204112+00:00"
@@ -29,6 +24,11 @@
       "link": "https://www.donga.com/news/Economy/article/all/20261127/135106266/2",
       "title": "공시가 12억 넘는 아파트 늘어… 왕십리-당산 1주택도 종부세",
       "used_at": "2026-11-27T22:31:50.415712+00:00"
+    },
+    {
+      "link": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008867655&plink=RSSLINK&cooper=RSSREADER",
+      "title": "내년 저소득층 국민연금 보험료 지원 대상 98만 5천 명…기준소득 월 100만 원 미만",
+      "used_at": "2026-11-28T09:01:46.186203+00:00"
     }
   ]
 }
